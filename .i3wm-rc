@@ -98,10 +98,10 @@ set $ws1 "1: "
 set $ws2 "2: "
 set $ws3 "3:"
 set $ws4 "4:"
-set $ws5 "5"
-set $ws6 "6"
-set $ws7 "7"
-set $ws8 "8"
+set $ws5 "5: "
+set $ws6 "6:"
+set $ws7 "7:"
+set $ws8 "8:"
 set $ws9 "9"
 set $ws10 "10"
 
@@ -161,11 +161,12 @@ mode "resize" {
         bindsym $mod+r mode "default"
 }
 
+# resize mode
 bindsym $mod+r mode "resize"
 
 
 
-set $bg-color 	         #2f343f
+set $bg-color            #2f343f
 set $inactive-bg-color   #2f343f
 set $text-color          #f3f4f5
 set $inactive-text-color #676E7D
@@ -183,12 +184,12 @@ client.urgent $urgent-bg-color $urgent-bg-color $text-color #00ff00
 bar {
         status_command i3status
         colors {
-		background $bg-color
-	    	separator 990E0E
-		#                  border             background         text
-		focused_workspace  $bg-color          $bg-color          $text-color
-		inactive_workspace $inactive-bg-color $inactive-bg-color $inactive-text-color
-		urgent_workspace   $urgent-bg-color   $urgent-bg-color   $text-color
+                background $bg-color
+                separator #757575
+                #                  border             background         text
+                focused_workspace  $bg-color          $bg-color          $text-color
+                inactive_workspace $inactive-bg-color $inactive-bg-color $inactive-text-color
+                urgent_workspace   $urgent-bg-color   $urgent-bg-color   $text-color
 }
 }
 
@@ -209,4 +210,4 @@ bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightne
 bindsym XF86AudioPlay exec playerctl play
 bindsym XF86AudioPause exec playerctl pause
 bindsym XF86AudioNext exec playerctl next
-bindsym XF86AudioPrev exec playerctl previousk
+bindsym XF86AudioPrev exec playerctl previous
