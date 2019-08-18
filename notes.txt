@@ -1,0 +1,6 @@
+i3-gaps
+
+gaps inner 10
+gaps outer 25
+
+smart_gaps on
