@@ -15,10 +15,12 @@ Xft.autohint: false
 Xft.hintstyle: hintslight
 Xft.lcdfilter: lcddefault
 
-*.font: Liberation Mono:pixelsize=12:antialias=true:autohint=true;
-*.alpha: 0.6
+*.font:	Liberation Mono:pixelsize=12:antialias=true:autohint=true;
+*.alpha: 0.1
+!0.3!
 
-!! brogrammer:
+
+/* !! brogrammer:
 *.foreground:  #d6dbe5
 *.background:  #131313
 *.color0:      #1f1f1f
@@ -37,4 +39,46 @@ Xft.lcdfilter: lcddefault
 *.color14:     #0f7ddb
 *.color7:      #d6dbe5
 *.color15:     #ffffff
-*.colorBD:     #d6dbe5
+*.colorBD:     #d6dbe5 */
+!======================
+!======================
+
+!batman theme from iterm2-color-schemes (pyrophos).
+!.cursorColor and .color14 changed.
+! special
+*.foreground:   #6f6f6f
+*.background:   #1b1d1e
+*.cursorColor:  #feed6c
+
+! black
+*.color0:       #1b1d1e
+*.color8:       #505354
+
+! red
+*.color1:       #e6dc44
+*.color9:       #fff78e
+
+! green
+*.color2:       #c8be46
+*.color10:      #fff27d
+
+! yellow
+*.color3:       #f4fd22
+*.color11:      #feed6c
+
+! blue
+*.color4:       #737174
+*.color12:      #919495
+
+! magenta
+*.color5:       #747271
+*.color13:      #9a9a9d
+
+! cyan
+*.color6:       #62605f
+*.color14:      #cdab53
+
+! white
+*.color7:       #c6c5bf
+*.color15:      #dadbd6
+ 
