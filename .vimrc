@@ -13,7 +13,7 @@
 	set nocompatible
 	filetype plugin on
 	syntax on
-	"colorscheme wal
+    "colorscheme wal
 	set encoding=utf-8
 	set number
 	set relativenumber
@@ -319,3 +319,8 @@ set pastetoggle=<F2>
             \ 'complete_pattern': ':\s*',
             \ 'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
             \ })
+
+
+""" Nvim-R's R buffer
+    """more info in: https://raw.githubusercontent.com/jalvesaq/Nvim-R/master/doc/Nvim-R.txt , search for 'terminal mode'
+let R_esc_term = 0
