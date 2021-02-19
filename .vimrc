@@ -322,5 +322,7 @@ set pastetoggle=<F2>
 
 
 """ Nvim-R's R buffer
+    """basically it makes the :term buffer itself become a vim in Normal Mode, so you can scroll and see the interpreter's log
+    """ CTRL+<inverted bar> and CTRL+n will open Normal Mode. Exit this mode with vim "i" command, entering Insert Mode. It brings you back to the terminal.
     """more info in: https://raw.githubusercontent.com/jalvesaq/Nvim-R/master/doc/Nvim-R.txt , search for 'terminal mode'
 let R_esc_term = 0
