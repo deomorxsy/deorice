@@ -320,9 +320,14 @@ set pastetoggle=<F2>
             \ 'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
             \ })
 
+""" Nvim-R configs
+let R_app = "sparkR"
+let R_cmd = "R"
+    "let R_path = '/opt/apache-spark/bin/load-spark-env.sh'
+    """/opt/apache-spark/bin/spark-submit \"sparkr-shell" /tmp/directory/backend_port
+    """ Nvim-R's R buffer
+        """more info in: https://raw.githubusercontent.com/jalvesaq/Nvim-R/master/doc/Nvim-R.txt , search for 'terminal mode'
+        let R_esc_term = 0
 
-""" Nvim-R's R buffer
-    """basically it makes the :term buffer itself become a vim in Normal Mode, so you can scroll and see the interpreter's log
-    """ CTRL+<inverted bar> and CTRL+n will open Normal Mode. Exit this mode with vim "i" command, entering Insert Mode. It brings you back to the terminal.
-    """more info in: https://raw.githubusercontent.com/jalvesaq/Nvim-R/master/doc/Nvim-R.txt , search for 'terminal mode'
-let R_esc_term = 0
+"""vimsence options
+"""let g:vimsence_custom_icons = {'r': '/home/asari/Imagens/Rlogo.png'}
