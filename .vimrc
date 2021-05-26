@@ -331,3 +331,23 @@ let R_cmd = "R"
 
 """vimsence options
 """let g:vimsence_custom_icons = {'r': '/home/asari/Imagens/Rlogo.png'}
+
+"set pythondll=/usr/bin/python
+
+
+#Writting
+fu! Writer()
+	map <silent> <Up> gk
+	imap <silent> <Up> <C-o>gk
+	map <silent> <Down> gj
+	imap <silent> <Down> <C-o>gj
+	map <silent> <home> g<home>
+	imap <silent> <home> <C-o>g<home>
+	map <silent> <End> g<End>
+	imap <silent> <End> <C-o>g<End>
+    "setlocal
+    set wrap
+	set linebreak
+	set nolist
+	set display+=lastline
+ endfunction
