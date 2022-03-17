@@ -78,7 +78,7 @@
 
 " Toggle DeadKeys set to F7 (for accent marks):
 	" so ~/.vim/luke/deadkeys.vim
-	nm <F7> :call ToggleDeadKeys()<CR>
+	"nm <F7> :call ToggleDeadKeys()<CR>
 
 " Source my IPA shorcuts:
 	map <leader>i :so ~/.vim/luke/ipa.vim<CR>
@@ -233,6 +233,10 @@
 	"autocmd FileType php,html inoremap -- &ndash;
 	"autocmd FileType php,html inoremap --- &mdash;
 
+""" vimtex
+
+	let g:vimtex_view_method = 'zathura'
+
 
 """.bib
 	autocmd FileType bib inoremap ;a @article{<Enter>author<Space>=<Space>"<++>",<Enter>year<Space>=<Space>"<++>",<Enter>title<Space>=<Space>"<++>",<Enter>journal<Space>=<Space>"<++>",<Enter>volume<Space>=<Space>"<++>",<Enter>pages<Space>=<Space>"<++>",<Enter>}<Enter><++><Esc>8kA,<Esc>i
@@ -262,13 +266,13 @@
 	autocmd FileType xml inoremap ;e <item><Enter><title><++></title><Enter><pubDate><Esc>:put<Space>=strftime('%c')<Enter>A</pubDate><Enter><link><++></link><Enter><description><![CDATA[<++>]]></description><Enter></item><Esc>5kcit
 	autocmd FileType xml inoremap ;a <a href="<++>"><++></a><++><Esc>F"ci"
 
-vmap <expr> ++ VMATH_YankAndAnalyse()
-nmap ++ vip++
+	vmap <expr> ++ VMATH_YankAndAnalyse()
+	nmap ++ vip++
 
-vnoremap K xkP`[V`]
-vnoremap J xp`[V`]
-vnoremap L >gv
-vnoremap H <gv
+	vnoremap K xkP`[V`]
+	vnoremap J xp`[V`]
+	vnoremap L >gv
+	vnoremap H <gv
 
 "set paste
 set pastetoggle=<F2>
@@ -276,10 +280,10 @@ set pastetoggle=<F2>
 """ncm2
 
     " enable ncm2 for all buffers
-    autocmd BufEnter * call ncm2#enable_for_buffer()
+    "uncomment_to_activate autocmd BufEnter * call ncm2#enable_for_buffer()
 
     " IMPORTANT: :help Ncm2PopupOpen for more information
-    set completeopt=noinsert,menuone,noselect
+    "uncomment_to_activate autocmd set completeopt=noinsert,menuone,noselect
 
     " NOTE: you need to install completion sources to get completions. Check
     " our wiki page for a list of sources: https://github.com/ncm2/ncm2/wiki
@@ -289,19 +293,19 @@ set pastetoggle=<F2>
 
     " suppress the annoying 'match x of y', 'The only match' and 'Pattern not
     " found' messages
-    set shortmess+=c
+    "uncomment_to_activate autocmd set shortmess+=c
 
     " CTRL-C doesn't trigger the InsertLeave autocmd . map to <ESC> instead.
-    inoremap <c-c> <ESC>
+    "uncomment_to_activate autocmd inoremap <c-c> <ESC>
 
     " When the <Enter> key is pressed while the popup menu is visible, it only
     " hides the menu. Use this mapping to close the menu and also start a new
     " line.
-    inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
+    "uncomment_to_activate autocmd inoremap <expr> <CR> (pumvisible() ? \"\<c-y>\<cr>" : \"\<CR>")
 
     " Use <TAB> to select the popup menu:
-    inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-    inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+    "uncomment_to_activate autocmd inoremap <expr> <Tab> pumvisible() ? \"\<C-n>" : \"\<Tab>"
+    "uncomment_to_activate autocmd inoremap <expr> <S-Tab> pumvisible() ? \"\<C-p>" : \"\<S-Tab>"
 
     " wrap existing omnifunc
     " Note that omnifunc does not run in background and may probably block the
@@ -309,25 +313,32 @@ set pastetoggle=<F2>
     " add 180ms delay before the omni wrapper:
     "  'on_complete': ['ncm2#on_complete#delay', 180,
     "               \ 'ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
-    au User Ncm2Plugin call ncm2#register_source({
-            \ 'name' : 'css',
-            \ 'priority': 9,
-            \ 'subscope_enable': 1,
-            \ 'scope': ['css','scss'],
-            \ 'mark': 'css',
-            \ 'word_pattern': '[\w\-]+',
-            \ 'complete_pattern': ':\s*',
-            \ 'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
-            \ })
+    "au User Ncm2Plugin call ncm2#register_source({
+    "        \ 'name' : 'css',
+    "        \ 'priority': 9,
+    "        \ 'subscope_enable': 1,
+    "        \ 'scope': ['css','scss'],
+    "        \ 'mark': 'css',
+    "        \ 'word_pattern': '[\w\-]+',
+    "        \ 'complete_pattern': ':\s*',
+    "        \ 'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
+    "        \ })
 
 """ Nvim-R configs
-let R_app = "sparkR"
-let R_cmd = "R"
+let R_app = 'R'
+let R_cmd = 'R --vanilla'
     "let R_path = '/opt/apache-spark/bin/load-spark-env.sh'
     """/opt/apache-spark/bin/spark-submit \"sparkr-shell" /tmp/directory/backend_port
     """ Nvim-R's R buffer
         """more info in: https://raw.githubusercontent.com/jalvesaq/Nvim-R/master/doc/Nvim-R.txt , search for 'terminal mode'
         let R_esc_term = 0
+
+""function SparkR(what)
+    "let g:rplugin_R = a:what
+    "call StartR("R")
+"endfunction
+"nmap <silent> <F6> :call SparkR("R")<CR>
+"nmap <silent> <F7> :call SparkR("sparkR")<CR>
 
 """vimsence options
 """let g:vimsence_custom_icons = {'r': '/home/asari/Imagens/Rlogo.png'}
@@ -335,7 +346,7 @@ let R_cmd = "R"
 "set pythondll=/usr/bin/python
 
 
-#Writting
+""" Writting
 fu! Writer()
 	map <silent> <Up> gk
 	imap <silent> <Up> <C-o>gk
@@ -351,3 +362,60 @@ fu! Writer()
 	set nolist
 	set display+=lastline
  endfunction
+
+
+"""ncm2 completion requirements
+let g:python3_host_prog="/usr/bin/python3"
+
+
+"" statusline
+set laststatus=2
+set statusline=                          " left align
+set statusline+=%2*\                     " blank char
+set statusline+=%2*\%{StatuslineMode()}
+set statusline+=%2*\
+set statusline+=%1*\ <<
+set statusline+=%1*\ %f                  " short filename
+set statusline+=%1*\ >>
+set statusline+=%=                       " right align
+set statusline+=%*
+set statusline+=%3*\%h%m%r               " file flags (help, read-only, modified)
+set statusline+=%4*\%{b:gitbranch}       " include git branch
+set statusline+=%3*\%.25F                " long filename (trimmed to 25 chars)
+set statusline+=%3*\::
+set statusline+=%3*\%l/%L\\|             " line count
+set statusline+=%3*\%y                   " file type
+hi User1 ctermbg=black ctermfg=grey guibg=black guifg=grey
+hi User2 ctermbg=green ctermfg=black guibg=green guifg=black
+hi User3 ctermbg=black ctermfg=lightgreen guibg=black guifg=lightgreen
+
+"" statusline functions
+function! StatuslineMode()
+    let l:mode=mode()
+    if l:mode==#"n"
+        return "NORMAL"
+    elseif l:mode==?"v"
+        return "VISUAL"
+    elseif l:mode==#"i"
+        return "INSERT"
+    elseif l:mode==#"R"
+        return "REPLACE"
+    endif
+endfunction
+
+function! StatuslineGitBranch()
+  let b:gitbranch=""
+  if &modifiable
+    lcd %:p:h
+    let l:gitrevparse=system("git rev-parse --abbrev-ref HEAD")
+    lcd -
+    if l:gitrevparse!~"fatal: not a git repository"
+      let b:gitbranch="(".substitute(l:gitrevparse, '\n', '', 'g').") "
+    endif
+  endif
+endfunction
+
+augroup GetGitBranch
+  autocmd!
+  autocmd VimEnter,WinEnter,BufEnter * call StatuslineGitBranch()
+augroup END 
