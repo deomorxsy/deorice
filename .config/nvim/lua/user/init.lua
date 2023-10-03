@@ -1,2 +1,2 @@
 require("user.remap")
-print("hello deo")
+require("user.set")
