@@ -5,9 +5,9 @@
 " |____/ \___|\___/|_| |_| |_|\___/|_|  /_/\_\___/\__, | |___/   \_/ |_|_| |_| |_|_|  \___|
 "                                                 |___/
 
-" Load Pathogen for plugins:
-	execute pathogen#infect()
-	execute pathogen#helptags()
+" [old] Load Pathogen for plugins:
+"	execute pathogen#infect()
+"	execute pathogen#helptags()
 
 " Some basics:
 	set nocompatible
