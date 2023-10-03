@@ -76,13 +76,6 @@
 " Spell-check set to F6:
 	map <F6> :setlocal spell! spelllang=en_us,es<CR>
 
-" Toggle DeadKeys set to F7 (for accent marks):
-	" so ~/.vim/luke/deadkeys.vim
-	"nm <F7> :call ToggleDeadKeys()<CR>
-
-" Source my IPA shorcuts:
-	map <leader>i :so ~/.vim/luke/ipa.vim<CR>
-
 " Use urlview to choose and open a url:
 	:noremap <leader>u :w<Home>silent <End> !urlview<CR>
 
@@ -236,6 +229,8 @@
 """ vimtex
 
 	let g:vimtex_view_method = 'zathura'
+    """let g:tex_flavor = 'xelatex'
+    """let g:Tex_IgnoredWarnings = 'Underfull'."\n".
 
 
 """.bib
@@ -333,6 +328,7 @@ let R_cmd = 'R --vanilla'
         """more info in: https://raw.githubusercontent.com/jalvesaq/Nvim-R/master/doc/Nvim-R.txt , search for 'terminal mode'
         let R_esc_term = 0
 
+"" old function for SparkR
 ""function SparkR(what)
     "let g:rplugin_R = a:what
     "call StartR("R")
@@ -341,10 +337,7 @@ let R_cmd = 'R --vanilla'
 "nmap <silent> <F7> :call SparkR("sparkR")<CR>
 
 """vimsence options
-"""let g:vimsence_custom_icons = {'r': '/home/asari/Imagens/Rlogo.png'}
-
-"set pythondll=/usr/bin/python
-
+"""let g:vimsence_custom_icons = {'r': 'Rlogo.png'}
 
 """ Writting
 fu! Writer()
@@ -418,4 +411,11 @@ endfunction
 augroup GetGitBranch
   autocmd!
   autocmd VimEnter,WinEnter,BufEnter * call StatuslineGitBranch()
-augroup END 
+augroup END
+
+" nvim-R integration with tmux
+"let R_external_term = 1
+"let R_external_term =
+"let R_notmuxconf = 1
+let R_source = '~/.config/vim/tmux_split.vim'
+
