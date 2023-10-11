@@ -53,9 +53,73 @@ keymap("n", "<C-l>", "<C-w>l", opts)
 vim.opt.vimwiki_ext2syntax = {'.Rmd:markdown, .rmd:markdown,.md:markdown, .markdown:markdown, .mdown:markdown'}
 
 -- calcurse notes
-vim.cmd([[
-autocmd
-]])
+vim.api.nvim_create_autocmd({
+    "BufRead, BufNewFile", "/tmp/calcurse*,~/.calcurse/notes/*",
+"set filetype=markdown",
+{augroup = "CalcurseFileType"}}
+-- vim.opt.nvim_buf_set_option = markdown
+
+-- spell-check set to F6
+map
+-- choose and open a url with urlview
+noremap
+
+-- copy selected text to system clipboard (requires xclip)
+vnoremap
+
+-- goyo plugin
+map
+inoremap
+
+-- enable goyo by default for mutt writting
+-- below, goyo width should be the line limit in mutt
+vim.api.nvim_create_autocmd({
+    "BufRead, BufNewFile", "/tmp/neomutt*",
+    "vim.g.goyo_width=72",
+    {augroup = "Goyo"}}
+
+-- autocomplete
+vim.g.wildmode = {longest,list,full}
+vim.g.wildmenu =
+
+-- delete all whitespace traling on save
+vim.api.nvim_create_autocmd({
+    "BufWritePre, *",
+    "%s/\s\+$//e",
+})
+
+-- renew bash and ranger configs when shortcut files are updated
+--
+
+
+-- clean out text build files with a script whenever you close a .tex file
+vim.api.nvim_create_autocmd({
+    "VimLeave, *.tex",
+    "!texclear",
+})
+
+-- disable automatic commenting on newline
+-- filetype
+vim.api.nvim_create_autocmd({
+    "FileType, *",
+    "setlocal",
+    "formatoptions-=c, formatoptions-=r, formatoptions-=o",
+})
+
+-- create new tab with C-T (ctrl+t)
+nnoremap
+
+-- navigate between guides
+
+vim.keymap.set('n', '<Space><Tab>', '<Esc>/<++><Enter>')
+inoremap
+vnoremap
+map
+inoremap
+
+-- normal mode
+
+-- snippets
 -- others
 
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")

@@ -16,26 +16,23 @@ return require('packer').startup(function(use)
         'rose-pine/neovim',
         as = 'rose-pine',
         config = function()
-        vim.cmd('colorscheme rose-pine')
+            vim.cmd('colorscheme rose-pine')
+        end
+    })
+
+    -- "=====> chadTREE: https://github.com/ms-jpq/chadtree <=====
+    use ({'ms-jpq/chadtree',
+        branch = 'chad',
+        {run = 'python3 -m chadtree deps'}, -- run is equivalent do in vim-plug
+        config = function()
+            vim.cmd('CHADdeps')
         end
     })
 
     use ({
-        'ms-jpq/chadtree',
-        branch = 'chad'
-        {run = 'python3 -m chadtree deps'}, -- run is equivalent do in vim-plug
-        config = function()
-        vim.cmd('CHADdeps')
-        end,
-        setup = function()
-        vim.cmd('CHADdeps')
-        end,
-    })
-
-    use (
         'nvim-treesitter/nvim-treesitter',
         {run = ':TSUpdate'},
-    )
+    } )
 
     use ('mbbill/undotree')
 
@@ -66,12 +63,6 @@ return require('packer').startup(function(use)
     use ('andweeb/presence.nvim')
 
 
-    -- "=====> chadTREE: https://github.com/ms-jpq/chadtree <=====
-    use ('ms-jpq/chadtree', {
-        'branch': 'chad',
-        'do': 'python3 -m chadtree deps'
-    })
-
     -- "=====> ncm-R for Rscripts completion
     use ('ncm2/ncm2')
     use ('roxma/nvim-yarp')
@@ -82,12 +73,12 @@ return require('packer').startup(function(use)
     -- "====> rust-analyzer dependencies
 
     -- " Use release branch (recommend)
-    use ('neoclide/coc.nvim', {'branch': 'release'})
+    -- use ('neoclide/coc.nvim', {branch = 'master'})
     -- " Or build from source code by using yarn: https://yarnpkg.com
-    use ('neoclide/coc.nvim', {
-        'branch': 'master',
-        'do': 'yarn install --frozen-lockfile'
-    })
+   -- use ('neoclide/coc.nvim', {
+   --     branch = 'master',
+   --     run = 'yarn install --frozen-lockfile'
+   -- })
 
     -- " nvim-jdtls
     use ('mfussenegger/nvim-jdtls')
@@ -107,5 +98,22 @@ return require('packer').startup(function(use)
 
     -- " Optional: better Rnoweb support (LaTeX completion)
     use ('lervag/vimtex')
+
+    -- lsp-zero
+    use {
+      'VonHeikemen/lsp-zero.nvim',
+      branch = 'v3.x',
+      requires = {
+        --- Uncomment these if you want to manage LSP servers from neovim
+        {'williamboman/mason.nvim'},
+        {'williamboman/mason-lspconfig.nvim'},
+
+        -- LSP Support
+        {'neovim/nvim-lspconfig'},
+        -- Autocompletion
+        {'hrsh7th/nvim-cmp'},
+        {'hrsh7th/cmp-nvim-lsp'},
+        {'L3MON4D3/LuaSnip'},
+      }}
 
 end)
