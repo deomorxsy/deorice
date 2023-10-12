@@ -22,7 +22,7 @@ The config is pretty straight-forward: just edit the ```~/.vimrc``` with vimscri
 
 neovim adopts the ```~/.config/nvim/init.vim``` or ```~/.config/nvim/init.lua``` file as the default config file. It is also compatible with the vimrc; that explains the [source](https://github.com/deomorxsy/deorice/blob/main/.config/nvim/init.vim.old#L3).
 
-This repository in specific migrates from the vimrc, used in vim, directly to the init.lua that uses the syntax of the [language lua] to program the editor. The runtime is the LuaJIT embedded in neovim and you can learn more in the [docs](https://neovim.io/doc/user/lua.html).
+This repository in specific migrates from the vimrc, used in vim, directly to the init.lua that uses the syntax of the [language lua](https://www.lua.org/docs.html) to program the editor. The runtime is the [LuaJIT](https://luajit.org/) embedded in neovim and you can learn more in the [docs](https://neovim.io/doc/user/lua.html).
 
 To use the base configuration, run the [playbooks (wip)](), execute the [scripts (wip)](https://github.com/deomorxsy/deorice/tree/main/scripts) or do it manually:
 
