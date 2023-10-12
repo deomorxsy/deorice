@@ -11,6 +11,9 @@ PS: I recommend any readers to create your own configuration based on these dotf
 
 PS 2: The following documentation in this README.md assumes the reader as a noob and tries to make them confortable with the idea of not being confortable, by searching for the main root cause of any future errors in the setup. As a general advice, even though there are scripts for automation in the repository, if you have time, try to make errors on purpose just to understand more of the system.
 
+
+## Editors
+
 ### vim
 
 The config is pretty straight-forward: just edit the ```~/.vimrc``` with vimscript/vimL syntax, place it in $HOME and next time you open vim it is already working. Search for the basics: the 7 vim modes, vimscript syntax, commands, etc. Read the errors and try to find the root cause. It's the best way to get out of future possible circles of the dependency hell.
@@ -42,6 +45,27 @@ git clone --depth 1 https://github.com/wbthomason/packer.nvim\
 4. Open nvim and enter in **Command-Line Mode**. Synchronize plugins in the configuration with packer and restart nvim session.
 ```
 :PackerSync
+```
+5. for provider-related errors, specifically about python (ultisnips), setup using ```./.config/nvim/scripts/neovim-setup.sh``` or executing manually the following, which sets up the python provider $PATH based in the hack path that python uses with the virtualenv. [Based on the docs](https://neovim.io/doc/user/provider.html#python-virtualenv).
+```python
+# setup python3 provider
+python -m venv ~/.config/nvim/venv_nvim/neovim3
+
+source ~/.config/nvim/venv_nvim/neovim3/bin/activate
+python3 -m pip install neovim
+
+# returns the relative $PATH of the python binary installed on the virtualenv
+pyvm=$(which python)
+
+# checks if the placeholder exists on file
+roco=$(awk 'FNR==14 && $3==p3hp_placeholder' ~/.config/nvim/init.lua)
+
+# using @ as sed delimiter since the bash variable expansion already uses
+# the slash "/" character for the path
+[ -n $roco ] && sed -e "s@p3hp_placeholder@$pyvm@g" ~/.config/nvim/init.lua
+
+# deactivate virtualenv
+deactivate
 ```
 
 main plugins used:
