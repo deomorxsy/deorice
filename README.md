@@ -45,8 +45,8 @@ git clone --depth 1 https://github.com/wbthomason/packer.nvim\
 ```
 
 main plugins used:
-- [telescope](https://github.com/nvim-telescope/telescope.nvim) or [chadtree](https://github.com/ms-jpq/chadtree) for fuzzy finding;
-- nvim-R to run a R interpreter inside neovim (checkout the tmux integration)
-- vimtex for latex local editions;
-- lsp-zero as a Language Server Protocols manager (literally acts as a package manager), which are external to neovim;
-- tree-sitter to parse all the code in the editor, which builds an incremental tree that is useful for a bunch of tasks related to programming language constructs, like highlighting, indenting, folding of these constructs, text-object manipulation and others. Also fast
+- [telescope](https://github.com/nvim-telescope/telescope.nvim) or [chadtree](https://github.com/ms-jpq/chadtree) for fuzzy search. The second is a whole [completion client](https://www.reddit.com/r/neovim/comments/p4m8vt/i_spent_1_year_of_my_life_on_making_a_fast_as/) spawning sqlite vms in memory and integrating with other external programs;
+- [nvim-R](https://github.com/jalvesaq/Nvim-R) to run a R interpreter inside neovim (checkout the tmux integration)
+- [vimtex](https://github.com/lervag/vimtex) for latex local editions;
+- [lsp-zero](https://github.com/VonHeikemen/lsp-zero.nvim) as a Language Server Protocols manager (literally acts as a package manager), which are external to neovim;
+- [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) to parse all the code in the editor, which builds an incremental tree that is useful for a bunch of tasks related to programming language constructs, like highlighting, indenting, folding of these constructs, text-object manipulation and [others](https://tree-sitter.github.io/tree-sitter/). Also fast af;
