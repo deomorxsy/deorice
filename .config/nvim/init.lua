@@ -1,6 +1,6 @@
 require("user.remap")
 require("tools")
-require("settings")
+require("settings") -- user.set
 require("user.packer")
 
 vim.opt.runtimepath:prepend("~/.vim") -- counterpart of :set^=, prepend or add before all characters

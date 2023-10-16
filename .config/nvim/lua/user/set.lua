@@ -1,10 +1,10 @@
 -- basics
 
-vim.o.nocompatible
+vim.o.nocompatible = 'true'
 vim.api.nvim_command('filetype plugin indent on')
 vim.api.nvim_command('syntax on')
 -- colorscheme x
-vim.o.enconding = 'utf-8'
+vim.o.encoding = 'utf-8'
 vim.o.number = 'true'
 vim.o.relativenumber = 'true'
 vim.o.mouse = 'a'
@@ -22,7 +22,7 @@ vim.o.tabstop = '4'
 vim.o.expandtab = 'true'
 vim.o.shiftwidth = '4'
 vim.o.softtabstop = '4'
-vim.o.backspace = ('indent','eol','start')
+vim.o.backspace = 'indent,eol,start'
 vim.o.title = 'true'
 vim.o.ttyfast = 'true'
 vim.o.background = 'dark'
@@ -123,6 +123,7 @@ inoremap
 -- others
 
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
+
 
 
 
