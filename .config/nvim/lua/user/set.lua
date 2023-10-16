@@ -56,37 +56,38 @@ vim.opt.vimwiki_ext2syntax = {'.Rmd:markdown, .rmd:markdown,.md:markdown, .markd
 vim.api.nvim_create_autocmd({
     "BufRead, BufNewFile", "/tmp/calcurse*,~/.calcurse/notes/*",
 "set filetype=markdown",
-{augroup = "CalcurseFileType"}}
+{augroup = "CalcurseFileType"}})
 -- vim.opt.nvim_buf_set_option = markdown
 
 -- spell-check set to F6
-map
+vim.api.nvim_set_keymap('n', '<F6>', '<cmd>setlocal spell! spelllang=en_us,es<CR>', {})
+
 -- choose and open a url with urlview
-noremap
+vim.api.nvim_set_keymap('n', '<leader>u', ':w<Home>silent <End> !urlview<CR>', {})
 
 -- copy selected text to system clipboard (requires xclip)
-vnoremap
+vim.api.nvim_set_keymap('v', '<C-c>', [["cy<esc>:!echo -n '<C-R>c' | xclip<CR>]], {noremap = true, silent = true})
 
 -- goyo plugin
-map
-inoremap
+vim.api.nvim_set_keymap('n', '<F10>', ':Goyo<CR>', {})
+vim.api.nvim_set_keymap('i', '<F10>', '<esc>:Goyo<CR>>a', {})
 
 -- enable goyo by default for mutt writting
 -- below, goyo width should be the line limit in mutt
 vim.api.nvim_create_autocmd({
-    "BufRead, BufNewFile", "/tmp/neomutt*",
+    "BufRead,BufNewFile", "/tmp/neomutt*",
     "vim.g.goyo_width=72",
-    {augroup = "Goyo"}}
+    {augroup = "Goyo"}})
 
 -- autocomplete
 vim.g.wildmode = {longest,list,full}
 vim.g.wildmenu =
 
 -- delete all whitespace traling on save
-vim.api.nvim_create_autocmd({
-    "BufWritePre, *",
-    "%s/\s\+$//e",
-})
+vim.api.nvim_create_autocmd('BufWritePre', {
+        pattern = '',
+        command = ':%s/\\s\\+$//e'
+    })
 
 -- renew bash and ranger configs when shortcut files are updated
 --
@@ -107,23 +108,41 @@ vim.api.nvim_create_autocmd({
 })
 
 -- create new tab with C-T (ctrl+t)
-nnoremap
+vim.api.nvim_set_keymap('n', '<C-t>', ':tabnew<CR>', { noremap = true })
 
 -- navigate between guides
-
+-- vim.api.nvim_set_keymap('n', '<Space><Tab>', '<Esc>/<++><Enter>')
 vim.keymap.set('n', '<Space><Tab>', '<Esc>/<++><Enter>')
-inoremap
-vnoremap
-map
-inoremap
+vim.api.nvim_set_keymap('i', '<Space><Tab>', [[<Esc>/<++><CR>"_c4l]], {})
+vim.api.nvim_set_keymap('v', '<Space><Tab>', [[<Esc>/<++><CR>"_c4l]], {})
+vim.api.nvim_set_keymap('n', '<Space><Tab>', [[<Esc>/<++><CR>"_c4l]], {})
+vim.api.nvim_set_keymap('i', ';gui', '<++>', {})
 
 -- normal mode
+vim.api.nvim_set_keymap('i', 'jw', '<Esc>')
+vim.api.nvim_set_keymap('i', 'wj', '<Esc>')
+
+
+ --____        _                  _
+--/ ___| _ __ (_)_ __  _ __   ___| |_ ___
+--\___ \| '_ \| | '_ \| '_ \ / _ \ __/ __|
+ --___) | | | | | |_) | |_) |  __/ |_\__ \
+--|____/|_| |_|_| .__/| .__/ \___|\__|___/
+              --|_|   |_|
+
+autocmd('Filetype', {
+    group = 'wordCount',
+    pattern = {'tex'},
+    command = ''
+})
+
 
 -- snippets
+
+
 -- others
 
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
-
 
 
 
