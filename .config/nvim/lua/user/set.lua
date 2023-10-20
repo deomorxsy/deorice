@@ -35,7 +35,7 @@ vim.o.splitright = 'true'
 
 -- shorten function name
 local keymap = vim.api.nvim_set_keymap
-
+local opt = { noremap = true, silent = true }
 -- normal = n
 -- visual = v
 -- visual_block = x
@@ -44,19 +44,20 @@ local keymap = vim.api.nvim_set_keymap
 -- command_mode = c
 
 -- shortcuts for window split navigation
-keymap("n", "<C-h>", "<C-w>h", opts)
-keymap("n", "<C-j>", "<C-w>j", opts)
-keymap("n", "<C-k>", "<C-w>k", opts)
-keymap("n", "<C-l>", "<C-w>l", opts)
+keymap("n", "<C-h>", "<C-w>h", opt)
+keymap("n", "<C-j>", "<C-w>j", opt)
+keymap("n", "<C-k>", "<C-w>k", opt)
+keymap("n", "<C-l>", "<C-w>l", opt)
 
 -- interpret .md related files as .markdown
-vim.opt.vimwiki_ext2syntax = {'.Rmd:markdown, .rmd:markdown,.md:markdown, .markdown:markdown, .mdown:markdown'}
+--vim.opt.vimwiki_ext2syntax = {'.Rmd:markdown, .rmd:markdown,.md:markdown, .markdown:markdown, .mdown:markdown'}
 
 -- calcurse notes
-vim.api.nvim_create_autocmd({
-    "BufRead, BufNewFile", "/tmp/calcurse*,~/.calcurse/notes/*",
-"set filetype=markdown",
-{augroup = "CalcurseFileType"}})
+--vim.api.nvim_create_autocmd({
+--    "BufRead, BufNewFile", "/tmp/calcurse*,~/.calcurse/notes/*",
+--"set filetype=markdown",
+--{augroup = "CalcurseFileType"}})
+
 -- vim.opt.nvim_buf_set_option = markdown
 
 -- spell-check set to F6
@@ -74,10 +75,12 @@ vim.api.nvim_set_keymap('i', '<F10>', '<esc>:Goyo<CR>>a', {})
 
 -- enable goyo by default for mutt writting
 -- below, goyo width should be the line limit in mutt
-vim.api.nvim_create_autocmd({
-    "BufRead,BufNewFile", "/tmp/neomutt*",
-    "vim.g.goyo_width=72",
-    {augroup = "Goyo"}})
+--vim.api.nvim_create_autocmd({ 'BufRead','BufNewFile' }, {"/tmp/neomutt*", "vim.g.goyo_width=72"})
+
+--- 'vim.api.nvim_create_autocmd({
+---    { 'BufRead,BufNewFile', '/tmp/neomutt*', 'vim.g.goyo_width=72' },
+---    {pattern={'Goyo'}}
+---})
 
 -- autocomplete
 vim.g.wildmode = {longest,list,full}
@@ -94,17 +97,16 @@ vim.api.nvim_create_autocmd('BufWritePre', {
 
 
 -- clean out text build files with a script whenever you close a .tex file
-vim.api.nvim_create_autocmd({
-    "VimLeave, *.tex",
-    "!texclear",
+vim.api.nvim_create_autocmd('VimLeave', {
+    pattern = '*.tex',
+    command = "!texclear",
 })
 
 -- disable automatic commenting on newline
 -- filetype
-vim.api.nvim_create_autocmd({
-    "FileType, *",
-    "setlocal",
-    "formatoptions-=c, formatoptions-=r, formatoptions-=o",
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = "*",
+    command = "setlocal formatoptions-=c, formatoptions-=r, formatoptions-=o",
 })
 
 -- create new tab with C-T (ctrl+t)
@@ -119,8 +121,8 @@ vim.api.nvim_set_keymap('n', '<Space><Tab>', [[<Esc>/<++><CR>"_c4l]], {})
 vim.api.nvim_set_keymap('i', ';gui', '<++>', {})
 
 -- normal mode
-vim.api.nvim_set_keymap('i', 'jw', '<Esc>')
-vim.api.nvim_set_keymap('i', 'wj', '<Esc>')
+vim.api.nvim_set_keymap('i', 'jw', '<Esc>', {})
+vim.api.nvim_set_keymap('i', 'wj', '<Esc>', {})
 
 
  --____        _                  _
@@ -129,15 +131,564 @@ vim.api.nvim_set_keymap('i', 'wj', '<Esc>')
  --___) | | | | | |_) | |_) |  __/ |_\__ \
 --|____/|_| |_|_| .__/| .__/ \___|\__|___/
               --|_|   |_|
+-- snippets
 
-autocmd('Filetype', {
-    group = 'wordCount',
+-- LATEX
+
+---- word count
+local augroup_tex = vim.api.nvim_create_augroup('tex_snippets', { clear = true})
+vim.api.nvim_create_autocmd('FileType', {
     pattern = {'tex'},
-    command = ''
+    group = augroup_tex,
+    desc = 'word count with detex piping to wc -w',
+    command = 'inoremap <F3> <Esc>:w !detex "\"| wc -w <CR>'
+})
+
+-- compile document with xelatex
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = 'compile with xelatex',
+    command = 'inoremap <F5> <Esc>:!xelatex<space><c-r>%<Enter>a'
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = 'compile with xelatex',
+    command = 'nnoremap <F5> :!xelatex<space><c-r>%<Enter>'
+})
+
+---- code snippets
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = 'yet another latex snippet',
+    command = ';fr "\"begin{frame}<Enter>"\"frametitle{}<Enter><Enter><++><Enter><Enter>"\"end{frame}<Enter><Enter><++><Esc>6kf}i'
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = 'yet another latex snippet',
+    command = 'inoremap ;fi "\"begin{fitch}<Enter><Enter>"\"end{fitch}<Enter><Enter><++><Esc>3kA '
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = 'yet another latex snippet',
+    command = 'inoremap ;exe "\"begin{exe}<Enter>"\"ex<Space><Enter>"\"end{exe}<Enter><Enter><++><Esc>3kA '
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = '',
+    command = 'inoremap ;em "\"emph{}<++><Esc>T{i'
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = '',
+    command = 'inoremap ;bf \textbf{}<++><Esc>T{i'
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = '',
+    command = 'vnoremap ; <ESC>`<i"\"{<ESC>`>2la}<ESC>?"\\"{<Enter>a'
+    })
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = '',
+    command = 'inoremap ;it \textit{}<++><Esc>T{i'
+    })
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = '',
+    command = 'inoremap ;ct \textcite{}<++><Esc>T{i'
+    })
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = '',
+    command = 'inoremap ;cp "\"parencite{}<++><Esc>T{i'
+    })
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = '',
+    command = 'inoremap ;glos {\"gll<Space><++><Space>\"\\<Enter><++><Space>\"\\<Enter>\"\"trans{``<++>\'\'}<Esc>2k2bcw'
+    })
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = '',
+    command = 'inoremap ;x "\"begin{xlist}<Enter>"\"ex<Space><Enter>"\"end{xlist}<Esc>kA<Space>'
+    })
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = '',
+    command = 'inoremap ;ol "\"begin{enumerate}<Enter><Enter>"\"end{enumerate}<Enter><Enter><++><Esc>3kA"\"item<Space>'
+    })
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = '',
+    command = 'inoremap ;ul "\"begin{itemize}<Enter><Enter>"\"end{itemize}<Enter><Enter><++><Esc>3kA"\"item<Space>'
+    })
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = '',
+    command = 'inoremap ;li <Enter>"\"item<Space>'
+    })
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = '',
+    command = 'inoremap ;ref "\"ref{}<Space><++><Esc>T{i'
+    })
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = '',
+    command = 'inoremap ;tab "\"begin{tabular}<Enter><++><Enter>"\"end{tabular}<Enter><Enter><++><Esc>4kA{}<Esc>i'
+    })
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = '',
+    command = 'inoremap ;ot'
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = '',
+    command = '"\"begin{tableau}<Enter>"\"inp{<++>}<Tab>"\"const{<++>}<Tab><++><Enter><++><Enter>"\"end{tableau}<Enter><Enter><++><Esc>5kA{}<Esc>i'
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = '',
+    command = 'inoremap ;can "\"cand{}<Tab><++><Esc>T{i'
+    })
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = '',
+    command = 'inoremap ;con "\"const{}<Tab><++><Esc>T{i'
+    })
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = '',
+    command = 'inoremap ;v \vio{}<Tab><++><Esc>T{i'
+    })
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = '',
+    command = 'inoremap ;a "\"href{}{<++>}<Space><++><Esc>2T{i'
+    })
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = '',
+    command = 'inoremap ;sc "\"textsc{}<Space><++><Esc>T{i'
+    })
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = '',
+    command = 'inoremap ;chap "\"chapter{}<Enter><Enter><++><Esc>2kf}i'
+    })
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = '',
+    command = 'inoremap ;sec "\"section{}<Enter><Enter><++><Esc>2kf}i'
+    })
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = '',
+    command = 'inoremap ;ssec "\"subsection{}<Enter><Enter><++><Esc>2kf}i'
+    })
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = '',
+    command = 'inoremap ;sssec "\"subsubsection{}<Enter><Enter><++><Esc>2kf}i'
+    })
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = '',
+    command = 'inoremap ;st <Esc>F{i*<Esc>f}i'
+    })
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = '',
+    command = 'inoremap ;beg "\"begin{DELRN}<Enter><++><Enter>"\"end{DELRN}<Enter><Enter><++><Esc>4k0fR:MultipleCursorsFind<Space>})DELRN<Enter>c'
+})
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = '',
+    command = 'inoremap ;up <Esc>/usepackage<Enter>o"\"usepackage{}<Esc>i'
+    })
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = '',
+    command = 'nnoremap ;up /usepackage<Enter>o"\"usepackage{}<Esc>i'
+    })
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = '',
+    command = 'inoremap ;tt "\"texttt{}<Space><++><Esc>T{i'
+    })
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = '',
+    command = 'inoremap ;bt {"\"blindtext}'
+    })
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = '',
+    command = 'inoremap ;nu $"\"varnothing$'
+    })
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = '',
+    command =  'inoremap ;col'
+    })
+
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = '',
+    command = '"\"begin{columns}[T]<Enter>"\"begin{column}{.5"\"textwidth}<Enter><Enter>"\"end{column}<Enter>"\"begin{column}{.5"\"textwid'
+    })
+
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = '',
+    command = 'th}<Enter><++><Enter>"\"end{column}<Enter>"\"end{columns}<Esc>5kA'
+    })
+
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = '',
+    command = 'inoremap ;rn ("\"ref{})<++><Esc>F}i '
+    })
+
+--- LATEX Logical symbols
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = 'LaTeX logical symbols',
+    command = 'inoremap ;m $$<Space><++><Esc>2T$i'
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = 'LaTeX logical symbols',
+    command = 'inoremap ;M $$$$<Enter><Enter><++><Esc>2k$hi'
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = 'LaTeX logical symbols',
+    command = 'inoremap ;neg {\neg}'
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = 'LaTeX logical symbols',
+    command = 'inoremap ;V {\vee}'
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = 'LaTeX logical symbols',
+    command = 'inoremap ;or {\vee}'
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = 'LaTeX logical symbols',
+    command = 'inoremap ;L {"\"wedge}'
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = 'LaTeX logical symbols',
+    command = 'inoremap ;and {\wedge}'
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = 'LaTeX logical symbols',
+    command = 'inoremap ;ra {\rightarrow}'
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = 'LaTeX logical symbols',
+    command = 'inoremap ;la {\leftarrow}'
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = 'LaTeX logical symbols',
+    command = 'inoremap ;lra {\leftrightarrow}'
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = 'LaTeX logical symbols',
+    command = 'inoremap ;fa {\forall}'
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = 'LaTeX logical symbols',
+    command = 'inoremap ;ex {\exists}'
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = 'LaTeX logical symbols',
+    command = 'inoremap ;dia {"\"Diamond}'
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = 'LaTeX logical symbols',
+    command = 'inoremap ;box {"\"Box}'
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = 'LaTeX logical symbols',
+    command = 'inoremap ;gt {\textgreater}'
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = 'LaTeX logical symbols',
+    command = 'inoremap ;lt{"\"textless}'
 })
 
 
--- snippets
+
+--- LaTeX Linguistics Shortcuts
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = 'latex linguistics shortcuts',
+    command = 'noremap ;nom {"\"textsc{nom}}'})
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = 'latex linguistics shortcuts',
+    command = 'inoremap ;acc {"\"textsc{acc}}'
+})
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = 'latex linguistics shortcuts',
+    command = 'inoremap ;dat {"\"textsc{dat}}'
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = 'latex linguistics shortcuts',
+    command = 'inoremap ;gen {"\"textsc{gen}}'
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = 'latex linguistics shortcuts',
+    command = 'inoremap ;abl {"\"textsc{abl}}'})
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = 'latex linguistics shortcuts',
+    command = 'inoremap ;voc {"\"textsc{voc}}'
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = 'latex linguistics shortcuts',
+    command = 'inoremap ;loc {"\"textsc{loc}}'
+})
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = 'latex linguistics shortcuts',
+    command = 'inoremap ;inst {"\"textsc{inst}}'})
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'tex'},
+    group = augroup_tex,
+    desc = 'latex linguistics shortcuts',
+    command = 'inoremap ;tipa "\"textipa{}<Space><++><Esc>T{i'})
+
+
+
+
+---- PHP/HTML
+local augroup_php_html = vim.api.nvim_create_augroup('tex_snippets', { clear = true})
+
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'php', 'html'},
+    group = augroup_php_html,
+    desc = 'php/html snippets',
+    command = 'inoremap ;b <b></b><Space><++><Esc>FbT>i'})
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'php', 'html'},
+    group = augroup_php_html,
+    desc = 'php/html snippets',
+    command = 'inoremap ;i <em></em><Space><++><Esc>FeT>i'})
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'php', 'html'},
+    group = augroup_php_html,
+    desc = 'php/html snippets',
+    command = 'inoremap ;h1 <h1></h1><Enter><Enter><++><Esc>2kf<i'})
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'php', 'html'},
+    group = augroup_php_html,
+    desc = 'php/html snippets',
+    command = 'inoremap ;h2 <h2></h2><Enter><Enter><++><Esc>2kf<i'})
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'php', 'html'},
+    group = augroup_php_html,
+    desc = 'php/html snippets',
+    command = 'inoremap ;h3 <h3></h3><Enter><Enter><++><Esc>2kf<i'})
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'php', 'html'},
+    group = augroup_php_html,
+    desc = 'php/html snippets',
+    command = 'inoremap ;p <p></p><Enter><Enter><++><Esc>02kf>a'})
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'php', 'html'},
+    group = augroup_php_html,
+    desc = 'php/html snippets',
+    command = 'inoremap ;a <a<Space>href=""><++></a><Space><++><Esc>14hi'})
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'php', 'html'},
+    group = augroup_php_html,
+    desc = 'php/html snippets',
+    command = 'inoremap ;e <a<Space>target="_blank"<Space>href=""><++></a><Space><++><Esc>14hi'})
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'php', 'html'},
+    group = augroup_php_html,
+    desc = 'php/html snippets',
+    command = 'inoremap ;ul <ul><Enter><li></li><Enter></ul><Enter><Enter><++><Esc>03kf<i'})
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'php', 'html'},
+    group = augroup_php_html,
+    desc = 'php/html snippets',
+    command = 'inoremap ;li <Esc>o<li></li><Esc>F>a'})
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'php', 'html'},
+    group = augroup_php_html,
+    desc = 'php/html snippets',
+    command = 'inoremap ;ol <ol><Enter><li></li><Enter></ol><Enter><Enter><++><Esc>03kf<i'})
+
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'php', 'html'},
+    group = augroup_php_html,
+    desc = 'php/html snippets',
+    command = 'inoremap ;im <table<Space>class="image"><Enter><caption align="bottom"><"/"caption><Enter><tr><td><a<space>href="pix/<++>"><img<Space>src="pix/<++>"<Space>'
+})
+    vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'php', 'html'},
+    group = augroup_php_html,
+    desc = 'php/html snippets',
+    width="<++>"><\/a><\/td><\/tr><Enter></table><Enter><Enter><++><Esc>4kf>a
+    '})
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'php', 'html'},
+    group = augroup_php_html,
+    desc = 'php/html snippets',
+    command = 'inoremap ;td <td></td><++><Esc>Fdcit'})
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'php', 'html'},
+    group = augroup_php_html,
+    desc = 'php/html snippets',
+    command = 'inoremap ;tr <tr></tr><Enter><++><Esc>kf<i'})
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'php', 'html'},
+    group = augroup_php_html,
+    desc = 'php/html snippets',
+    command = 'inoremap ;th <th></th><++><Esc>Fhcit'})
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'php', 'html'},
+    group = augroup_php_html,
+    desc = 'php/html snippets',
+    command = 'inoremap ;tab <table><Enter></table><Esc>O'})
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'php', 'html'},
+    group = augroup_php_html,
+    desc = 'php/html snippets',
+    command = 'inoremap ;gr <font color="green"></font><Esc>F>a'})
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'php', 'html'},
+    group = augroup_php_html,
+    desc = 'php/html snippets',
+    command = 'inoremap ;rd <font color="red"></font><Esc>F>a'})
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'php', 'html'},
+    group = augroup_php_html,
+    desc = 'php/html snippets',
+    command = 'inoremap ;yl <font color="yellow"></font><Esc>F>a'})
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'php', 'html'},
+    group = augroup_php_html,
+    desc = 'php/html snippets',
+    command = 'inoremap ;dt <dt></dt><Enter><dd><++></dd><Enter><++><esc>2kcit'})
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'php', 'html'},
+    group = augroup_php_html,
+    desc = 'php/html snippets',
+    command = 'inoremap ;dl <dl><Enter><Enter></dl><enter><enter><++><esc>3kcc'})
+
 
 
 -- others
