@@ -50,7 +50,7 @@ keymap("n", "<C-k>", "<C-w>k", opt)
 keymap("n", "<C-l>", "<C-w>l", opt)
 
 -- interpret .md related files as .markdown
---vim.opt.vimwiki_ext2syntax = {'.Rmd:markdown, .rmd:markdown,.md:markdown, .markdown:markdown, .mdown:markdown'}
+vim.g.vimwiki_ext2syntax = {'.Rmd:markdown, .rmd:markdown,.md:markdown, .markdown:markdown, .mdown:markdown'}
 
 -- calcurse notes
 --vim.api.nvim_create_autocmd({
@@ -136,6 +136,8 @@ vim.api.nvim_set_keymap('i', 'wj', '<Esc>', {})
 -- LATEX
 
 ---- word count
+
+
 local augroup_tex = vim.api.nvim_create_augroup('tex_snippets', { clear = true})
 vim.api.nvim_create_autocmd('FileType', {
     pattern = {'tex'},
@@ -446,7 +448,7 @@ vim.api.nvim_create_autocmd('FileType', {
     pattern = {'tex'},
     group = augroup_tex,
     desc = 'LaTeX logical symbols',
-    command = 'inoremap ;and {\wedge}'
+    command = 'inoremap ;and {"\"wedge}'
 })
 
 vim.api.nvim_create_autocmd('FileType', {
@@ -460,14 +462,14 @@ vim.api.nvim_create_autocmd('FileType', {
     pattern = {'tex'},
     group = augroup_tex,
     desc = 'LaTeX logical symbols',
-    command = 'inoremap ;la {\leftarrow}'
+    command = 'inoremap ;la {"\"leftarrow}'
 })
 
 vim.api.nvim_create_autocmd('FileType', {
     pattern = {'tex'},
     group = augroup_tex,
     desc = 'LaTeX logical symbols',
-    command = 'inoremap ;lra {\leftrightarrow}'
+    command = 'inoremap ;lra {"\"leftrightarrow}'
 })
 
 vim.api.nvim_create_autocmd('FileType', {
@@ -481,7 +483,7 @@ vim.api.nvim_create_autocmd('FileType', {
     pattern = {'tex'},
     group = augroup_tex,
     desc = 'LaTeX logical symbols',
-    command = 'inoremap ;ex {\exists}'
+    command = 'inoremap ;ex {"\"exists}'
 })
 
 vim.api.nvim_create_autocmd('FileType', {
@@ -575,124 +577,229 @@ vim.api.nvim_create_autocmd('FileType', {
 ---- PHP/HTML
 local augroup_php_html = vim.api.nvim_create_augroup('tex_snippets', { clear = true})
 
+local php_html = [[
+    inoremap ;b <b></b><Space><++><Esc>FbT>i |
+    inoremap ;i <em></em><Space><++><Esc>FeT>i |
+    inoremap ;h1 <h1></h1><Enter><Enter><++><Esc>2kf<i |
+    inoremap ;h2 <h2></h2><Enter><Enter><++><Esc>2kf<i |
+    inoremap ;h3 <h3></h3><Enter><Enter><++><Esc>2kf<i |
+    inoremap ;p <p></p><Enter><Enter><++><Esc>02kf>a |
+    inoremap ;a <a<Space>href=""><++></a><Space><++><Esc>14hi |
+    inoremap ;e <a<Space>target="_blank"<Space>href=""><++></a><Space><++><Esc>14hi |
+    inoremap ;ul <ul><Enter><li></li><Enter></ul><Enter><Enter><++><Esc>03kf<i |
+    inoremap ;li <Esc>o<li></li><Esc>F>a |
+    inoremap ;ol <ol><Enter><li></li><Enter></ol><Enter><Enter><++><Esc>03kf<i |
+    inoremap ;im <table<Space>class="image"><Enter><caption align="bottom"></caption><Enter><tr><td><a<space>href="pix/<++>"><img< |Space>src="pix/<++>"<Space>width="<++>"></a></td></tr><Enter></table><Enter><Enter><++><Esc>4kf>a
+    inoremap ;td <td></td><++><Esc>Fdcit |
+    inoremap ;tr <tr></tr><Enter><++><Esc>kf<i |
+    inoremap ;th <th></th><++><Esc>Fhcit |
+    inoremap ;tab <table><Enter></table><Esc>O |
+    inoremap ;gr <font color="green"></font><Esc>F>a |
+    inoremap ;rd <font color="red"></font><Esc>F>a |
+    inoremap ;yl <font color="yellow"></font><Esc>F>a |
+    inoremap ;dt <dt></dt><Enter><dd><++></dd><Enter><++><esc>2kcit |
+    inoremap ;dl <dl><Enter><Enter></dl><enter><enter><++><esc>3kcc  |
+]]
 vim.api.nvim_create_autocmd('FileType', {
     pattern = {'php', 'html'},
     group = augroup_php_html,
     desc = 'php/html snippets',
-    command = 'inoremap ;b <b></b><Space><++><Esc>FbT>i'})
-vim.api.nvim_create_autocmd('FileType', {
-    pattern = {'php', 'html'},
-    group = augroup_php_html,
-    desc = 'php/html snippets',
-    command = 'inoremap ;i <em></em><Space><++><Esc>FeT>i'})
-vim.api.nvim_create_autocmd('FileType', {
-    pattern = {'php', 'html'},
-    group = augroup_php_html,
-    desc = 'php/html snippets',
-    command = 'inoremap ;h1 <h1></h1><Enter><Enter><++><Esc>2kf<i'})
-vim.api.nvim_create_autocmd('FileType', {
-    pattern = {'php', 'html'},
-    group = augroup_php_html,
-    desc = 'php/html snippets',
-    command = 'inoremap ;h2 <h2></h2><Enter><Enter><++><Esc>2kf<i'})
-vim.api.nvim_create_autocmd('FileType', {
-    pattern = {'php', 'html'},
-    group = augroup_php_html,
-    desc = 'php/html snippets',
-    command = 'inoremap ;h3 <h3></h3><Enter><Enter><++><Esc>2kf<i'})
-vim.api.nvim_create_autocmd('FileType', {
-    pattern = {'php', 'html'},
-    group = augroup_php_html,
-    desc = 'php/html snippets',
-    command = 'inoremap ;p <p></p><Enter><Enter><++><Esc>02kf>a'})
-vim.api.nvim_create_autocmd('FileType', {
-    pattern = {'php', 'html'},
-    group = augroup_php_html,
-    desc = 'php/html snippets',
-    command = 'inoremap ;a <a<Space>href=""><++></a><Space><++><Esc>14hi'})
-vim.api.nvim_create_autocmd('FileType', {
-    pattern = {'php', 'html'},
-    group = augroup_php_html,
-    desc = 'php/html snippets',
-    command = 'inoremap ;e <a<Space>target="_blank"<Space>href=""><++></a><Space><++><Esc>14hi'})
-vim.api.nvim_create_autocmd('FileType', {
-    pattern = {'php', 'html'},
-    group = augroup_php_html,
-    desc = 'php/html snippets',
-    command = 'inoremap ;ul <ul><Enter><li></li><Enter></ul><Enter><Enter><++><Esc>03kf<i'})
-vim.api.nvim_create_autocmd('FileType', {
-    pattern = {'php', 'html'},
-    group = augroup_php_html,
-    desc = 'php/html snippets',
-    command = 'inoremap ;li <Esc>o<li></li><Esc>F>a'})
-vim.api.nvim_create_autocmd('FileType', {
-    pattern = {'php', 'html'},
-    group = augroup_php_html,
-    desc = 'php/html snippets',
-    command = 'inoremap ;ol <ol><Enter><li></li><Enter></ol><Enter><Enter><++><Esc>03kf<i'})
-
-vim.api.nvim_create_autocmd('FileType', {
-    pattern = {'php', 'html'},
-    group = augroup_php_html,
-    desc = 'php/html snippets',
-    command = 'inoremap ;im <table<Space>class="image"><Enter><caption align="bottom"><"/"caption><Enter><tr><td><a<space>href="pix/<++>"><img<Space>src="pix/<++>"<Space>'
+    command = php_html
 })
-    vim.api.nvim_create_autocmd('FileType', {
-    pattern = {'php', 'html'},
-    group = augroup_php_html,
-    desc = 'php/html snippets',
-    width="<++>"><\/a><\/td><\/tr><Enter></table><Enter><Enter><++><Esc>4kf>a
-    '})
-vim.api.nvim_create_autocmd('FileType', {
-    pattern = {'php', 'html'},
-    group = augroup_php_html,
-    desc = 'php/html snippets',
-    command = 'inoremap ;td <td></td><++><Esc>Fdcit'})
-vim.api.nvim_create_autocmd('FileType', {
-    pattern = {'php', 'html'},
-    group = augroup_php_html,
-    desc = 'php/html snippets',
-    command = 'inoremap ;tr <tr></tr><Enter><++><Esc>kf<i'})
-vim.api.nvim_create_autocmd('FileType', {
-    pattern = {'php', 'html'},
-    group = augroup_php_html,
-    desc = 'php/html snippets',
-    command = 'inoremap ;th <th></th><++><Esc>Fhcit'})
-vim.api.nvim_create_autocmd('FileType', {
-    pattern = {'php', 'html'},
-    group = augroup_php_html,
-    desc = 'php/html snippets',
-    command = 'inoremap ;tab <table><Enter></table><Esc>O'})
-vim.api.nvim_create_autocmd('FileType', {
-    pattern = {'php', 'html'},
-    group = augroup_php_html,
-    desc = 'php/html snippets',
-    command = 'inoremap ;gr <font color="green"></font><Esc>F>a'})
-vim.api.nvim_create_autocmd('FileType', {
-    pattern = {'php', 'html'},
-    group = augroup_php_html,
-    desc = 'php/html snippets',
-    command = 'inoremap ;rd <font color="red"></font><Esc>F>a'})
-vim.api.nvim_create_autocmd('FileType', {
-    pattern = {'php', 'html'},
-    group = augroup_php_html,
-    desc = 'php/html snippets',
-    command = 'inoremap ;yl <font color="yellow"></font><Esc>F>a'})
-vim.api.nvim_create_autocmd('FileType', {
-    pattern = {'php', 'html'},
-    group = augroup_php_html,
-    desc = 'php/html snippets',
-    command = 'inoremap ;dt <dt></dt><Enter><dd><++></dd><Enter><++><esc>2kcit'})
-vim.api.nvim_create_autocmd('FileType', {
-    pattern = {'php', 'html'},
-    group = augroup_php_html,
-    desc = 'php/html snippets',
-    command = 'inoremap ;dl <dl><Enter><Enter></dl><enter><enter><++><esc>3kcc'})
-
-
 
 -- others
 
+--- vimtex
+vim.g.vimtex_view_method = 'zathura'
+-- vim.g.tex_flavor = 'xelatex'
+-- vim.g.Tex_IgnoredWarnings = 'Underfull'."\n".
+
+--- .bib
+local augroup_texbib = vim.api.nvim_create_augroup('tex_bib', { clear = true})
+
+local bibtex = [[
+    inoremap ;a @article{<Enter>author<Space>=<Space>"<++>",<Enter>year<Space>=<Space>"<++>",<Enter>title<Space>=<Space>"<++>",<Enter>journal<Space>=<Space>"<++>",<Enter>volume<Space>=<Space>"<++>",<Enter>pages<Space>=<Space>"<++>",<Enter>}<Enter><++><Esc>8kA,<Esc>i |
+    inoremap ;b @book{<Enter>author<Space>=<Space>"<++>",<Enter>year<Space>=<Space>"<++>",<Enter>title<Space>=<Space>"<++>",<Enter>publisher<Space>=<Space>"<++>",<Enter>}<Enter><++><Esc>6kA,<Esc>i |
+    inoremap ;c @incollection{<Enter>author<Space>=<Space>"<++>",<Enter>title<Space>=<Space>"<++>",<Enter>booktitle<Space>=<Space>"<++>",<Enter>editor<Space>=<Space>"<++>",<Enter>year<Space>=<Space>"<++>",<Enter>publisher<Space>=<Space>"<++>",<Enter>}<Enter><++><Esc>8kA,<Esc>i
+
+]]
+
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'bib'},
+    group = augroup_texbib,
+    desc = 'tex bib files',
+	command = bibtex
+})
+
+
+--- MARKDOWN
+local augroup_md = vim.api.nvim_create_augroup('au_md', { clear = true})
+
+local md_cmds = [[
+    map <leader>w yiWi[<esc>Ea](<esc>pa) |
+    inoremap ;n ---<Enter><Enter> |
+    inoremap ;b ****<++><Esc>F*hi |
+    inoremap ;s ~~~~<++><Esc>F~hi |
+    inoremap ;e **<++><Esc>F*i |
+    inoremap ;h ====<Space><++><Esc>F=hi |
+    inoremap ;i ![](<++>)<++><Esc>F[a |
+    inoremap ;a [](<++>)<++><Esc>F[a |
+    inoremap ;1 #<Space><Enter><++><Esc>kA |
+    inoremap ;2 ##<Space><Enter><++><Esc>kA |
+    inoremap ;3 ###<Space><Enter><++><Esc>kA |
+    inoremap ;l --------<Enter> |
+    <F5> :!pandoc<space><C-r>%<space>-o<space><C-r>%.pdf<Enter><Enter> |
+    <F5> :!echo<space>"require(rmarkdown);<space>render('<c-r>%')"<space>\|<space>R<space>--vanilla<enter> |
+    ;r ```{r}<CR>```<CR><CR><esc>2kO |
+    ;p ```{python}<CR>```<CR><CR><esc>2kO |
+    nnoremap <F5> :!echo "require(rmarkdown); render('<c-r">"%') "\"| R --vanilla |
+    inoremap ;r ```{r}<CR>```<CR><CR><esc>2kO
+]]
+
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'rmd'},
+    group = augroup_md,
+    desc = 'tex bib files',
+	command = md_cmds
+})
+
+--- xml
+
+local xml_cmds = [[
+    inoremap ;a <a href="\<++>"><++></a><++><Esc>F"ci"
+    vmap <expr> ++ VMATH_YankAndAnalyse()
+    nmap ++ vip++
+    vnoremap K xkP`[V`]
+    vnoremap J xp`[V`]
+    vnoremap L >gv
+    vnoremap H <gv
+]]
+
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'rmd'},
+    group = augroup_texbib,
+    desc = 'tex bib files',
+	command = xml_cmds
+})
+--- others others
+vim.o.pastetoggle = '<F2>'
+
+-- Nvim-R configs
+vim.o.R_app = 'R'
+vim.o.R_cmd = 'R --vanilla'
+vim.o.R_esc_term = 0
+
+-- function test
+
+function myFunction()
+    print("Hello from myFunction!")
+end
+
+--write
+local writer = vim.api.nvim_exec([[
+    fu! Writer()
+    map <silent> <Up> gk
+    imap <silent> <Up> <C-o>gk
+    map <silent> <Down> gj
+    imap <silent> <Down> <C-o>gj
+    map <silent> <home> g<home>
+    imap <silent> <home> <C-o>g<home>
+    map <silent> <End> g<End>
+    imap <silent> <End> <C-o>g<End>
+    "setlocal
+    set wrap
+    set linebreak
+    set nolist
+    set display+=lastline
+    endfunction
+]], true)
+
+-- ncm2 completion requirements
+vim.g.python3_host_prog="/usr/bin/python3"
+
+-- Statusline
+
+
+
+vim.opt.laststatus = 2
+vim.opt.statusline = sl_values
+
+-- statusline functions
+local function StatuslineMode()
+    local mode = vim.fn.mode()
+    if mode == 'n' then
+        return "NORMAL"
+    elseif mode == 'v' then
+        return "VISUAL"
+    elseif mode == 'i' then
+        return "INSERT"
+    elseif mode == 'R' then
+        return "REPLACE"
+    end
+end
+
+local function StatuslineGitBranch()
+    local gitbranch = ""
+    if vim.bo.modifiable then
+        local current_dir = vim.fn.expand("%:p:h")
+        vim.cmd("lcd " .. current_dir)
+        local gitrevparse = vim.fn.system("git rev-parse --abbrev-ref HEAD")
+        vim.cmd("lcd -")
+        if not string.find(gitrevparse, "fatal: not a git repository") then
+            gitbranch = "(" .. string.gsub(gitrevparse, '\n', '') .. ") "
+        end
+    end
+    vim.bo.gitbranch = gitbranch
+end
+
+local sl_values = [[
+  "", -- left align
+  "%2*\\", -- blank char
+  "%2*\\%{StatuslineMode()}",
+  "%2*\\",
+  "%1*\\ <<",
+  "%1*\\ %f", -- short filename
+  "%1*\\ >>",
+  "%=", -- right align
+  "%*",
+  "%3*\\%h%m%r", -- file flags (help, read-only, modified)
+  "%4*\\%{vim.b.gitbranch}", -- include git branch
+  "%3*\\%.25F", -- long filename (trimmed to 25 chars)
+  "%3*\\::",
+  "%3*\\%l/%L\\\\|", -- line count
+  "%3*\\%y" -- file type
+]]
+
+-- highlights
+vim.cmd[[
+  hi User1 ctermbg=black ctermfg=grey guibg=black guifg=grey
+  hi User2 ctermbg=green ctermfg=black guibg=green guifg=black
+  hi User3 ctermbg=black ctermfg=lightgreen guibg=black guifg=lightgreen
+]]
+
+
+local ggb_au = vim.api.nvim_create_augroup('get_git_branch', { clear = true})
+
+local function branch_name()
+    local branch = vim.fn.system("git branch --slow-current 2> /dev/null | tr -d '\n'")
+    if branch ~= "" then
+        return branch
+    else
+        return ""
+    end
+end
+
+vim.api.nvim_create_autocmd({"VimEnter","WinEnter","BufEnter"}, {
+    callback = function()
+        vim.b.branch_name = branch_name()
+    end
+
+})
+
+-- nvim-R tmux
+vim.g.R_source = '/home/asari/Documentos/coding/tmux_split.vim'
+
+-- laters gators
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 
 
