@@ -1,35 +1,44 @@
+--  ____                                                 _             _
+-- |  _ \  ___  ___  _ __ ___   ___  _ ____  _____ _   _( )___  __   _(_)_ __ ___  _ __ ___
+-- | | | |/ _ \/ _ \| '_ ` _ \ / _ \| '__\ \/ / __| | | |// __| \ \ / / | '_ ` _ \| '__/ __|
+-- | |_| |  __/ (_) | | | | | | (_) | |   >  <\__ \ |_| | \__ \  \ V /| | | | | | | | | (__
+-- |____/ \___|\___/|_| |_| |_|\___/|_|  /_/\_\___/\__, | |___/   \_/ |_|_| |_| |_|_|  \___|
+--                                                 |___/
+
+
 -- basics
 
-vim.o.nocompatible = 'true'
+vim.o.signcolumn = 'no' -- used by coc.nvim
+vim.o.nocompatible = true
 vim.api.nvim_command('filetype plugin indent on')
 vim.api.nvim_command('syntax on')
 -- colorscheme x
 vim.o.encoding = 'utf-8'
-vim.o.number = 'true'
-vim.o.relativenumber = 'true'
+vim.o.number = true
+vim.o.relativenumber = true
 vim.o.mouse = 'a'
 vim.o.history = '1000'
-vim.o.aw = 'true'
-vim.o.ts = '4'
-vim.o.nocp = 'true'
-vim.o.nowrap = 'true'
-vim.o.ruler = 'true'
+vim.o.aw = true
+vim.o.ts = 4
+vim.o.nocp = true
+vim.o.nowrap = true
+vim.o.ruler = true
 vim.o.ve = 'all'
-vim.o.vb = 'true'
-vim.o.ic = 'true'
-vim.o.ai = 'true'
-vim.o.tabstop = '4'
-vim.o.expandtab = 'true'
-vim.o.shiftwidth = '4'
-vim.o.softtabstop = '4'
+vim.o.vb = true
+vim.o.ic = true
+vim.o.ai = true
+vim.o.tabstop = 4
+vim.o.expandtab = true
+vim.o.shiftwidth = 4
+vim.o.softtabstop = 4
 vim.o.backspace = 'indent,eol,start'
-vim.o.title = 'true'
-vim.o.ttyfast = 'true'
+vim.o.title = true
+vim.o.ttyfast = true
 vim.o.background = 'dark'
 
 -- splits open bottom and right
-vim.o.splitbelow = 'true'
-vim.o.splitright = 'true'
+vim.o.splitbelow = true
+vim.o.splitright = true
 
 -- shortcuts for split navigation
 
@@ -577,29 +586,31 @@ vim.api.nvim_create_autocmd('FileType', {
 ---- PHP/HTML
 local augroup_php_html = vim.api.nvim_create_augroup('tex_snippets', { clear = true})
 
-local php_html = [[
-    inoremap ;b <b></b><Space><++><Esc>FbT>i |
-    inoremap ;i <em></em><Space><++><Esc>FeT>i |
-    inoremap ;h1 <h1></h1><Enter><Enter><++><Esc>2kf<i |
-    inoremap ;h2 <h2></h2><Enter><Enter><++><Esc>2kf<i |
-    inoremap ;h3 <h3></h3><Enter><Enter><++><Esc>2kf<i |
-    inoremap ;p <p></p><Enter><Enter><++><Esc>02kf>a |
-    inoremap ;a <a<Space>href=""><++></a><Space><++><Esc>14hi |
-    inoremap ;e <a<Space>target="_blank"<Space>href=""><++></a><Space><++><Esc>14hi |
-    inoremap ;ul <ul><Enter><li></li><Enter></ul><Enter><Enter><++><Esc>03kf<i |
-    inoremap ;li <Esc>o<li></li><Esc>F>a |
-    inoremap ;ol <ol><Enter><li></li><Enter></ol><Enter><Enter><++><Esc>03kf<i |
-    inoremap ;im <table<Space>class="image"><Enter><caption align="bottom"></caption><Enter><tr><td><a<space>href="pix/<++>"><img< |Space>src="pix/<++>"<Space>width="<++>"></a></td></tr><Enter></table><Enter><Enter><++><Esc>4kf>a
-    inoremap ;td <td></td><++><Esc>Fdcit |
-    inoremap ;tr <tr></tr><Enter><++><Esc>kf<i |
-    inoremap ;th <th></th><++><Esc>Fhcit |
-    inoremap ;tab <table><Enter></table><Esc>O |
-    inoremap ;gr <font color="green"></font><Esc>F>a |
-    inoremap ;rd <font color="red"></font><Esc>F>a |
-    inoremap ;yl <font color="yellow"></font><Esc>F>a |
-    inoremap ;dt <dt></dt><Enter><dd><++></dd><Enter><++><esc>2kcit |
-    inoremap ;dl <dl><Enter><Enter></dl><enter><enter><++><esc>3kcc  |
-]]
+local php_html = vim.cmd([[
+  augroup augroup_php_html
+    inoremap ;b <b></b><Space><++><Esc>FbT>i
+    inoremap ;i <em></em><Space><++><Esc>FeT>i
+    inoremap ;h1 <h1></h1><Enter><Enter><++><Esc>2kf<i
+    inoremap ;h2 <h2></h2><Enter><Enter><++><Esc>2kf<i
+    inoremap ;h3 <h3></h3><Enter><Enter><++><Esc>2kf<i
+    inoremap ;p <p></p><Enter><Enter><++><Esc>02kf>a
+    inoremap ;a <a<Space>href=""><++></a><Space><++><Esc>14hi
+    inoremap ;e <a<Space>target="_blank"<Space>href=""><++></a><Space><++><Esc>14hi
+    inoremap ;ul <ul><Enter><li></li><Enter></ul><Enter><Enter><++><Esc>03kf<i
+    inoremap ;li <Esc>o<li></li><Esc>F>a
+    inoremap ;ol <ol><Enter><li></li><Enter></ol><Enter><Enter><++><Esc>03kf<i
+    inoremap ;im <table<Space>class="image"><Enter><caption align="bottom"></caption><Enter><tr><td><a<space>href="pix/<++>"><img<Space>src="pix/<++>"<Space>width="<++>"></a></td></tr><Enter></table><Enter><Enter><++><Esc>4kf>a
+    inoremap ;td <td></td><++><Esc>Fdcit
+    inoremap ;tr <tr></tr><Enter><++><Esc>kf<i
+    inoremap ;th <th></th><++><Esc>Fhcit
+    inoremap ;tab <table><Enter></table><Esc>O
+    inoremap ;gr <font color="green"></font><Esc>F>a
+    inoremap ;rd <font color="red"></font><Esc>F>a
+    inoremap ;yl <font color="yellow"></font><Esc>F>a
+    inoremap ;dt <dt></dt><Enter><dd><++></dd><Enter><++><esc>2kcit
+    inoremap ;dl <dl><Enter><Enter></dl><enter><enter><++><esc>3kcc
+  augroup END
+]])
 vim.api.nvim_create_autocmd('FileType', {
     pattern = {'php', 'html'},
     group = augroup_php_html,
@@ -718,90 +729,13 @@ local writer = vim.api.nvim_exec([[
 vim.g.python3_host_prog="/usr/bin/python3"
 
 -- Statusline
-
-
-
-vim.opt.laststatus = 2
-vim.opt.statusline = sl_values
-
--- statusline functions
-local function StatuslineMode()
-    local mode = vim.fn.mode()
-    if mode == 'n' then
-        return "NORMAL"
-    elseif mode == 'v' then
-        return "VISUAL"
-    elseif mode == 'i' then
-        return "INSERT"
-    elseif mode == 'R' then
-        return "REPLACE"
-    end
-end
-
-local function StatuslineGitBranch()
-    local gitbranch = ""
-    if vim.bo.modifiable then
-        local current_dir = vim.fn.expand("%:p:h")
-        vim.cmd("lcd " .. current_dir)
-        local gitrevparse = vim.fn.system("git rev-parse --abbrev-ref HEAD")
-        vim.cmd("lcd -")
-        if not string.find(gitrevparse, "fatal: not a git repository") then
-            gitbranch = "(" .. string.gsub(gitrevparse, '\n', '') .. ") "
-        end
-    end
-    vim.bo.gitbranch = gitbranch
-end
-
-local sl_values = [[
-  "", -- left align
-  "%2*\\", -- blank char
-  "%2*\\%{StatuslineMode()}",
-  "%2*\\",
-  "%1*\\ <<",
-  "%1*\\ %f", -- short filename
-  "%1*\\ >>",
-  "%=", -- right align
-  "%*",
-  "%3*\\%h%m%r", -- file flags (help, read-only, modified)
-  "%4*\\%{vim.b.gitbranch}", -- include git branch
-  "%3*\\%.25F", -- long filename (trimmed to 25 chars)
-  "%3*\\::",
-  "%3*\\%l/%L\\\\|", -- line count
-  "%3*\\%y" -- file type
-]]
-
--- highlights
-vim.cmd[[
-  hi User1 ctermbg=black ctermfg=grey guibg=black guifg=grey
-  hi User2 ctermbg=green ctermfg=black guibg=green guifg=black
-  hi User3 ctermbg=black ctermfg=lightgreen guibg=black guifg=lightgreen
-]]
-
-
-local ggb_au = vim.api.nvim_create_augroup('get_git_branch', { clear = true})
-
-local function branch_name()
-    local branch = vim.fn.system("git branch --slow-current 2> /dev/null | tr -d '\n'")
-    if branch ~= "" then
-        return branch
-    else
-        return ""
-    end
-end
-
-vim.api.nvim_create_autocmd({"VimEnter","WinEnter","BufEnter"}, {
-    callback = function()
-        vim.b.branch_name = branch_name()
-    end
-
-})
+-- refer to user/newstatus.lua
 
 -- nvim-R tmux
-vim.g.R_source = '/home/asari/Documentos/coding/tmux_split.vim'
+vim.g.R_source = '~/.config/vim/tmux_split.vim'
 
 -- laters gators
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
-
 
 
 
