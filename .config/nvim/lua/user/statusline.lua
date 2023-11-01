@@ -1,4 +1,9 @@
+-- always show last status
 vim.opt.laststatus = 2
+
+-- ================
+-- highlight presets
+-- ================
 
 local hl_colors = { -- highlights presets
     {'StatusType', {bg='#ff0000', fg='#1d2021'}},
@@ -23,6 +28,10 @@ local hl_colors_var = { --other hi presets
   {'LineColAlt', { bg = '#504945', fg = '#928374' }},
   {'FiletypeAlt', { bg = '#3C3836', fg = '#504945' }},
 }
+
+-- ================
+-- set highlights
+-- ================
 
 local set_hlc = function(group, options)
     local frgd = (options.fg and options.fg == '') or ('guifg=' .. options.fg) or ''
@@ -69,6 +78,25 @@ local function mode()
     local current_mode = vim.api.nvim_get_mode().mode
     return string.format(" %s ", modes[current_mode]):upper()
 end
+
+
+-- ================
+-- set and enable highlights again [?!?!]
+-- ================
+
+vim.opt.termguicolors = true			-- terminal gui colors
+
+vim.cmd "highlight StatusType guibg=#b16286 guifg=#1d2021"
+vim.cmd "highlight StatusFile guibg=#fabd2f guifg=#1d2021"
+vim.cmd "highlight StatusModified guibg=#1d2021 guifg=#d3869b"
+vim.cmd "highlight StatusBuffer guibg=#98971a guifg=#1d2021"
+vim.cmd "highlight StatusLocation guibg=#458588 guifg=#1d2021"
+vim.cmd "highlight StatusPercent guibg=#1d2021 guifg=#ebdbb2"
+vim.cmd "highlight StatusNorm guibg=none guifg=red"
+
+-- ================
+-- concatenate states to table
+-- ================
 
 Statusline = {}
 Statusline.active = function()
