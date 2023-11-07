@@ -737,5 +737,32 @@ vim.g.R_source = '~/.config/vim/tmux_split.vim'
 -- laters gators
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 
+-- autocomplete popup
+
+--local ag_pmenu = vim.api.nvim_create_augroup('ag_pmenu', { clear = true})
+
+--local pmenu_colors = [[
+--    highlight hl-Pmenu ctermfg=white ctermbg=black guifg=white guibg=black |
+--    highlight hl-PmenuSel ctermfg=black ctermbg=white guifg=black guibg=white
+--]]
+
+--vim.api.nvim_create_autocmd('FileType', {
+--    group = ag_pmenu,
+--    desc = 'pmenu colors',
+--	command = pmenu_colors
+--})
+--
+--vim.cmd[[
+--    'au VimEnter * highlight hl-Pmenu ctermfg=white ctermbg=black' |
+--    'au VimEnter * highlight hl-PmenuSel ctermfg=green ctermbg=black'
+--]]
+--
+--
+vim.cmd[[
+    highlight Pmenu      ctermfg=2 ctermbg=3 guifg=#778ba5 guibg=#1c1c1c
+    highlight PmenuSel   ctermfg=2 ctermbg=3 guifg=yellow guibg=#8a8a8c
+    highlight PmenuSbar  ctermfg=2 ctermbg=3 guifg=#778ba5 guibg=#1c1c1c
+    highlight PmenuThumb ctermfg=2 ctermbg=3 guifg=#778ba5 guibg=#1c1c1c
+]]
 
 
