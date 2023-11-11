@@ -40,5 +40,7 @@ telescope.setup {
         "--glob=!**/dist/*",
         "--glob=!**/yarn.lock",
         "--glob=!**/package-lock.json",
+        "--glob=!**/*org.eclipse.*", --eclipse/maven/java specific.
+        "--glob=!**/*venv_nvim*",
     }
 }
