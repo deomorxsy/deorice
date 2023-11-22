@@ -21,16 +21,15 @@ return require('packer').startup(function(use)
     --})
 
     -- "=====> chadTREE: https://github.com/ms-jpq/chadtree <=====
-    use ({'ms-jpq/chadtree',
-        branch = 'chad',
-        {run = 'python3 -m chadtree deps'}, -- run is equivalent do in vim-plug
-        config = function()
-            vim.cmd('CHADdeps')
-        end
-    })
+    --use ({'ms-jpq/chadtree',
+    --    branch = 'chad',
+    --    {run = 'python3 -m chadtree deps'}, -- run is equivalent do in vim-plug
+    --    config = function()
+    --        vim.cmd('CHADdeps')
+    --    end
+    --})
 
-    use ({
-        'nvim-treesitter/nvim-treesitter',
+    use ({'nvim-treesitter/nvim-treesitter',
         {run = ':TSUpdate'},
     } )
 
