@@ -20,7 +20,7 @@ The config is pretty straight-forward: just edit the ```~/.vimrc``` with vimscri
 
 ### neovim
 
-neovim adopts the ```~/.config/nvim/init.vim``` or ```~/.config/nvim/init.lua``` file as the default config file. It is also compatible with the vimrc; that explains the [source](https://github.com/deomorxsy/deorice/blob/main/.config/nvim/init.vim.old#L3).
+Neovim adopts the ```~/.config/nvim/init.vim``` or ```~/.config/nvim/init.lua``` file as the default config file. It is also compatible with the vimrc; that explains the [source](https://github.com/deomorxsy/deorice/blob/main/.config/nvim/init.vim.old#L3).
 
 This repository in specific migrates from the vimrc, used in vim, directly to the init.lua that uses the syntax of the [language lua](https://www.lua.org/docs.html) to program the editor. The runtime is the [LuaJIT](https://luajit.org/) embedded in neovim and you can learn more in the [docs](https://neovim.io/doc/user/lua.html).
 
@@ -32,7 +32,7 @@ git clone git@github.com:deomorxsy/deorice.git
 cd ./deorice/
 ```
 
-2. copy nvim to the $HOME config dotfile:
+2. Copy nvim to the $HOME config dotfile:
 ```sh
 cp -r ./.config/nvim/ ~/.config/
 ```
@@ -44,7 +44,7 @@ git clone --depth 1 https://github.com/wbthomason/packer.nvim \
 ```
 
 
-4. To avoid [provider-related](https://neovim.io/doc/user/provider.html) errors, specifically about python (ultisnips), you can use the script [neovim-setup.sh](./.config/nvim/scripts/neovim-setup.sh), ```./.config/nvim/scripts/neovim-setup.sh```, which sets up the python provider ```$PATH``` based in the hack path that python uses with the virtualenv. [Based on the docs](https://neovim.io/doc/user/provider.html#python-virtualenv) ;)
+4. To avoid [provider-related](https://neovim.io/doc/user/provider.html) errors, specifically about python (ultisnips), you can use the script [neovim-setup.sh](./.config/nvim/scripts/neovim-setup.sh), ```./.config/nvim/scripts/neovim-setup.sh```, which sets up the python provider ```$PATH``` based in the hack path that python uses with the virtualenv, [adapted from the docs](https://neovim.io/doc/user/provider.html#python-virtualenv) ;)
 ```sh
 cat > ./scripts/neovim-setup.sh << "EOF"
 #!/usr/bin/sh
@@ -78,14 +78,14 @@ chmod +x ./scripts/neovim-setup.sh
 . ./scripts/neovim-setup.sh
 ```
 
-5. set the python provider path
+5. Set the python provider path
 ```sh
 let g:python3_host_prog = "${HOME}/.config/nvim/venv_nvim/neovim3/bin/python"
 ```
 
-6. Source the packer.lua file to finish installing packer. Then, also in command line, synchronize plugins in the configuration with packer.  I like the [headless flag](https://neovim.io/doc/user/starting.html#--headless) for this, otherwise just open the specific ```packer.lua``` file for sourcing, enter Terminal Mode and type ```:so```. Synchronize in any context.
+6. Source the packer.lua file to finish installing packer. Then, also in command line, synchronize plugins in the configuration with packer.  I like the [headless flag](https://neovim.io/doc/user/starting.html#--headless) for this, otherwise just open the specific ```packer.lua``` file for sourcing, enter Terminal Mode and type ```:so```. Synchronize with ```PackerSync``` in any context.
 ```sh
-nvim --headless -c 'so' -c 'Packersync' "${HOME}/.config/nvim/lua/user/packer.lua"
+nvim --headless -c 'so' -c 'PackerSync' "${HOME}/.config/nvim/lua/user/packer.lua"
 ```
 
 
