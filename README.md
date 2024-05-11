@@ -53,7 +53,7 @@ cat > ./scripts/neovim-setup.sh << "EOF"
 git clone --depth 1 https://github.com/wbthomason/packer.nvim \
  ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 
-# setup python3 provider
+# setup python venv
 python -m venv ~/.config/nvim/venv_nvim/neovim3
 
 # source the venv activate binary
@@ -78,15 +78,14 @@ chmod +x ./scripts/neovim-setup.sh
 . ./scripts/neovim-setup.sh
 ```
 
-5. Source the packer.lua file to finish installing packer. I like the [headless flag](https://neovim.io/doc/user/starting.html#--headless) for this.
+5. set the python provider path
 ```sh
-nvim --headless -c 'so' "${HOME}/.config/nvim/venv_nvim/neovim3/bin/python"
-
+let g:python3_host_prog = "${HOME}/.config/nvim/venv_nvim/neovim3/bin/python"
 ```
 
-6. Open nvim and enter **Command-Line Mode**. Synchronize plugins in the configuration with packer and restart nvim session.
-```
-:PackerSync
+6. Source the packer.lua file to finish installing packer. Then, also in command line, synchronize plugins in the configuration with packer.  I like the [headless flag](https://neovim.io/doc/user/starting.html#--headless) for this, otherwise just open the specific ```packer.lua``` file for sourcing, enter Terminal Mode and type ```:so```. Synchronize in any context.
+```sh
+nvim --headless -c 'so' -c 'Packersync' "${HOME}/.config/nvim/lua/user/packer.lua"
 ```
 
 
