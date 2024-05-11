@@ -48,7 +48,7 @@ git clone --depth 1 https://github.com/wbthomason/packer.nvim \
 ```
 
 
-4. To avoid [provider-related](https://neovim.io/doc/user/provider.html) errors, specifically about python (ultisnips), you can use the script [neovim-setup.sh](./.config/nvim/scripts/neovim-setup.sh), ```./.config/nvim/scripts/neovim-setup.sh```, which sets up the python provider ```$PATH``` based in the hack path that python uses with the virtualenv, [adapted from the docs](https://neovim.io/doc/user/provider.html#python-virtualenv) ;)
+4. To avoid [provider-related](https://neovim.io/doc/user/provider.html) errors, specifically about python (ultisnips), you can use the script [neovim-setup.sh](./scripts/neovim-setup.sh), ```./scripts/neovim-setup.sh```, which sets up the python provider ```$PATH``` based in the hack path that python uses with the virtualenv, [adapted from the docs](https://neovim.io/doc/user/provider.html#python-virtualenv) ;)
 ```sh
 cat > ./scripts/neovim-setup.sh << "EOF"
 #!/usr/bin/sh
