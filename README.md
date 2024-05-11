@@ -10,7 +10,9 @@
 
 PS: For any interested readers, try to create your own configuration based on these dotfiles.
 
-PS2: some of these are related with neovim running under tmux.
+PS2: Some of these are related with neovim running under tmux.
+
+PS3: The following is not intended to be gatekeeping how to use any of its tools. Its just a merge between a personal opinionated configuration and a tutorial for posterity.
 
 ## Editors
 
@@ -20,9 +22,11 @@ The config is pretty straight-forward: just edit the ```~/.vimrc``` with vimscri
 
 ### neovim
 
-Neovim adopts the ```~/.config/nvim/init.vim``` or ```~/.config/nvim/init.lua``` file as the default config file. It is also compatible with the vimrc; that explains the [source](https://github.com/deomorxsy/deorice/blob/main/.config/nvim/init.vim.old#L3).
+Neovim adopts the ```~/.config/nvim/init.vim``` or ```~/.config/nvim/init.lua``` file as the default config file. It is also compatible with the vimrc; that explains the [source](https://github.com/deomorxsy/deorice/blob/main/.config/nvim/init.vim.old#L3). It means these are the files neovim uses for configuration lookups every time the editor starts.
 
 This repository in specific migrates from the vimrc, used in vim, directly to the init.lua that uses the syntax of the [language lua](https://www.lua.org/docs.html) to program the editor. The runtime is the [LuaJIT](https://luajit.org/) embedded in neovim and you can learn more in the [docs](https://neovim.io/doc/user/lua.html).
+
+To handle LSP, DAP, linters and formatters you can use [mason-nvim](https://github.com/williamboman/mason.nvim). You can also integrate its functionality with [lsp-zero](https://github.com/VonHeikemen/lsp-zero.nvim) into a not-bloated, fast [gattai-mecha](https://github.com/VonHeikemen/lsp-zero.nvim/blob/v3.x/doc/md/guides/integrate-with-mason-nvim.md) for completion.
 
 To use the base configuration, run the [playbooks (wip)](), execute the [scripts (wip)](https://github.com/deomorxsy/deorice/tree/main/scripts) or do it manually:
 
@@ -89,10 +93,11 @@ nvim --headless -c 'so' -c 'PackerSync' "${HOME}/.config/nvim/lua/user/packer.lu
 ```
 
 
-Main plugins used in this vim/neovim rice:
+Main plugins used in this vim/neovim rice, not ordered:
 - [telescope](https://github.com/nvim-telescope/telescope.nvim) or [chadtree](https://github.com/ms-jpq/chadtree) for fuzzy search. The second is a whole [completion client](https://www.reddit.com/r/neovim/comments/p4m8vt/i_spent_1_year_of_my_life_on_making_a_fast_as/) spawning sqlite vms in memory and integrating with other external programs;
-- [nvim-R](https://github.com/jalvesaq/Nvim-R) to run a R interpreter inside neovim (checkout the tmux integration)
+- [nvim-R](https://github.com/jalvesaq/Nvim-R) to run a R interpreter inside neovim (checkout the tmux integration);
 - [vimtex](https://github.com/lervag/vimtex) for latex local editions;
 - [lsp-zero](https://github.com/VonHeikemen/lsp-zero.nvim) as a Language Server Protocols manager (literally acts as a package manager), which are external to neovim;
-- [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) to parse all the code in the editor, which builds an incremental tree that is useful for a bunch of tasks related to programming language constructs, like highlighting, indenting, folding of these constructs, text-object manipulation and [others](https://tree-sitter.github.io/tree-sitter/). Also fast af;
+- [mason.nvim](https://github.com/williamboman/mason.nvim) as a package manager for LSP servers, DAP servers, linters, and formatters;
+- [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) to parse all the code in the editor. It builds an incremental parsing tree that is useful for a bunch of tasks related to programming language constructs, like highlighting, indenting, folding of these constructs, text-object manipulation and [others](https://tree-sitter.github.io/tree-sitter/). Also fast af;
 
