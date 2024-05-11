@@ -8,8 +8,7 @@ local set_hl = function(group, options)
   vim.cmd(string.format('hi %s %s %s %s', group, bg, fg, gui))
 end
 
--- you can of course pick whatever colour you want, I picked these colours
--- because I use Gruvbox and I like them
+-- gruvbox-based
 local highlights = {
   {'StatusLine', { fg = '#3C3836', bg = '#EBDBB2' }},
   {'StatusLineNC', { fg = '#3C3836', bg = '#928374' }},

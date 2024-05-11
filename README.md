@@ -1,16 +1,16 @@
-<div align="center">
 
 ## deorice
 > dotfiles for \*nix setup ricing
+
+<div align="center">
 
 [![Lua](https://img.shields.io/badge/Lua-blue.svg?style=for-the-badge&logo=lua)](http://www.lua.org)
 [![Neovim](https://img.shields.io/badge/Neovim%200.5+-green.svg?style=for-the-badge&logo=neovim)](https://neovim.io)
 </div>
 
-PS: I recommend any readers to create your own configuration based on these dotfiles, it's not "production-ready" since part of it is built from scratch or by just customizing parts of the system.
+PS: For any interested readers, try to create your own configuration based on these dotfiles.
 
-PS 2: The following documentation in this README.md assumes the reader as a noob and tries to make them confortable with the idea of not being confortable, by searching for the main root cause of any future errors in the setup. As a general advice, even though there are scripts for automation in the repository, if you have time, try to make errors on purpose just to understand more of the system.
-
+PS2: some of these are related with neovim running under tmux.
 
 ## Editors
 
@@ -27,7 +27,7 @@ This repository in specific migrates from the vimrc, used in vim, directly to th
 To use the base configuration, run the [playbooks (wip)](), execute the [scripts (wip)](https://github.com/deomorxsy/deorice/tree/main/scripts) or do it manually:
 
 1. Clone this repository:
-```
+```sh
 git clone git@github.com:deomorxsy/deorice.git
 cd ./deorice/
 ```
@@ -46,7 +46,7 @@ git clone --depth 1 https://github.com/wbthomason/packer.nvim \
 
 4. To avoid [provider-related](https://neovim.io/doc/user/provider.html) errors, specifically about python (ultisnips), you can use the script [neovim-setup.sh](./.config/nvim/scripts/neovim-setup.sh), ```./.config/nvim/scripts/neovim-setup.sh```, which sets up the python provider ```$PATH``` based in the hack path that python uses with the virtualenv. [Based on the docs](https://neovim.io/doc/user/provider.html#python-virtualenv) ;)
 ```sh
-cat << EOF > ./scripts/neovim-setup.sh
+cat > ./scripts/neovim-setup.sh << "EOF"
 #!/usr/bin/sh
 #
 # packer plugin manager setup
@@ -96,4 +96,4 @@ Main plugins used in this vim/neovim rice:
 - [vimtex](https://github.com/lervag/vimtex) for latex local editions;
 - [lsp-zero](https://github.com/VonHeikemen/lsp-zero.nvim) as a Language Server Protocols manager (literally acts as a package manager), which are external to neovim;
 - [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) to parse all the code in the editor, which builds an incremental tree that is useful for a bunch of tasks related to programming language constructs, like highlighting, indenting, folding of these constructs, text-object manipulation and [others](https://tree-sitter.github.io/tree-sitter/). Also fast af;
--
+
