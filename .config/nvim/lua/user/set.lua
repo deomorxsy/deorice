@@ -765,4 +765,20 @@ vim.cmd[[
     highlight PmenuThumb ctermfg=2 ctermbg=3 guifg=#778ba5 guibg=#1c1c1c
 ]]
 
+-- floating diagnostics
+--
+vim.keymap.set('n', '<leader>i', function()
+    local found_float = false
+    for _, flowin in ipairs(vim.api.nvim_list_wins()) do
+        if vim.api.nvim_win_get_config(flowin).relative ~= '' then
+            vim.api.nvim_win_close(flowin, true)
+            found_float = true
+        end
+    end
 
+    if found_float then
+        return
+    end
+
+    vim.diagnostic.open_float(nil, { focus = false, scope = 'cursor' })
+end, {desc = 'toggle diagnostics'})

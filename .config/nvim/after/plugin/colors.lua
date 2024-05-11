@@ -8,5 +8,3 @@ function ColorsByFlow(color)
 end
 
 ColorsByFlow()
-
-

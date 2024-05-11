@@ -115,4 +115,14 @@ return require('packer').startup(function(use)
         {'L3MON4D3/LuaSnip'},
       }}
 
+      -- nvim-platformio
+    use {
+        'anurag3301/nvim-platformio.lua',
+        requires = {
+            {'akinsho/nvim-toggleterm.lua'},
+            {'nvim-telescope/telescope.nvim'},
+            {'nvim-lua/plenary.nvim'},
+        }
+    }
+
 end)
