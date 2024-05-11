@@ -12,7 +12,7 @@ PS: For any interested readers, try to create your own configuration based on th
 
 PS2: Some of these are related with neovim running under tmux.
 
-PS3: The following is not intended to be gatekeeping how to use any of its tools. Its just a merge between a personal opinionated configuration and a tutorial for posterity.
+PS3: The following is not intended to be gatekeeping how to use any of these tools. Its just a merge between a personal opinionated configuration and a tutorial for posterity.
 
 ## Editors
 
