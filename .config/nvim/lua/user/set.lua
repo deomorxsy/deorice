@@ -726,7 +726,7 @@ local writer = vim.api.nvim_exec([[
 ]], true)
 
 -- ncm2 completion requirements
-vim.g.python3_host_prog="/usr/bin/python3"
+vim.g.python3_host_prog = "$HOME/.config/nvim/venv_nvim/neovim3/bin/python"
 
 -- Statusline
 -- refer to user/newstatus.lua

@@ -11,8 +11,7 @@ vim.o.packpath = vim.o.runtimepath
 -- check ./lua/user/packer.lua for installed plugins
 
 -- python interpreter path from virtualenv
-vim.g.python3_host_prog = "/home/asari/.config/nvim/venv_nvim/neovim3/bin/python"
-
+vim.g.python3_host_prog = "$HOME/.config/nvim/venv_nvim/neovim3/bin/python"
 
 -- lsp
 -- Mason Setup

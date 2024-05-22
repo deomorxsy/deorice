@@ -33,7 +33,7 @@ statusbar_time_color = cyan:b
 # Port and dir configuration
 mpd_host = localhost
 mpd_port = 6601
-mpd_music_dir = "/home/asari/Musicas"
+mpd_music_dir = "$HOME/Musicas"
 
 
 # Visualizer config

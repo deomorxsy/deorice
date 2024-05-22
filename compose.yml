@@ -1,0 +1,18 @@
+version: "3.8"
+services:
+  nvim:
+    environment:
+      - git_hash
+    build:
+      context: "."
+      dockerfile: "./.config/nvim/Dockerfile"
+      tags:
+        - "localhost:5000/deonvim:latest"
+    stop_signal: SIGINT
+  dwm:
+    build:
+      context: "./wms/dwm/"
+      tags:
+        - "localhost:5000/deodwm:latest"
+    stop_signal: SIGINT
+
