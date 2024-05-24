@@ -100,4 +100,5 @@ Main plugins used in this vim/neovim rice, not ordered:
 - [lsp-zero](https://github.com/VonHeikemen/lsp-zero.nvim) as a Language Server Protocols manager (literally acts as a package manager), which are external to neovim;
 - [mason.nvim](https://github.com/williamboman/mason.nvim) as a package manager for LSP servers, DAP servers, linters, and formatters;
 - [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) to parse all the code in the editor. It builds an incremental parsing tree that is useful for a bunch of tasks related to programming language constructs, like highlighting, indenting, folding of these constructs, text-object manipulation and [others](https://tree-sitter.github.io/tree-sitter/). Also fast af;
+- [presence.nvim]() is a cool way to understand how activity logic SDKs such as discord presence works, and also lua dotfile config for other apps.
 
