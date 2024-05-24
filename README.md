@@ -28,7 +28,7 @@ This repository in specific migrates from the vimrc, used in vim, directly to th
 
 To handle LSP, DAP, linters and formatters you can use [mason-nvim](https://github.com/williamboman/mason.nvim). You can also integrate its functionality with [lsp-zero](https://github.com/VonHeikemen/lsp-zero.nvim) into a not-bloated, fast [gattai-mecha](https://github.com/VonHeikemen/lsp-zero.nvim/blob/v3.x/doc/md/guides/integrate-with-mason-nvim.md) for completion.
 
-To use the base configuration, run the [playbooks (wip)](), execute the [scripts (wip)](https://github.com/deomorxsy/deorice/tree/main/scripts) or do it manually:
+To use the base configuration, run the [playbooks](./scripts/playbooks/), execute the [scripts](./scripts/) or do it manually:
 
 1. Clone this repository:
 ```sh
