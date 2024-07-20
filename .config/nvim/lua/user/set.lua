@@ -745,7 +745,7 @@ local writer = [[
 vim.api.nvim_exec2(writer, { output = true })
 
 -- ncm2 completion requirements
-vim.g.python3_host_prog = "/home/asari/.config/nvim/venv_nvim/neovim3/bin/python"
+vim.g.python3_host_prog = "$HOME/.config/nvim/venv_nvim/neovim3/bin/python"
 
 -- Statusline
 -- refer to user/newstatus.lua
