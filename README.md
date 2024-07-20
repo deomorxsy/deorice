@@ -58,11 +58,11 @@ git clone --depth 1 https://github.com/wbthomason/packer.nvim \
  ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 
 # setup python venv
-python -m venv ~/.config/nvim/venv_nvim/neovim3
+python3 -m venv ~/.config/nvim/venv_nvim/neovim3
 
 # source the venv activate binary
 . ~/.config/nvim/venv_nvim/neovim3/bin/activate
-python3 -m pip install pynvim==0.5.0
+python3 -m pip install --upgrade pynvim==0.5.0
 
 # returns the relative $PATH of the python binary installed on the virtualenv
 pyvm=$(which python)
@@ -100,5 +100,6 @@ Main plugins used in this vim/neovim rice, not ordered:
 - [lsp-zero](https://github.com/VonHeikemen/lsp-zero.nvim) as a Language Server Protocols manager (literally acts as a package manager), which are external to neovim;
 - [mason.nvim](https://github.com/williamboman/mason.nvim) as a package manager for LSP servers, DAP servers, linters, and formatters;
 - [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) to parse all the code in the editor. It builds an incremental parsing tree that is useful for a bunch of tasks related to programming language constructs, like highlighting, indenting, folding of these constructs, text-object manipulation and [others](https://tree-sitter.github.io/tree-sitter/). Also fast af;
-- [presence.nvim]() is a cool way to understand how activity logic SDKs such as discord presence works, and also lua dotfile config for other apps.
+- [presence.nvim](https://github.com/andweeb/presence.nvim/) is a cool way to understand how activity logic SDKs such as discord presence works, and also lua dotfile config for other apps.
+- [pio]() for espressif development. Install it also on the virtualenv, use it inside nvim or source outside while multiplexing with tmux. Also check [xtensa-qemetsu](https://github.com/deomorxsy/xtensa-qemetsu) for a CI/CD, qemu-based environment setup.
 

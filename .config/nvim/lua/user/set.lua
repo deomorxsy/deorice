@@ -9,7 +9,7 @@
 -- basics
 
 vim.o.signcolumn = 'no' -- used by coc.nvim
-vim.o.nocompatible = true
+--vim.o.nocompatible = true
 vim.api.nvim_command('filetype plugin indent on')
 vim.api.nvim_command('syntax on')
 -- colorscheme x
@@ -17,11 +17,11 @@ vim.o.encoding = 'utf-8'
 vim.o.number = true
 vim.o.relativenumber = true
 vim.o.mouse = 'a'
-vim.o.history = '1000'
+vim.o.history = 1000
 vim.o.aw = true
 vim.o.ts = 4
-vim.o.nocp = true
-vim.o.nowrap = true
+--vim.o.nocp = true
+vim.wo.wrap = false
 vim.o.ruler = true
 vim.o.ve = 'all'
 vim.o.vb = true
@@ -693,12 +693,29 @@ vim.api.nvim_create_autocmd('FileType', {
 	command = xml_cmds
 })
 --- others others
-vim.o.pastetoggle = '<F2>'
+--vim.o.pastetoggle = '<F2>'
 
--- Nvim-R configs
-vim.o.R_app = 'R'
-vim.o.R_cmd = 'R --vanilla'
-vim.o.R_esc_term = 0
+-- Nvim-R configs (Lua port)
+
+local augroup = vim.api.nvim_create_augroup
+local autocmd = vim.api.nvim_create_autocmd
+
+augroup('Rsettings', { clear = true })
+
+autocmd('Filetype', {
+    group = 'Rsettings',
+    pattern = {'r'},
+    callback = function()
+        vim.bo.filetype = 'r'
+        vim.o.R_app = 'R'
+        vim.o.R_cmd = 'R --vanilla'
+        vim.o.R_esc_term = 0
+    end,
+})
+
+--vim.o.R_app = 'R'
+--vim.o.R_cmd = 'R --vanilla'
+--vim.o.R_esc_term = 0
 
 -- function test
 
@@ -707,7 +724,7 @@ function myFunction()
 end
 
 --write
-local writer = vim.api.nvim_exec([[
+local writer = [[
     fu! Writer()
     map <silent> <Up> gk
     imap <silent> <Up> <C-o>gk
@@ -723,10 +740,12 @@ local writer = vim.api.nvim_exec([[
     set nolist
     set display+=lastline
     endfunction
-]], true)
+]]
+
+vim.api.nvim_exec2(writer, { output = true })
 
 -- ncm2 completion requirements
-vim.g.python3_host_prog = "$HOME/.config/nvim/venv_nvim/neovim3/bin/python"
+vim.g.python3_host_prog = "/home/asari/.config/nvim/venv_nvim/neovim3/bin/python"
 
 -- Statusline
 -- refer to user/newstatus.lua
