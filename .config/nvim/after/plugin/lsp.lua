@@ -17,45 +17,66 @@ end)
 
 require('mason').setup({})
 require('mason-lspconfig').setup({
-  ensure_installed = {'tsserver', 'rust_analyzer', 'eslint', },
+  ensure_installed = {'tsserver', 'rust_analyzer', 'eslint', 'gopls'},
   handlers = {
     lsp_zero.default_setup,
     lua_ls = function()
       local lua_opts = lsp_zero.nvim_lua_ls()
       require('lspconfig').lua_ls.setup(lua_opts)
     end,
+
+    function(server_name)
+	    if server_name == "tsserver" then
+		    server_name = "ts_ls"
+	    end
+	    local capabilities = require("cmp_nvim_lsp").default_capabilities()
+	    require("lspconfig")[server_name].setup({
+		    capabilities = capabilities,
+	    })
+    end,
   }
 })
 
 local cmp = require('cmp')
-local cmp_select = {behavior = cmp.SelectBehavior.Select}
+--local cmp_select = {behavior = cmp.SelectBehavior.Select}
 local cmp_action = require("lsp-zero").cmp_action()
+
+
 cmp.setup({
-    mapping = {
+    mapping = cmp.mapping.preset.insert({
         ["<CR>"] = cmp.mapping.confirm({
-            behavior = cmp.ConfirmBehavior.Replace, select=true
-        }),
+                    behavior = cmp.ConfirmBehavior.Replace, select=true
+                }),
         ["<Tab>"] = cmp_action.luasnip_supertab(),
         ["<S-Tab>"] = cmp_action.luasnip_shift_supertab(),
+        --formatting = {
+        --    format = require("lspkind").cmp_format({mode = "symbol"})
+        --}
+        --['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
+        --['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
+        ['<C-p>'] = cmp.mapping.select_prev_item(),
+        ['<C-n>'] = cmp.mapping.select_next_item(),
+        ['<C-y>'] = cmp.mapping.confirm({ select = true }),
+        ['<C-Space>'] = cmp.mapping.complete(),
+    }),
+    sources = {
+        {name = 'path'},
+        {name = 'nvim_lsp'},
+        {name = 'nvim_lua'},
     },
-
-    --formatting = {
-    --    format = require("lspkind").cmp_format({mode = "symbol"})
-    --}
+    formatting = lsp_zero.cmp_format(),
 })
 
+--local on_attach = require("plugins.configs.lspconfig").on_attach
+--local capabilities = require("plugins.configs.lspconfig").capabilities
 
-cmp.setup({
-  sources = {
-    {name = 'path'},
-    {name = 'nvim_lsp'},
-    {name = 'nvim_lua'},
-  },
-  formatting = lsp_zero.cmp_format(),
-  mapping = cmp.mapping.preset.insert({
-    ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
-    ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
-    ['<C-y>'] = cmp.mapping.confirm({ select = true }),
-    ['<C-Space>'] = cmp.mapping.complete(),
-  }),
-})
+local lspconfig = require("lspconfig")
+local util = require "lspconfig/util"
+
+lspconfig.gopls.setup {
+    on_attach = lsp_zero.on_attach,
+    capabilities = require("cmp_nvim_lsp").default_capabilities(),
+    cmd = {"gopls"},
+    filetypes = { "go", "gomod", "gowork", "gotmpl" },
+    root_dir = util.root_pattern("go.work", "go.mod", ".git"),
+}
