@@ -719,9 +719,8 @@ autocmd('Filetype', {
 
 -- function test
 
-function myFunction()
+local myFunction()
     print("Hello from myFunction!")
-end
 
 --write
 local writer = [[

@@ -7,6 +7,9 @@
 ! config can be added there or also here below.
 ! For comments use "!"
 
+! load with  ; xrdb -load ./dotfiles/.Xresources
+Sxiv.background: #ebdbb2
+
 Xft.dpi: 96
 Xft.antialias: true
 Xft.hinting: true
@@ -20,7 +23,7 @@ Xft.lcdfilter: lcddefault
 !0.3!
 
 
-/* !! brogrammer:
+!! brogrammer:
 *.foreground:  #d6dbe5
 *.background:  #131313
 *.color0:      #1f1f1f
@@ -39,13 +42,13 @@ Xft.lcdfilter: lcddefault
 *.color14:     #0f7ddb
 *.color7:      #d6dbe5
 *.color15:     #ffffff
-*.colorBD:     #d6dbe5 */
+*.colorBD:     #d6dbe5
 !======================
 !======================
 
-!batman theme from iterm2-color-schemes (pyrophos).
+/*!batman theme from iterm2-color-schemes (pyrophos).
 !.cursorColor and .color14 changed.
-! special
+! special /*
 *.foreground:   #6f6f6f
 *.background:   #1b1d1e
 *.cursorColor:  #feed6c
@@ -80,5 +83,6 @@ Xft.lcdfilter: lcddefault
 
 ! white
 *.color7:       #c6c5bf
-*.color15:      #dadbd6
- 
+*.color15:      #dadbd6*/
+
+
