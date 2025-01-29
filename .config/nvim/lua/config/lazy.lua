@@ -149,6 +149,24 @@ require("lazy").setup({
             {'nvim-lua/plenary.nvim'},
         },
     },
+
+    -- julian's lean.nvim
+    {
+        'julian/lean.nvim',
+        dependencies = {
+            'neovim/nvim-lspconfig',
+            'nvim-lua/plenary.nvim',
+
+            -- Autocompletion
+            'hrsh7th/nvim-cmp',
+            'hrsh7th/cmp-nvim-lsp',
+            'hrsh7th/cmp-buffer',
+            'hrsh7th/cmp-path',
+        },
+        opts = {
+            mappings = true,
+        }
+    }
   },
   -- Configure any other settings here. See the documentation for more details.
   -- colorscheme that will be used when installing plugins.

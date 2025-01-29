@@ -1,6 +1,12 @@
  require'nvim-treesitter.configs'.setup {
   -- A list of parser names, or "all" (the listed parsers should always be installed)
-  ensure_installed = { "c", "rust", "lua", "javascript", "typescript", "vim", "vimdoc", "query", "java", "python", "r", "go", "bash", "perl", "haskell", "elixir", "ocaml", "erlang", "make", "dockerfile", "nix", "yaml", "toml", "scala", "html", "css", "vue", "sql"},
+  ensure_installed = {
+      "c", "rust", "lua", "javascript", "typescript", "vim",
+      "vimdoc", "query", "java", "python", "r", "go", "bash",
+      "perl", "haskell", "elixir", "ocaml", "erlang", "make",
+      "dockerfile", "nix", "yaml", "toml", "scala", "html",
+      "css", "vue", "sql", "zig"
+  },
   --
   -- ensure_notes:
   -- haskell-language-server will need the ghcup package manager installed.
