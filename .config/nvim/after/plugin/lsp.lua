@@ -17,23 +17,34 @@ end)
 
 require('mason').setup({})
 require('mason-lspconfig').setup({
-  ensure_installed = {'tsserver', 'rust_analyzer', 'eslint', 'gopls'},
-  handlers = {
-    lsp_zero.default_setup,
-    lua_ls = function()
-      local lua_opts = lsp_zero.nvim_lua_ls()
-      require('lspconfig').lua_ls.setup(lua_opts)
-    end,
+    -- Will be called for each installed server that doesn't have
+    -- a dedicated handler.
+    --
+    -- regarding tsserver -> ts_ls
+    -- Q: "Why not just change the "tsserver" item in ensure_installed to "ts_ls" ?
+    -- R: Because that would tell mason to install the ts_ls package and no such
+    -- package exists. It only has tsserver"
+    --
+    -- tsserver/ts_ls is a Neovim port of Matt Pocock's ts-error-translator for VSCode
+    -- for turning messy and confusing TypeScript errors into plain English.
+    ensure_installed = {'rust_analyzer', 'eslint', 'gopls'},
+    handlers = {
+        lsp_zero.default_setup,
+        lua_ls = function()
+          local lua_opts = lsp_zero.nvim_lua_ls()
+          require('lspconfig').lua_ls.setup(lua_opts)
+        end,
 
-    function(server_name)
-	    if server_name == "tsserver" then
-		    server_name = "ts_ls"
-	    end
-	    local capabilities = require("cmp_nvim_lsp").default_capabilities()
-	    require("lspconfig")[server_name].setup({
-		    capabilities = capabilities,
-	    })
-    end,
+        function(server_name)
+            server_name = server_name == 'tssserver' and 'ts_ls' or server_name
+            --if server_name == "tsserver" then
+            --    server_name = "ts_ls"
+            --end
+            local capabilities = require("cmp_nvim_lsp").default_capabilities()
+            require("lspconfig")[server_name].setup({
+                capabilities = capabilities,
+            })
+        end,
   }
 })
 

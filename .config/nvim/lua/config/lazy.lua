@@ -135,10 +135,61 @@ require("lazy").setup({
         -- Autocompletion
         {'hrsh7th/nvim-cmp'},
         {'hrsh7th/cmp-nvim-lsp'},
-        {'L3MON4D3/LuaSnip'},
+        {
+            'L3MON4D3/LuaSnip',
+            lazy = true
+        },
 
         },
     },
+
+    -- NotebookNavigator for Python REPL
+    {
+
+        "GCBallesteros/NotebookNavigator.nvim",
+        keys = {
+            { "]h", function() require("notebook-navigator").move_cell "d" end },
+            { "[h", function() require("notebook-navigator").move_cell "u" end },
+            { "<leader>X", "<cmd>lua require('notebook-navigator').run_cell()<cr>" },
+            { "<leader>x", "<cmd>lua require('notebook-navigator').run_and_move()<cr>" },
+        },
+        dependencies = {
+            "echasnovski/mini.comment",
+            "hkupty/iron.nvim", -- repl provider
+            -- "akinsho/toggleterm.nvim", -- alternative repl provider
+            -- "benlubas/molten-nvim", -- alternative repl provider
+            "anuvyklack/hydra.nvim",
+        },
+    event = "VeryLazy",
+    config = function()
+        local nn = require "notebook-navigator"
+        nn.setup({
+            cell_markers = {
+            -- python = "# %%",
+            },
+            activate_hydra_keys = "<leader>h" ,
+            show_hydra_hint = true,
+            hydra_keys = {
+                comment = "c",
+                run = "X",
+                run_and_move = "x",
+                move_up = "k",
+                move_down = "j",
+                add_cell_before = "a",
+                add_cell_after = "b",
+            },
+            repl_provider = "auto",
+            syntax_highlight = false,
+            cell_highlight_group = "Folded",
+        })
+    end,
+    },
+    --{
+    --    config = function ()
+    --        require("presence"):setup(){}
+    --
+    --    end
+    --},
 
     -- nvim-platformio
     {
@@ -154,14 +205,15 @@ require("lazy").setup({
     {
         'julian/lean.nvim',
         dependencies = {
-            'neovim/nvim-lspconfig',
+            'VonHeikemen/lsp-zero.nvim',
+            --'neovim/nvim-lspconfig',
             'nvim-lua/plenary.nvim',
 
             -- Autocompletion
             'hrsh7th/nvim-cmp',
-            'hrsh7th/cmp-nvim-lsp',
-            'hrsh7th/cmp-buffer',
-            'hrsh7th/cmp-path',
+            --'hrsh7th/cmp-nvim-lsp',
+            --'hrsh7th/cmp-buffer',
+            --'hrsh7th/cmp-path',
         },
         opts = {
             mappings = true,

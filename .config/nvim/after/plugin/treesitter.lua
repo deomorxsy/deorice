@@ -5,8 +5,13 @@
       "vimdoc", "query", "java", "python", "r", "go", "bash",
       "perl", "haskell", "elixir", "ocaml", "erlang", "make",
       "dockerfile", "nix", "yaml", "toml", "scala", "html",
-      "css", "vue", "sql", "zig"
+      "css", "vue", "sql", "zig", "clojure", "gleam",
+      "fsharp", "agda", "idris", "purescript",
+      "swift", "scheme", "racket",
+
   },
+  --
+  -- yet to be added: raku,
   --
   -- ensure_notes:
   -- haskell-language-server will need the ghcup package manager installed.
