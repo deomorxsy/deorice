@@ -12,7 +12,7 @@ PS: For any interested readers, try to create your own configuration based on th
 
 PS2: Some of these are related with neovim running under tmux.
 
-PS3: The following is not intended to be gatekeeping how to use any of these tools. Its just a merge between a personal opinionated configuration and a tutorial for posterity.
+PS3: The following is not intended to be gatekeeping how to use any of these tools. Its just a merge between a personal configuration for posterity.
 
 ## Editors
 
@@ -101,5 +101,5 @@ Main plugins used in this vim/neovim rice, not ordered:
 - [mason.nvim](https://github.com/williamboman/mason.nvim) as a package manager for LSP servers, DAP servers, linters, and formatters;
 - [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) to parse all the code in the editor. It builds an incremental parsing tree that is useful for a bunch of tasks related to programming language constructs, like highlighting, indenting, folding of these constructs, text-object manipulation and [others](https://tree-sitter.github.io/tree-sitter/). Also fast af;
 - [presence.nvim](https://github.com/andweeb/presence.nvim/) is a cool way to understand how activity logic SDKs such as discord presence works, and also lua dotfile config for other apps.
-- [pio]() for espressif development. Install it also on the virtualenv, use it inside nvim or source outside while multiplexing with tmux. Also check [xtensa-qemetsu](https://github.com/deomorxsy/xtensa-qemetsu) for a CI/CD, qemu-based environment setup.
-
+- [pio](https://docs.platformio.org/en/latest/core/installation/index.html) for espressif development. Install it also on the virtualenv, use it inside nvim or source outside while multiplexing with tmux. Also check [xtensa-qemetsu](https://github.com/deomorxsy/xtensa-qemetsu) for a CI/CD, qemu-based environment setup.
+- [lean.nvim](https://github.com/Julian/lean.nvim?tab=readme-ov-file), the neovim support for the Lean4 programming language and theorem prover
