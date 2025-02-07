@@ -59,8 +59,11 @@ ssh -vv "$1"
 # give it time for the WARP network interface be removed
 sleep 5
 
+# shutdown the vpn after the ssh connection is finished.
+shutwarp
+
 # check the network interfaces
-ip a
+# ip a
 }
 
 setwg() {
@@ -143,6 +146,8 @@ USAGE: setvpn [-options]
                 - close
                 - setwarp [host_alias]
                 - shutwarp
+                - help
+                - version
 eg,
 setvpn open   # open connection based on the built-in configuration file
 setvpn close  # close connection if it already exists
@@ -156,11 +161,11 @@ END
 
 
 # Check the argument passed from the command line
-if [ "$1" = "open" ]; then
+if [ "$1" = "open" ] || [ "$1" = "-o" ]; then
     openwgd
-elif [ "$1" = "close" ]; then
+elif [ "$1" = "close" ] || [ "$1" = "-c" ]; then
     closewgd
-elif [ "$1" = "setwarp" ]; then
+elif [ "$1" = "setwarp" ] || [ "$1" = "-set" ]; then
     check_ssh_host=$(grep "HOST $2" < "$HOME/.ssh/config")
     if ! [ "$check_ssh_host" = "" ]; then
         printf "\nHost alias found. Proceeding with the connection...\n\n"
@@ -169,9 +174,13 @@ elif [ "$1" = "setwarp" ]; then
         printf "Host alias not found. Exiting now...\n\n"
     fi
 #
-elif [ "$1" = "shutwarp" ]; then
+elif [ "$1" = "shutwarp" ] || [ "$1" = "--shut" ] || [ "$1" = "shut" ]; then
     shutwarp
 #
+elif [ "$1" = "help" ] || [ "$1" = "--help" ] || [ "$1" = "-h" ]; then
+    print_usage
+elif [ "$1" = "version" ] || [ "$1" = "--version" ] || [ "$1" = "-v" ]; then
+    printf "setvpn version 1.0 [fev 06 2025].\n"
 else
     printf "\nInvalid function name. Please specify one of the following:\n"
     print_usage

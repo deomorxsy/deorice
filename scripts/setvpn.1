@@ -1,0 +1,56 @@
+.TH setvpn 1 "fev 06, 2025" "Version 1.0"
+.nh
+.ad left
+.SH NAME
+setvpn \- This program sets up a vpn tunnel with WARP and wireguard specifically for ssh connections.
+
+.SH SYNTAX
+.B setvpn
+.RI [ options ]
+.SH OPTIONS
+Executed binary options.
+.TP
+.B \-o, \-\-open
+open connection based on the built-in configuration file.
+.TP
+.B \-c, \-\-close
+close connection if it already exists.
+.TP
+.B \-set, \-\-setwarp
+creates the VPN tunnel around a SSH connection to the host_alias.
+.TP
+.B \-shut, \-\-shutwarp
+closes the connection.
+.TP
+.B \-h, \-\-help
+Prints help information.
+.TP
+.B \-v, \-\-version
+Show version information and exit.
+.SH EXIT CODE
+The command \fBsetvpn\fR returns the following exit codes:
+.TP
+.B 0
+Success.
+.TP
+.B 1
+General error.
+.TP
+.B 2
+Invalid command syntax.
+.TP
+.B 130
+Script terminated by Control-C (SIGINT).
+.SH EXAMPLE
+.PP
+To run example with an input file and output the results to a file:
+.PP
+.B setvpn \-set setwarp
+.SH SEE ALSO
+.PP
+.BR wg-quick (8),
+.BR ssh (1),
+.BR systemd.service (5)
+.SH AUTHOR
+.PP
+deomorxsy <your.email@example.com>
