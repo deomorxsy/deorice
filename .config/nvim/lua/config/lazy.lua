@@ -34,7 +34,9 @@ require("lazy").setup({
     },
 
 
-    { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate', },
+    --{ 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate', },
+
+    {"nvim-treesitter/nvim-treesitter", build = ":TSUpdate"},
     { 'mbbill/undotree' },
     { 'ms-jpq/coq_nvim', branch = 'coq' },
 
@@ -49,6 +51,116 @@ require("lazy").setup({
     -- " - scientific calculator
     -- " - comment banner
     -- " - etc
+
+    -- lsp-zero
+    {
+      'VonHeikemen/lsp-zero.nvim',
+      branch = 'v3.x',
+      dependencies = {
+        --- Uncomment these if you want to manage LSP servers from neovim
+        {'williamboman/mason.nvim'},
+        {'williamboman/mason-lspconfig.nvim'},
+
+        -- Autocompletion
+        {
+            'hrsh7th/nvim-cmp',
+            event = 'InsertEnter',
+            config = function()
+                local cmp = require('cmp')
+
+                cmp.setup({
+                    sources = {
+                        {name = 'nvim_lsp'},
+                    },
+                    mapping = cmp.mapping.preset.insert({
+                        ['<C-space>'] = cmp.mapping.complete(),
+                        ['<C-u>'] = cmp.mapping.scroll_docs(-4),
+                        ['<C-d>'] = cmp.mapping.scroll_docs(4),
+                    }),
+                    snippet = {
+                        expand = function(args)
+                            vim.snippet.expand(args.body)
+                        end,
+                    },
+                })
+            end
+        },
+
+        -- LSP Support
+        {
+            'neovim/nvim-lspconfig',
+            cmd = "LspInfo",
+            event = {'BufReadPre', 'BufNewFile'},
+            dependencies = {
+                -- Autocompletion
+                {'hrsh7th/cmp-nvim-lsp'},
+            },
+            init = function ()
+                local lsp_defaults = require('lspconfig').util.default_config
+
+                -- add cmp_nvim_lsp capabilities settings to lspconfig
+                -- this should be executed before you configure any language server
+                lsp_defaults.capabilities = vim.tbl_deep_extend(
+                'force',
+                lsp_defaults.capabilities,
+                require('cmp_nvim_lsp').default_capabilities()
+                )
+
+                -- LspAttach is used to enable features when
+                -- there is a language server active for the file
+                vim.api.nvim_create_autocmd('LspAttach', {
+                    desc = 'LSP actions',
+                    callback = function (event)
+                        local opts = {buffer = event.buf}
+
+                        vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', opts)
+                        vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', opts)
+                        vim.keymap.set('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>', opts)
+                        vim.keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>', opts)
+                        vim.keymap.set('n', 'go', '<cmd>lua vim.lsp.buf.type_definition()<cr>', opts)
+                        vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', opts)
+                        vim.keymap.set('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<cr>', opts)
+                        vim.keymap.set('n', '<F2>', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
+                        vim.keymap.set({'n', 'x'}, '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
+                        vim.keymap.set('n', '<F4>', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
+
+                    end,
+                })
+
+                --require('lspconfig').gleam.setup({})
+                --require('lspconfig').ocamllsp.setup({})
+
+            end
+        },
+
+        -- Snippets
+        {'L3MON4D3/LuaSnip',lazy = true},
+
+        },
+    },
+
+    {'julian/lean.nvim'},
+    -- -- julian's lean.nvim LSP
+    --  {
+    --      'julian/lean.nvim',
+    --      dependencies = {
+    --          'VonHeikemen/lsp-zero.nvim',
+    --          --'neovim/nvim-lspconfig',
+    --          'nvim-lua/plenary.nvim',
+
+    --          -- Autocompletion
+    --          -- below already is being imported by
+    --          -- lsp-zero dependency tree
+
+    --          --'hrsh7th/nvim-cmp',
+    --          --'hrsh7th/cmp-nvim-lsp',
+    --          --'hrsh7th/cmp-buffer',
+    --          --'hrsh7th/cmp-path',
+    --      },
+    --      opts = {
+    --          mappings = true,
+    --      }
+    --  },
 
 
     -- "=====> https://github.com/andweeb/presence.nvim
@@ -120,28 +232,7 @@ require("lazy").setup({
     -- " Optional: better Rnoweb support (LaTeX completion)
     { 'lervag/vimtex' },
 
-    -- lsp-zero
-    {
-      'VonHeikemen/lsp-zero.nvim',
-      branch = 'v3.x',
-      dependencies = {
-        --- Uncomment these if you want to manage LSP servers from neovim
-        {'williamboman/mason.nvim'},
-        {'williamboman/mason-lspconfig.nvim'},
 
-        -- LSP Support
-        {'neovim/nvim-lspconfig'},
-
-        -- Autocompletion
-        {'hrsh7th/nvim-cmp'},
-        {'hrsh7th/cmp-nvim-lsp'},
-        {
-            'L3MON4D3/LuaSnip',
-            lazy = true
-        },
-
-        },
-    },
 
     -- NotebookNavigator for Python REPL
     {
@@ -201,24 +292,7 @@ require("lazy").setup({
         },
     },
 
-    -- julian's lean.nvim
-    {
-        'julian/lean.nvim',
-        dependencies = {
-            'VonHeikemen/lsp-zero.nvim',
-            --'neovim/nvim-lspconfig',
-            'nvim-lua/plenary.nvim',
 
-            -- Autocompletion
-            'hrsh7th/nvim-cmp',
-            --'hrsh7th/cmp-nvim-lsp',
-            --'hrsh7th/cmp-buffer',
-            --'hrsh7th/cmp-path',
-        },
-        opts = {
-            mappings = true,
-        }
-    }
   },
   -- Configure any other settings here. See the documentation for more details.
   -- colorscheme that will be used when installing plugins.

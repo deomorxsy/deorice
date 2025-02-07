@@ -1,3 +1,4 @@
+-- local lsp_zero = require('lsp-zero')
 -- Always show sign column.
 -- The sign column is used by the LSP support to show diagnostics
 -- (the E, W, etc. characters on the side)
@@ -38,7 +39,8 @@ local function on_attach(_, bufnr)
     end
 
     -- Autocomplete using the Lean language server
-    vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+    --vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+    vim.api.nvim_set_option_value(bufnr, 'omnifunc', {'v:lua.vim.lsp.omnifunc'})
 
     -- Support for triggering code actions (e.g. "Try this:" suggestions from `simp?`)
     cmd('n', '<leader>a', vim.lsp.buf.code_action)
@@ -50,7 +52,8 @@ local function on_attach(_, bufnr)
     cmd('n', '<leader>N', function() vim.diagnostic.goto_prev{popup_opts = {show_header = false}} end)
 
     -- <leader>K will show all diagnostics for the current line in a popup window
-    cmd('n', '<leader>K', function() vim.diagnostic.open_float(0, { scope = "line", header = false, focus = false }) end)
+    -- cmd('n', '<leader>K', function() vim.diagnostic.open_float(0, { scope = "line", header = false, focus = false }) end)
+    cmd('n', '<leader>K', function() vim.diagnostic.open_float(nil, { scope = "line", header = false, focus = false }) end)
 
     -- <leader>q will load all errors in the current lean file into the location list
     -- (and then will open the location list)

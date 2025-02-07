@@ -44,3 +44,4 @@ luac.out
 # -- misc ignore
 scripts/brk_*.conf
 coq_deps.txt
+perlnavigator.txt

@@ -5,7 +5,12 @@ ENV USER="nvim"
 
 RUN <<EOF
 apk upgrade && apk update && \
-     add --no-cache neovim python3 luarocks ripgrep git zig
+     add --no-cache neovim python3 luarocks ripgrep git zig node
+
+# zig: c compiler
+# node: provider for nvim's treesitter
+# python: provider for nvim
+
 EOF
 
 
@@ -27,6 +32,12 @@ pip3 install --no-cache-dir -r pynvim && \
 #./requirements.txt && \
 
 deactivate
+
+# set node provider
+# todo: set user for local npm install
+npm install -g nvim
+npm install -g tree-sitter-cli
+
 
 EOF
 

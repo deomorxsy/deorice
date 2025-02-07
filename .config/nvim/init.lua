@@ -9,3 +9,4 @@ require("settings") -- user.set
 --require("user.packer")
 --require("plugins.packerSpecs") -- Ensure the plugins are loaded.
 
+-- configure treesitter
