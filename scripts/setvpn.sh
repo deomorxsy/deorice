@@ -1,5 +1,11 @@
 #!/bin/sh
 
+#v0.1.0
+
+setvpn_ver() {
+    printf "\nsetvpn v0.1.0 [fev 07 2025].\n"
+}
+
 # disconnect from WARP
 shutwarp() {
 
@@ -178,9 +184,11 @@ elif [ "$1" = "shutwarp" ] || [ "$1" = "--shut" ] || [ "$1" = "shut" ]; then
     shutwarp
 #
 elif [ "$1" = "help" ] || [ "$1" = "--help" ] || [ "$1" = "-h" ]; then
+    setvpn_ver
     print_usage
 elif [ "$1" = "version" ] || [ "$1" = "--version" ] || [ "$1" = "-v" ]; then
-    printf "setvpn version 1.0 [fev 06 2025].\n"
+    setvpn_ver
+
 else
     printf "\nInvalid function name. Please specify one of the following:\n"
     print_usage
