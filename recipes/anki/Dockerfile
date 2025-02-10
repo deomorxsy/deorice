@@ -6,30 +6,35 @@ COPY ./requirements.txt .
 ENV USER="myapp"
 WORKDIR "/home/${USER}/app"
 
-#RUN addgroup -g 1000 -S "${USER}" && \
-#    adduser -s /bin/sh -u 1000 -G "${USER}" \
-#        -h "/home/${USER}" -D "${USER}" && && \
-#    su "${USER}"
-
-#RUN apk upgrade && apk update && \
-#    apk add python3 py3-pip
-
-#USER "${USER}"
-
-
 RUN <<EOF
-set -e
+
+#set -e
+
+# install basic tools
+apk upgrade && apk update && \
+    apk add python3 py3-pip zstd xdg-utils \
+        nsxiv libx11 imlib2 libxft musl libexif fontconfig
+
 
 addgroup -g 1000 -S "${USER}" && \
 adduser -s /bin/sh -u 1000 -G "${USER}" \
     -h "/home/${USER}" -D "${USER}" && \
-su "${USER}" && \
+su "${USER}" && cd || return && \
 pip3 install --user --upgrade pip virtualenv --break-system-packages && \
 export PATH=$HOME/.local/bin/:$PATH && \
 virtualenv venv && source ./venv/bin/activate && \
 python3 -m ensurepip --default-pip && \
-pip3 install --no-cache-dir -r ./requirements.txt && \
 
+# get the release, decompress with zst, tar, and attempt to install.
+wget https://github.com/ankitects/anki/releases/download/25.02rc1/anki-25.02-linux-qt6.tar.zst
+zstd -d ./anki-25.02-linux-qt6.tar.zst
+tar -xvf anki-25.02-linux-qt6.tar
+cd ./anki-25.02-linux-qt6 || return
+. ./install.sh
+
+#pip3 install --no-cache-dir -r ./requirements.txt && \
+
+# always
 deactivate
 
 EOF

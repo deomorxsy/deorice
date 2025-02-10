@@ -8,11 +8,8 @@
 [![Neovim](https://img.shields.io/badge/Neovim%200.5+-green.svg?style=for-the-badge&logo=neovim)](https://neovim.io)
 </div>
 
-PS: For any interested readers, try to create your own configuration based on these dotfiles.
-
-PS2: Some of these are related with neovim running under tmux.
-
-PS3: The following is not intended to be gatekeeping how to use any of these tools. Its just a merge between a personal configuration for posterity.
+- PS: For any interested readers, try to create your own configuration based on these dotfiles.
+- PS2: Some of these are related with neovim running under tmux.
 
 ## Editors
 

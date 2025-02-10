@@ -2,6 +2,20 @@
 
 #v0.1.0
 
+install_bin() {
+    if [ -f ./scripts/setvpn.sh ] && [ -f /usr/bin/setvpn ]; then
+        if sudo cp ./scripts/setvpn.sh /usr/bin/setvpn; then
+            printf "\n|> setvpn installed with success.\n "
+        else
+            printf "\n|> It was not possible to install setvpn. :0\n"
+            printf "Error: %s\n" $?
+        fi
+
+    else
+        echo ue
+    fi
+}
+
 setvpn_ver() {
     printf "\nsetvpn v0.1.0 [fev 07 2025].\n"
 }
@@ -154,11 +168,14 @@ USAGE: setvpn [-options]
                 - shutwarp
                 - help
                 - version
+                - install
 eg,
-setvpn open   # open connection based on the built-in configuration file
-setvpn close  # close connection if it already exists
-setvpn setwarp host_alias # creates the VPN tunnel around a SSH connection to the host_alias
-setvpn shutwarp # closes the connection
+setvpn -open   # open connection based on the built-in configuration file
+setvpn -close  # close connection if it already exists
+setvpn -setwarp host_alias # creates the VPN tunnel around a SSH connection to the host_alias
+setvpn -shut # closes the connection
+setvpn -i # install setvpn
+
 See the man page and example file for more info.
 
 END
@@ -188,7 +205,8 @@ elif [ "$1" = "help" ] || [ "$1" = "--help" ] || [ "$1" = "-h" ]; then
     print_usage
 elif [ "$1" = "version" ] || [ "$1" = "--version" ] || [ "$1" = "-v" ]; then
     setvpn_ver
-
+elif [ "$1" = "-i" ] || [ "$1" = "--install" ]; then
+    install_bin
 else
     printf "\nInvalid function name. Please specify one of the following:\n"
     print_usage
