@@ -42,7 +42,7 @@
 	syntax on
 	filetype plugin indent on
 
-" Splits open at the bottom and right, which is non-retarded, unlike vim defaults.
+" Splits open at the bottom and right
 	set splitbelow
 	set splitright
 
