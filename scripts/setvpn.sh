@@ -45,6 +45,35 @@ fi
 ip a
 }
 
+warp() {
+
+if [ -f /usr/bin/yay ]; then
+    if ! [ -f /usr/bin/warp-svc ]; then
+        yay -S cloudflare-warp-bin --noconfirm
+    else
+        printf "\n|> warp-svc script found. Skipping install...\n"
+    fi
+else
+    printf "\n|> The yay package manager is not installed. Install it first. Exiting now...\n\n"
+fi
+
+# check if the warp daemon is inactive
+checkstatus=$(systemctl --no-pager status warp-svc | awk 'NR==3 {print $2}')
+
+if [ "$checkstatus" = "inactive" ]; then
+    sudo systemctl start warp-svc
+    printf "|> The daemon was inactive. Starting now...\n"
+    # give it time to bootstrap the network interface
+    sleep 8
+elif [ "$checkstatus" = "active" ]; then
+    printf "|> Daemon active. Skipping...\n"
+fi
+
+warp-cli registration new
+warp-cli connect
+
+}
+
 # wraps up a SSH connection with the WARP VPN
 setwarp() {
 
@@ -168,12 +197,16 @@ USAGE: setvpn [-options]
                 - shutwarp
                 - help
                 - version
+                - warp
                 - install
 eg,
 setvpn -open   # open connection based on the built-in configuration file
 setvpn -close  # close connection if it already exists
 setvpn -setwarp host_alias # creates the VPN tunnel around a SSH connection to the host_alias
 setvpn -shut # closes the connection
+setvpn -help # prints this help message
+setvpn -version # prints the program version
+setvpn -w | --warp | warp # creates the vpn tunnel
 setvpn -i # install setvpn
 
 See the man page and example file for more info.
@@ -205,6 +238,8 @@ elif [ "$1" = "help" ] || [ "$1" = "--help" ] || [ "$1" = "-h" ]; then
     print_usage
 elif [ "$1" = "version" ] || [ "$1" = "--version" ] || [ "$1" = "-v" ]; then
     setvpn_ver
+elif [ "$1" = "warp" ] || [ "$1" = "--warp" ] || [ "$1" = "-w" ]; then
+    warp
 elif [ "$1" = "-i" ] || [ "$1" = "--install" ]; then
     install_bin
 else
