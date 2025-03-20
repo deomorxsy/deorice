@@ -4,7 +4,10 @@ WORKDIR /tests
 COPY ./requirements.txt .
 
 ENV USER="myapp"
+ENV ANKI_TARBALL="https://github.com/ankitects/anki/releases/download/25.02/anki-25.02-linux-qt6.tar.zst"
+
 WORKDIR "/home/${USER}/app"
+
 
 RUN <<EOF
 
@@ -16,23 +19,34 @@ apk upgrade && apk update && \
         nsxiv libx11 imlib2 libxft musl libexif fontconfig
 
 
+USER="myapp"
+
+
 addgroup -g 1000 -S "${USER}" && \
-adduser -s /bin/sh -u 1000 -G "${USER}" \
-    -h "/home/${USER}" -D "${USER}" && \
-su "${USER}" && cd || return && \
+adduser -s /bin/sh -u 1000 -G "${USER}" -h "/home/${USER}" -D "${USER}" && \
+su "${USER}"
+
+
+ANKI_TARBALL="https://github.com/ankitects/anki/releases/download/25.02/anki-25.02-linux-qt6.tar.zst"
+
+cd || return && mkdir ./myapp && cd ./myapp/ || return && \
 pip3 install --user --upgrade pip virtualenv --break-system-packages && \
 export PATH=$HOME/.local/bin/:$PATH && \
 virtualenv venv && source ./venv/bin/activate && \
-python3 -m ensurepip --default-pip && \
+python3 -m ensurepip --default-pip
 
 # get the release, decompress with zst, tar, and attempt to install.
-wget https://github.com/ankitects/anki/releases/download/25.02rc1/anki-25.02-linux-qt6.tar.zst
+wget "${ANKI_TARBALL}"
+
 zstd -d ./anki-25.02-linux-qt6.tar.zst
 tar -xvf anki-25.02-linux-qt6.tar
 cd ./anki-25.02-linux-qt6 || return
 . ./install.sh
 
 #pip3 install --no-cache-dir -r ./requirements.txt && \
+
+
+
 
 # always
 deactivate
