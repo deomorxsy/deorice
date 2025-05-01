@@ -89,6 +89,8 @@ let g:python3_host_prog = "${HOME}/.config/nvim/venv_nvim/neovim3/bin/python"
 nvim --headless -c 'so' -c 'PackerSync' "${HOME}/.config/nvim/lua/user/packer.lua"
 ```
 
+### emacs
+based on MELPA elisp rice, it follows the XDG spec.
 
 Main plugins used in this vim/neovim rice, not ordered:
 - [telescope](https://github.com/nvim-telescope/telescope.nvim) or [chadtree](https://github.com/ms-jpq/chadtree) for fuzzy search. The second is a whole [completion client](https://www.reddit.com/r/neovim/comments/p4m8vt/i_spent_1_year_of_my_life_on_making_a_fast_as/) spawning sqlite vms in memory and integrating with other external programs;

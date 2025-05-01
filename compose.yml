@@ -7,12 +7,21 @@ services:
       context: "."
       dockerfile: "./.config/nvim/Dockerfile"
       tags:
-        - "localhost:5000/deonvim:latest"
+        - "localhost:5000/nvim-deorice:latest"
     stop_signal: SIGINT
+  anki:
+    environment:
+      - git_hash
+    build:
+      context: "."
+      dockerfile: "./recipes/anki/Dockerfile"
+      tags:
+        - "localhost:5000/anki-deorice:latest"
   dwm:
     build:
       context: "./wms/dwm/"
+      dockerfile: "./."
       tags:
-        - "localhost:5000/deodwm:latest"
+        - "localhost:5000/dwm-deorice:latest"
     stop_signal: SIGINT
 
