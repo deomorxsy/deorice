@@ -1,4 +1,7 @@
-version: "3.8"
+#version: "3.8"
+volumes:
+  anki-data:
+
 services:
   nvim:
     environment:
@@ -9,7 +12,17 @@ services:
       tags:
         - "localhost:5000/nvim-deorice:latest"
     stop_signal: SIGINT
-  anki:
+  anki-desktop:
+        image: mikescherbakov/anki-desktop-docker:latest
+        container_name: anki-desktop
+        ports:
+            - "3000:3000"
+            - "8765:8765"
+        volumes:
+            - anki-data:/config/.local/share
+        restart: unless-stopped
+  # self-hosted anki ui
+  shanki:
     environment:
       - git_hash
     build:

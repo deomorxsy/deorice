@@ -45,3 +45,6 @@ luac.out
 scripts/brk_*.conf
 coq_deps.txt
 perlnavigator.txt
+
+# artifacts
+artifacts/anki*
