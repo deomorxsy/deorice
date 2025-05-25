@@ -1,4 +1,4 @@
--- local lsp_zero = require('lsp-zero')
+local lsp_zero = require('lsp-zero')
 -- Always show sign column.
 -- The sign column is used by the LSP support to show diagnostics
 -- (the E, W, etc. characters on the side)
@@ -63,7 +63,12 @@ end
 
 -- Enable lean.nvim, and enable abbreviations and mappings
 require('lean').setup{
-    lsp = { on_attach = on_attach },
+    lsp = {
+        -- on_attach = on_attach
+        on_attach = nil,
+        -- set it to false to prevent it from setting up leanls
+        enable = false
+    },
     mappings = true,
 }
 

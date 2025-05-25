@@ -233,7 +233,66 @@ require("lazy").setup({
     { 'lervag/vimtex' },
 
 
+    {
+        "nvimtools/hydra.nvim",
+        config = function ()
+            local Hydra = require("hydra")
+            Hydra({
+            -- create hydras
+            name = "tiamat",
+            mode = "n",
+            body = "<leader>o",
+            hint = [[
+                _h_: <- _l_: -> _q_: exit
+            ]],
+            config = {
+                -- see :h hydra-heads
+                exit = false, -- set the default exit value for each head in the hydra
 
+                -- decides what to do when a key which doesn't belong to any head is pressed
+                --   nil: hydra exits and foreign key behaves normally, as if the hydra wasn't active
+                --   "warn": hydra stays active, issues a warning and doesn't run the foreign key
+                --   "run": hydra stays active, runs the foreign key
+                foreign_keys = nil,
+
+                -- see `:h hydra-colors`
+                color = "red", -- "red" | "amaranth" | "teal" | "pink"
+
+                -- define a hydra for the given buffer, pass `true` for current buf
+                buffer = nil,
+
+                -- when true, summon the hydra after pressing only the `body` keys. Normally a head is
+                -- required
+                invoke_on_body = true,
+
+                -- description used for the body keymap when `invoke_on_body` is true
+                desc = nil, -- when nil, "[Hydra] .. name" is used
+
+                -- see :h hydra-hooks
+                on_enter = nil, -- called when the hydra is activated
+                on_exit = nil, -- called before the hydra is deactivated
+                on_key = nil, -- called after every hydra head
+
+                -- timeout after which the hydra is automatically disabled. Calling any head
+                -- will refresh the timeout
+                --   true: timeout set to value of 'timeoutlen' (:h 'timeoutlen')
+                --   5000: set to desired number of milliseconds
+                timeout = false, -- by default hydras wait forever
+
+                -- see :h hydra-hint-hint-configuration
+                hint =  {
+                    position = "bottom",
+                    border = "rounded",
+                },
+            },
+            heads = {
+                { "h", "<C-w>h", { desc = "Window left" } },
+                { "l", "<C-w>l", { desc = "Window right" } },
+                {"q", nil, { exit = true, desc = "Quit Hydra"} },
+            }
+        })
+        end
+    },
     -- NotebookNavigator for Python REPL
     {
 
@@ -249,31 +308,31 @@ require("lazy").setup({
             "hkupty/iron.nvim", -- repl provider
             -- "akinsho/toggleterm.nvim", -- alternative repl provider
             -- "benlubas/molten-nvim", -- alternative repl provider
-            "anuvyklack/hydra.nvim",
+            --"anuvyklack/hydra.nvim",
         },
-    event = "VeryLazy",
-    config = function()
-        local nn = require "notebook-navigator"
-        nn.setup({
-            cell_markers = {
-            -- python = "# %%",
-            },
-            activate_hydra_keys = "<leader>h" ,
-            show_hydra_hint = true,
-            hydra_keys = {
-                comment = "c",
-                run = "X",
-                run_and_move = "x",
-                move_up = "k",
-                move_down = "j",
-                add_cell_before = "a",
-                add_cell_after = "b",
-            },
-            repl_provider = "auto",
-            syntax_highlight = false,
-            cell_highlight_group = "Folded",
-        })
-    end,
+        event = "VeryLazy",
+        config = function()
+            local nn = require "notebook-navigator"
+            nn.setup({
+                cell_markers = {
+                -- python = "# %%",
+                },
+                -- activate_hydra_keys = "<leader>h" ,
+                -- show_hydra_hint = true,
+                -- hydra_keys = {
+                --     comment = "c",
+                --     run = "X",
+                --     run_and_move = "x",
+                --     move_up = "k",
+                --     move_down = "j",
+                --     add_cell_before = "a",
+                --     add_cell_after = "b",
+                -- },
+                repl_provider = "auto",
+                syntax_highlight = false,
+                cell_highlight_group = "Folded",
+            })
+        end,
     },
     --{
     --    config = function ()

@@ -1,4 +1,12 @@
 local lsp_zero = require('lsp-zero')
+
+--lsp.preset('recommended')
+lsp_zero.preset('recommended')
+
+
+--lsp_zero.ensure_installed({ 'leanls' })
+
+
 --
 -- lsp_zero.on_attach(function(client, bufnr)
 --   local opts = {buffer = bufnr, remap = false}
@@ -91,3 +99,5 @@ lspconfig.gopls.setup {
     filetypes = { "go", "gomod", "gowork", "gotmpl" },
     root_dir = util.root_pattern("go.work", "go.mod", ".git"),
 }
+
+lsp_zero.setup()
