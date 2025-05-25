@@ -358,7 +358,7 @@ require("lazy").setup({
   install = { colorscheme = { "habamax" } },
   -- automatically check for plugin updates
   -- notify is relative to the messages at startup.
-  checker = { 
+  checker = {
       enabled = true,
       notify = false,
   },
