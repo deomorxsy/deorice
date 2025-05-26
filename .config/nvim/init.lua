@@ -10,3 +10,16 @@ require("settings") -- user.set
 --require("plugins.packerSpecs") -- Ensure the plugins are loaded.
 
 -- configure treesitter
+
+-- configure virtual text diagnostics
+vim.diagnostic.config({
+    virtual_text = {
+        prefix = '■',
+        spacing = 2,
+    },
+    signs = true,
+    underline = true,
+    update_in_insert = false,
+    severity_sort = true,
+})
+
