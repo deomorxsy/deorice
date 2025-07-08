@@ -12,6 +12,15 @@ services:
       tags:
         - "localhost:5000/nvim-deorice:latest"
     stop_signal: SIGINT
+  jupynvim:
+    environment:
+      - git_hash
+    build:
+      context: "."
+      dockerfile: "/.config/nvim/other-apps/ipynb/Dockerfile.headers"
+      tags:
+        - "localhost:5000/jupynvim:latest"
+    stop_signal: SIGINT
   anki-desktop:
         image: mikescherbakov/anki-desktop-docker:latest
         container_name: anki-desktop

@@ -1,0 +1,27 @@
+# Remote plugin API
+pynvim==0.5.2
+
+# Interact with jupyter
+jupyter_client==8.6.3
+
+# Digital Image Processing and overall displaying
+ueberzug==18.3.1
+pillow==11.2.1
+
+# Display SVG images
+cairosvg==2.8.2
+
+# Display TeX formulas
+pnglatex==1.1
+
+# Display Plotly figures
+plotly==6.1.2
+kaleido==1.0.0
+pyperclip==1.9.0
+
+# base jupyter kernel
+ipykernel==6.29.5
+
+# needs linux-headers ethtool
+psutil==7.0.0
+

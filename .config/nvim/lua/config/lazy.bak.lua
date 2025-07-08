@@ -233,21 +233,7 @@ require("lazy").setup({
     -- " Optional: better Rnoweb support (LaTeX completion)
     { 'lervag/vimtex' },
 
-    {
-    },
-    {
-        "dccsillag/magma-nvim",
-        build = ":UpdateRemotePlugins",
-        config = function()
-            vim.cmd("let g:magma_automatically_open_output = v:false")
-            vim.keymap.set("n", "<leader>r", ":MagmaEvaluateOperator<CR>", { silent = true })
-            vim.keymap.set("n", "<leader>rr", ":MagmaEvaluateLine<CR>", { silent = true })
-            vim.keymap.set("x", "<leader>r", ":<C-u>MagmaEvaluateVisual<CR>", { silent = true })
-            vim.keymap.set("n", "<leader>rc", ":MagmaReevaluateCell<CR>", { silent = true })
-            vim.keymap.set("n", "<leader>rd", ":MagmaDelete<CR>", { silent = true })
-            vim.keymap.set("n", "<leader>ro", ":MagmaShowOutput<CR>", { silent = true })
-        end
-    },
+
     {
         "nvimtools/hydra.nvim",
         config = function ()
