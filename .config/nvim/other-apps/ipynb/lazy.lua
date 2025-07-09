@@ -163,19 +163,73 @@ require("lazy").setup({
 
     {
     },
+
+    -- Code cell running, setup otter
     {
-        "dccsillag/magma-nvim",
-        build = ":UpdateRemotePlugins",
-        config = function()
-            vim.cmd("let g:magma_automatically_open_output = v:false")
-            vim.keymap.set("n", "<leader>r", ":MagmaEvaluateOperator<CR>", { silent = true })
-            vim.keymap.set("n", "<leader>rr", ":MagmaEvaluateLine<CR>", { silent = true })
-            vim.keymap.set("x", "<leader>r", ":<C-u>MagmaEvaluateVisual<CR>", { silent = true })
-            vim.keymap.set("n", "<leader>rc", ":MagmaReevaluateCell<CR>", { silent = true })
-            vim.keymap.set("n", "<leader>rd", ":MagmaDelete<CR>", { silent = true })
-            vim.keymap.set("n", "<leader>ro", ":MagmaShowOutput<CR>", { silent = true })
-        end
+        "quarto-dev/quarto-nvim",
+        dependencies = {
+          "jmbuhr/otter.nvim",
+          "nvim-treesitter/nvim-treesitter",
+        },
     },
+
+    -- LSP features in markdown cells
+    {
+        'jmbuhr/otter.nvim',
+        dependencies = {
+          'nvim-treesitter/nvim-treesitter',
+        },
+        opts = {},
+    },
+
+    -- Notebook conversion
+    {
+        "GCBallesteros/jupytext.nvim",
+        lazy = false,
+        opts = {
+            -- on-disk representation
+            style = "markdown"
+        },
+        config = true,
+    },
+
+    -- Image rendering (ueberzug backend)
+    {
+        "3rd/image.nvim",
+        build = false, -- so that it doesn't build the rock https://github.com/3rd/image.nvim/issues/91#issuecomment-2453430239
+        opts = {
+            processor = "magick_cli",
+        }
+    },
+    -- Run cells interactively
+    {
+        "benlubas/molten-nvim",
+        version = "^1.0.0", -- use version <2.0.0 to avoid breaking changes
+        dependencies = { "3rd/image.nvim" },
+        build = ":UpdateRemotePlugins",
+        init = function()
+            -- these are examples, not defaults. Please see the readme
+            vim.g.molten_image_provider = "image.nvim"
+            vim.g.molten_output_win_max_height = 20
+        end,
+    },
+
+
+    -- {
+    --     "dccsillag/magma-nvim",
+    --     build = ":UpdateRemotePlugins",
+    --     config = function()
+    --         vim.cmd("let g:magma_automatically_open_output = v:false")
+    --         vim.keymap.set("n", "<leader>r", ":MagmaEvaluateOperator<CR>", { silent = true })
+    --         vim.keymap.set("n", "<leader>rr", ":MagmaEvaluateLine<CR>", { silent = true })
+    --         vim.keymap.set("x", "<leader>r", ":<C-u>MagmaEvaluateVisual<CR>", { silent = true })
+    --         vim.keymap.set("n", "<leader>rc", ":MagmaReevaluateCell<CR>", { silent = true })
+    --         vim.keymap.set("n", "<leader>rd", ":MagmaDelete<CR>", { silent = true })
+    --         vim.keymap.set("n", "<leader>ro", ":MagmaShowOutput<CR>", { silent = true })
+    --     end
+    -- },
+
+
     {
         "nvimtools/hydra.nvim",
         config = function ()

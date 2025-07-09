@@ -1,10 +1,4 @@
 # Context: ./.config/nvim/other-apps/ipynb/
-
-# This will raise error due to orjson and PyO3
-# FROM python:3.14-rc-alpine3.22 as builder
-# podman pull python:3.14-rc-alpine3.22
-# podman run --rm -it --entrypoint=/bin/sh python:3.14-rc-alpine3.22
-
 FROM python:3.13-alpine3.22 as builder
 
 # podman pull python:3.13-alpine3.22
@@ -18,45 +12,11 @@ ENV USER="nvim"
 
 RUN <<EOF
 
-# (
-# cat <<FIRST
-# https://dl-cdn.alpinelinux.org/alpine/v3.22/main
-# https://dl-cdn.alpinelinux.org/alpine/v3.22/community
-# FIRST
-# ) > /etc/apk/repositories
-
-
-# apk upgrade && apk update && \
-# apk add --no-cache \
-#     build-base \
-#     libx11-dev \
-#     libxext-dev \
-#     libxres-dev \
-#     xorgproto \
-#     python3-dev \
-#     py3-pip \
-#     meson \
-#     ninja \
-#     cmake \
-#     pkgconfig \
-#     py3-setuptools \
-#     py3-wheel \
-#     p3-dev musl-dev linux-headers
-
-
-# apk upgrade && apk update && \
-    # apk add --no-cache gcc
-    # apk add --no-cache clang
-    # apk add --no-cache neovim python3 py3-pip py3-pkgconfig luarocks ripgrep git cmake nodejs npm libx11-dev
-
-
 apk upgrade && apk update && \
     apk add --no-cache build-base linux-headers \
         neovim luarocks git nodejs npm \
         libx11-dev xorgproto \
-        clang meson ninja cmake pkgconfig ethtool
-
-
+        clang meson ninja cmake pkgconfig ethtool imagemagick
 
 
 (
@@ -68,10 +28,8 @@ HMM
 ) > /etc/apk/repositories
 
 apk add libxext libxext-dev libxres-dev
-# ethtool
-# zig: c compiler
-# node: provider for nvim's treesitter
-# python: provider for nvim
+
+#
 
 EOF
 

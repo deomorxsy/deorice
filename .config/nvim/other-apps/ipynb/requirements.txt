@@ -19,9 +19,14 @@ plotly==6.1.2
 kaleido==1.0.0
 pyperclip==1.9.0
 
-# base jupyter kernel
+# Base jupyter kernel
 ipykernel==6.29.5
 
-# needs linux-headers ethtool
+# Needs linux-headers ethtool
 psutil==7.0.0
 
+# For GCBallesteros/jupytext.nvim notebook conversion
+jupytext==1.17.2
+
+# Papermill for later
+papermill==2.6.0
