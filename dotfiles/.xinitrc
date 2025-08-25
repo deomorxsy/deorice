@@ -49,13 +49,26 @@ picom -f &
 nitrogen --restore &
 
 #statusbar date with xsetroot
-while true; do
-    xsetroot -name "$(date)"
-    sleep 1s #time update every minute
-done &
+# while true; do
+#     xsetroot -name "$(date)"
+#     sleep 1s #time update every minute
+# done &
 
 #Execute DWM
-exec dwm >> ~/.dwm.log
+# exec dwm >> ~/.dwm.log
+
+# xmonad config
+# after upgrade: xmonad --recompile
+#
+XMONAD_PATH="$HOME/.config/xmonad"
+mkdir -p "${XMONAD_PATH}"
+
+(
+cat <<EOF
+EOF
+) | tee "${XMONAD_PATH}/xmonad.hs"
+
+exec xmonad >> ~/.xmonad.log
 
 # Setting PATH for dmenu
 #export PATH="~/bin/Discord:${PATH}"
