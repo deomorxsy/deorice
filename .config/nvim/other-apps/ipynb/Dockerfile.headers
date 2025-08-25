@@ -8,7 +8,7 @@ FROM python:3.13-alpine3.22 as builder
 WORKDIR /tests
 COPY ./.config/nvim/other-apps/ipynb/requirements.txt .
 
-ENV USER="nvim"
+ENV NVIM_USER="nvim"
 
 RUN <<EOF
 
@@ -37,20 +37,26 @@ EOF
 RUN <<EOF
 set -e
 
-USER="nvim"
+NVIM_USER="nvim"
+
+# Copy files to /test beforehand
+mkdir -p /tests/
+chown -R $NVIM_USER:$NVIM_USER /tests/
+
 
 # set python provider
-addgroup -g 1000 -S "${USER}" && \
-adduser -s /bin/sh -u 1000 -G "${USER}" \
-    -h "/home/${USER}" -D "${USER}" && \
+addgroup -g 1000 -S "${NVIM_USER}" && \
+adduser -s /bin/sh -u 1000 -G "${NVIM_USER}" \
+    -h "/home/${NVIM_USER}" -D "${NVIM_USER}" && \
 
-mkdir -p /home/"${USER}/.config/nvim/" && \
-chown -R "$USER:$USER" /home/"${USER}"/.config && \
-cd /home/"${USER}/.config/nvim/" && \
+mkdir -p /home/"${NVIM_USER}/.config/nvim/" && \
+chown -R "$NVIM_USER:$NVIM_USER" /home/"${NVIM_USER}"/.config && \
+cd /home/"${NVIM_USER}/.config/nvim/" && \
 
 npm install -g tree-sitter-cli && \
 
-su "${USER}" -c '
+
+su "${NVIM_USER}" -c '
 export PATH=$HOME/.local/bin/:$PATH && \
 pip3 install --user --upgrade pip virtualenv --break-system-packages && \
 virtualenv "$HOME"/.config/nvim/venv_nvim/neovim3 && source ./venv_nvim/neovim3/bin/activate && \
@@ -62,7 +68,22 @@ git clone https://github.com/deomorxsy/deorice.git
 cp -r "$HOME"/.config/nvim/deorice/.config/* "$HOME"/.config/
 
 cp ./deorice/.config/nvim/other-apps/ipynb/treesitter.lua ./after/plugin/treesitter.lua
+cp ./deorice/.config/nvim/other-apps/ipynb/lazy.lua ./lua/config/lazy.lua
 
+rm ./after/plugin/lean.lua
+
+
+NOTE=/tests/pyarrow_livy_test.ipynb
+
+# source ./venv_nvim/neovim3/bin/activate
+
+nvim --headless \
+    -c "lua print('Lazy syncing + jupytext test…')" \
+    -c 'Lazy sync' \
+    -c 'UpdateRemotePlugins' \
+    -c "edit $NOTE" \
+    -c 'write' \
+    -c 'quitall'
 
 # nvim --headless -u NONE -c "luafile $dir/hullo.lua" -c ":qa" >> /test/test_result_"$(basename "$dir")"_.txt 2>&1
 # nvim --headless -u NONE -c "lua os.execute('mkdir -p ./other-apps/ipynb/')" -c ":qa"
@@ -89,8 +110,8 @@ npm install -g tree-sitter-cli
 EOF
 
 
-#USER 1000
-#WORKDIR /$USER/rice/
+#NVIM_USER 1000
+#WORKDIR /$NVIM_USER/rice/
 
 COPY . .
 RUN ls -allhtr
@@ -114,7 +135,7 @@ for dir in /test/*; do
 done
 }
 
-su "${USER}" && nvim_tests
+su "${NVIM_USER}" && nvim_tests
 EOF
 
 ENTRYPOINT [ "nvim", "--headless", "-c" , "'so'", "-c", "'PackerSync'", " "${HOME}/.config/nvim/lua/user/packer.lua" " ]

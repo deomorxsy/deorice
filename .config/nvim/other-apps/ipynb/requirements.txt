@@ -28,5 +28,5 @@ psutil==7.0.0
 # For GCBallesteros/jupytext.nvim notebook conversion
 jupytext==1.17.2
 
-# Papermill for later
+# Papermill for later headless execution of ipynb
 papermill==2.6.0
