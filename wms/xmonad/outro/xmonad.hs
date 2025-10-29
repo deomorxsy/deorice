@@ -23,9 +23,9 @@ customStartupHook :: x ()
 customStartupHook = do
     -- script sets up tmux where it left
     spawnOnce "VALUE='LAST_SESSION' . ./config/scripts/tmux-setter.sh"
-    spawnOnce "picom -f &"              -- compositor
-    spawnOnce "nitrogen --restore &"    -- background browser and setter
-    spawnOnce ""                        --
+    spawnOnce "nitrogen --restore &"
+    spawnOnce ""
+    spawnOnce ""
     spawnOnce ""
     spawnOnce ""
     spawnOnce ""
@@ -51,7 +51,6 @@ main = do
             }
         , modMask = mod4Mask            -- Rebind mod to super key
         } `additionalKeys` [
-            -- .|. syntax comes from Data.Bits that exports it by default from the 0.9 release on.
             ((mod4Mask .|. shiftMask, xK_z), spawn "xscreensaver-command -lock; xset dpms force off")
             , ((controlMask, xK_Print), spawn "sleep 0.2; scrot -s")
             , ((0, xK_Print), spawn "scrot")
