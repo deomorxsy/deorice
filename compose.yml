@@ -1,8 +1,23 @@
 #version: "3.8"
 volumes:
   anki-data:
+  xmonad-data:
+    driver_opts:
+      type: "bind"
+      o: "ro"
 
 services:
+  xmonad:
+    environment:
+      - git_hash
+    build:
+      context: "."
+      dockerfile: "./.config/wms/xmonad/Dockerfile"
+      tags:
+        - "localhost:5000/xmonad:latest"
+    volumes:
+            - ./wms/xmonad/:/app/:ro
+    stop_signal: SIGINT
   nvim:
     environment:
       - git_hash
