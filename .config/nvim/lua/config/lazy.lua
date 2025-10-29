@@ -97,7 +97,10 @@ require("lazy").setup({
                 {'hrsh7th/cmp-nvim-lsp'},
             },
             init = function ()
-                local lsp_defaults = require('lspconfig').util.default_config
+                -- local lsp_defaults = require('lspconfig').util.default_config
+                -- local lsp_defaults = vim.lsp.config().util.default_config
+                -- local hmm = vim.lsp.config.string.u
+                local lsp_defaults = vim.lsp.config
 
                 -- add cmp_nvim_lsp capabilities settings to lspconfig
                 -- this should be executed before you configure any language server
@@ -231,7 +234,18 @@ require("lazy").setup({
     { 'ncm2/ncm2-ultisnips' },
 
     -- " Optional: better Rnoweb support (LaTeX completion)
-    { 'lervag/vimtex' },
+    {
+        'lervag/vimtex',
+        lazy = false,
+        init = function ()
+            vim.g.vimtex_compiler_latexmk_engines = {
+                --_ = "-lualatex"
+                _ = "-xelatex"
+            }
+            vim.g.vimtex_view_method = "skim"
+
+        end,
+    },
 
     {
     },
@@ -297,7 +311,7 @@ require("lazy").setup({
                 -- see :h hydra-hint-hint-configuration
                 hint =  {
                     position = "bottom",
-                    border = "rounded",
+                    -- border = "rounded",
                 },
             },
             heads = {

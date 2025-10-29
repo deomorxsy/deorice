@@ -35,12 +35,17 @@ require('mason-lspconfig').setup({
     --
     -- tsserver/ts_ls is a Neovim port of Matt Pocock's ts-error-translator for VSCode
     -- for turning messy and confusing TypeScript errors into plain English.
-    ensure_installed = {'rust_analyzer', 'eslint', 'gopls'},
+    -- gopls also
+    ensure_installed = {'rust_analyzer', 'eslint'},
+
     handlers = {
         lsp_zero.default_setup,
         lua_ls = function()
           local lua_opts = lsp_zero.nvim_lua_ls()
-          require('lspconfig').lua_ls.setup(lua_opts)
+          -- require('lspconfig').lua_ls.setup(lua_opts)
+          -- The `require('lspconfig')` "framework" is deprecated, use vim.lsp.config (see :help lspconfig-nvim-0.11) instead.
+          -- Feature will be removed in nvim-lspconfig v3.0.0
+          vim.lsp.config.lua_ls.setup(lua_opts)
         end,
 
         function(server_name)
@@ -49,7 +54,10 @@ require('mason-lspconfig').setup({
             --    server_name = "ts_ls"
             --end
             local capabilities = require("cmp_nvim_lsp").default_capabilities()
-            require("lspconfig")[server_name].setup({
+            -- require("lspconfig")[server_name].setup({})
+            -- The `require('lspconfig')` "framework" is deprecated, use vim.lsp.config (see :help lspconfig-nvim-0.11) instead.
+            -- Feature will be removed in nvim-lspconfig v3.0.0
+            vim.lsp.config.lua_ls.setup({
                 capabilities = capabilities,
             })
         end,
@@ -89,15 +97,28 @@ cmp.setup({
 --local on_attach = require("plugins.configs.lspconfig").on_attach
 --local capabilities = require("plugins.configs.lspconfig").capabilities
 
-local lspconfig = require("lspconfig")
-local util = require "lspconfig/util"
+-- local lspconfig = require("lspconfig")
+-- local util = require "lspconfig/util"
+local lspconfig = vim.lsp.config
+-- local util = lspconfig.util
 
-lspconfig.gopls.setup {
+
+-- lspconfig.gopls.setup({
+--     on_attach = lsp_zero.on_attach,
+--     capabilities = require("cmp_nvim_lsp").default_capabilities(),
+--     cmd = {"gopls"},
+--     filetypes = { "go", "gomod", "gowork", "gotmpl" },
+--     root_dir = util.root_pattern("go.work", "go.mod", ".git"),
+-- })
+
+lspconfig("gopls", {
     on_attach = lsp_zero.on_attach,
     capabilities = require("cmp_nvim_lsp").default_capabilities(),
     cmd = {"gopls"},
     filetypes = { "go", "gomod", "gowork", "gotmpl" },
-    root_dir = util.root_pattern("go.work", "go.mod", ".git"),
-}
+    root_dir = lspconfig("util", { ... }).root_pattern("go.work", "go.mod", ".git"),
+    -- root_dir = vim.lsp.config["util"].root_pattern("go.work", "go.mod", ".git"),
+    -- vim.lsp.config("util", {}).root_pattern
+})
 
 lsp_zero.setup()
