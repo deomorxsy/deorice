@@ -1,10 +1,7 @@
 #!/bin/sh
-#
-#
-#
 
 cloud_setup() {
-PASSWD="{{DRIVE_PASSWD}}"
+export PASSWD="${DRIVE_PASSWD}"
 
 cp ../../dotfiles/.cvsignore ~/backup/gdrive/
 
@@ -12,10 +9,14 @@ cp ../../dotfiles/.cvsignore ~/backup/gdrive/
 
 nvim_setup() {
 
-mkdir -p "$HOME"/.config/nvim/
+NEOVIM_CONFIG_PATH="${HOME}"/.config/nvim/
+DOTFILE_PATH_REPO="./.config/nvim"
 
-if [ -d ./.config/nvim/ ]; then
-    cp -r ./.config/nvim/* "$HOME"/.config/nvim/
+# always idempotent
+mkdir -p "${DOTFILE_PATH_REPO}"
+
+if [ -d "${DOTFILE_PATH_REPO}" ]; then
+    cp -r "${DOTFILE_PATH_REPO}"/* "${NEOVIM_CONFIG_PATH}"
     printf "\n|> Neovim configuration synchronized with success! \o/ \n\n"
 else
     printf "\n|> Error: Neovim configuration directory not found. Exiting now...\n\n"
