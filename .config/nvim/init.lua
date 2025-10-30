@@ -23,3 +23,19 @@ vim.diagnostic.config({
     severity_sort = true,
 })
 
+vim.g.vimtex_compiler_latexmk = vim.tbl_deep_extend("force",
+    vim.g.vimtex_compiler_latexmk or {},
+    {
+        aux_dir = "aux",
+        out_dir = "output",
+        executable = "latexmk",
+        options = {
+            "-pdf",
+            "-interaction=nostopmode",
+            "-file-line-error",
+            "-shell-escape",
+        },
+    }
+)
+
+
