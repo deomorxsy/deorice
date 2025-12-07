@@ -69,6 +69,7 @@ require("lazy").setup({
                 { "mason-org/mason.nvim", opts = {} },
                 "neovim/nvim-lspconfig",
             },
+        },
 
         -- Autocompletion
         {
