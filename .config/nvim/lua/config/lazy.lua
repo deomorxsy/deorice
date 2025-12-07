@@ -59,8 +59,16 @@ require("lazy").setup({
       branch = 'v3.x',
       dependencies = {
         --- Uncomment these if you want to manage LSP servers from neovim
-        {'williamboman/mason.nvim'},
-        {'williamboman/mason-lspconfig.nvim'},
+        -- {'mason-org/mason.nvim'},
+        {
+            'mason-org/mason-lspconfig.nvim',
+            opts = {
+                ensure_installed = { "lua_ls", "rust_analyzer" },
+            },
+            dependencies = {
+                { "mason-org/mason.nvim", opts = {} },
+                "neovim/nvim-lspconfig",
+            },
 
         -- Autocompletion
         {
