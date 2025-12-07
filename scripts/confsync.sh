@@ -45,9 +45,9 @@ END
 
 
 # Check the argument passed from the command line
-if [ "$1" = "nvim" ] || [ "$1" = "-nvim" ] || [ "$1" = "--nvim" ] || [ "$1" = "--neovim" ] ; then
+if [ "$MODE" = "synch" ] || [ "$MODE" = "-synch" ] || [ "$MODE" = "--synch" ] || [ "$MODE" = "--synchronize" ] ; then
     nvim_setup
-elif [ "$1" = "help" ] || [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+elif [ "$MODE" = "help" ] || [ "$MODE" = "-h" ] || [ "$MODE" = "--help" ]; then
     print_usage
 else
     printf "\n|> Invalid function name. Please specify one of: [function1, nvim, help]\n\n"
