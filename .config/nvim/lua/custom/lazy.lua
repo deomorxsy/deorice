@@ -59,8 +59,17 @@ require("lazy").setup({
       branch = 'v3.x',
       dependencies = {
         --- Uncomment these if you want to manage LSP servers from neovim
-        {'williamboman/mason.nvim'},
-        {'williamboman/mason-lspconfig.nvim'},
+        -- {'mason-org/mason.nvim'},
+        {
+            'mason-org/mason-lspconfig.nvim',
+            opts = {
+                ensure_installed = { "lua_ls", "rust_analyzer" },
+            },
+            dependencies = {
+                { "mason-org/mason.nvim", opts = {} },
+                "neovim/nvim-lspconfig",
+            },
+        },
 
         -- Autocompletion
         {
@@ -96,17 +105,45 @@ require("lazy").setup({
                 -- Autocompletion
                 {'hrsh7th/cmp-nvim-lsp'},
             },
+            opts = {
+                servers = {
+                    ['*'] = {
+                        keys = {
+                            -- add a keymap
+                            { "H", "<cmd>echo 'hello'<cr>", desc = "Say Hello" },
+                            -- Change an existing keymap
+                            { "K", "<cmd>echo 'custom hover'<cr>", desc = "Custom Hover" },
+                            -- Disable a keymap
+                            { "gd", false },
+
+                            -- old ones
+                            { "n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", desc = "hmm..." },
+                            { "n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", desc = "hmm..." },
+                            { "n", "gd", "<cmd>lua vim.lsp.buf.definition()<cr>", desc = "hmm..." },
+                            { "n", "gD", "<cmd>lua vim.lsp.buf.declaration()<cr>", desc = "hmm..." },
+                            { "n", "gi", "<cmd>lua vim.lsp.buf.implementation()<cr>", desc = "hmm..." },
+                            { "n", "go", "<cmd>lua vim.lsp.buf.type_definition()<cr>", desc = "hmm..." },
+                            { "n", "gr", "<cmd>lua vim.lsp.buf.references()<cr>", desc = "hmm..." },
+                            { "n", "gs", "<cmd>lua vim.lsp.buf.signature_help()<cr>", desc = "hmm..." },
+                            { "n", "<F2>", "<cmd>lua vim.lsp.buf.rename()<cr>", desc = "hmm..." },
+                            { {"n", "x"}, "<F3>", "<cmd>lua vim.lsp.buf.format({async = true})<cr>", desc = "hmm..." },
+                            { "n", "<F4>", "<cmd>lua vim.lsp.buf.code_action()<cr>", desc = "hmm..." },
+
+                        },
+                    },
+                },
+            },
+        --},
             init = function ()
                 -- local lsp_defaults = require('lspconfig').util.default_config
+                -- local lsp_defaults = vim.lsp.config().util.default_config
+                -- local hmm = vim.lsp.config.string.u
+                -- vim.lsp.config.
                 local lsp_defaults = vim.lsp.config
 
                 -- add cmp_nvim_lsp capabilities settings to lspconfig
                 -- this should be executed before you configure any language server
-                lsp_defaults.capabilities = vim.tbl_deep_extend(
-                'force',
-                lsp_defaults.capabilities,
-                require('cmp_nvim_lsp').default_capabilities()
-                )
+                lsp_defaults.capabilities = vim.tbl_deep_extend('force', lsp_defaults.capabilities, require('cmp_nvim_lsp').default_capabilities())
 
                 -- LspAttach is used to enable features when
                 -- there is a language server active for the file
@@ -141,12 +178,84 @@ require("lazy").setup({
         },
     },
 
+    {'julian/lean.nvim'},
+    -- -- julian's lean.nvim LSP
+    --  {
+    --      'julian/lean.nvim',
+    --      dependencies = {
+    --          'VonHeikemen/lsp-zero.nvim',
+    --          --'neovim/nvim-lspconfig',
+    --          'nvim-lua/plenary.nvim',
+
+    --          -- Autocompletion
+    --          -- below already is being imported by
+    --          -- lsp-zero dependency tree
+
+    --          --'hrsh7th/nvim-cmp',
+    --          --'hrsh7th/cmp-nvim-lsp',
+    --          --'hrsh7th/cmp-buffer',
+    --          --'hrsh7th/cmp-path',
+    --      },
+    --      opts = {
+    --          mappings = true,
+    --      }
+    --  },
+
+
+    -- "=====> https://github.com/andweeb/presence.nvim
+    -- { 'andweeb/presence.nvim' }
+
+    {
+        "andweeb/presence.nvim",
+        config = function()
+            require("presence"):setup({
+            -- General options
+            auto_update         = true,                       -- Update activity based on autocmd events (if `false`, map or manually execute `:lua package.loaded.presence:update()`)
+            neovim_image_text   = ":ZZ", -- Text displayed when hovered over the Neovim image
+            main_image          = "neovim",                   -- Main image display (either "neovim" or "file")
+            client_id           = "793271441293967371",       -- Use your own Discord application client id (not recommended)
+            log_level           = nil,                        -- Log messages at or above this level (one of the following: "debug", "info", "warn", "error")
+            debounce_timeout    = 10,                         -- Number of seconds to debounce events (or calls to `:lua package.loaded.presence:update(<filename>, true)`)
+            enable_line_number  = false,                      -- Displays the current line number instead of the current project
+            blacklist           = {},                         -- A list of strings or Lua patterns that disable Rich Presence if the current file name, path, or workspace matches
+            buttons             = true,                       -- Configure Rich Presence button(s), either a boolean to enable/disable, a static table (`{{ label = "<label>", url = "<url>" }, ...}`, or a function(buffer: string, repo_url: string|nil): table)
+            file_assets         = {},                         -- Custom file asset definitions keyed by file names and extensions (see default config at `lua/presence/file_assets.lua` for reference)
+            show_time           = true,                       -- Show the timer
+
+            -- Rich Presence text options
+            editing_text        = "Editing %s",               -- Format string rendered when an editable file is loaded in the buffer (either string or function(filename: string): string)
+            file_explorer_text  = "Browsing %s",              -- Format string rendered when browsing a file explorer (either string or function(file_explorer_name: string): string)
+            git_commit_text     = "Committing changes",       -- Format string rendered when committing changes in git (either string or function(filename: string): string)
+            plugin_manager_text = "Managing plugins",         -- Format string rendered when managing plugins (either string or function(plugin_manager_name: string): string)
+            reading_text        = "Reading %s",               -- Format string rendered when a read-only or unmodifiable file is loaded in the buffer (either string or function(filename: string): string)
+            workspace_text      = "Working on %s",            -- Format string rendered when in a git repository (either string or function(project_name: string|nil, filename: string): string)
+            line_number_text    = "Line %s out of %s",        -- Format string rendered when `enable_line_number` is set to true (either string or function(line_number: number, line_count: number): string)
+        })
+        end,
+    },
+
 
     -- "=====> ncm-R for Rscripts completion
-    -- { 'ncm2/ncm2' },
-    -- { 'roxma/nvim-yarp' },
-    -- { 'jalvesaq/Nvim-R' },
-    -- { 'gaalcaras/ncm-R' },
+    { 'ncm2/ncm2' },
+    { 'roxma/nvim-yarp' },
+    { 'jalvesaq/Nvim-R' },
+    { 'gaalcaras/ncm-R' },
+
+
+    -- "====> rust-analyzer dependencies
+
+    -- " Use release branch (recommend)
+    -- use ('neoclide/coc.nvim', {branch = 'master'})
+    -- " Or build from source code by using yarn: https://yarnpkg.com
+    -- use ('neoclide/coc.nvim', {
+    --     branch = 'master',
+    --     run = 'yarn install --frozen-lockfile'
+    -- })
+
+    -- " nvim-jdtls
+    { 'mfussenegger/nvim-jdtls' },
+
+
 
     -- " Vim 8 only
     -- uncomment on vim.init
@@ -160,77 +269,34 @@ require("lazy").setup({
     { 'ncm2/ncm2-ultisnips' },
 
     -- " Optional: better Rnoweb support (LaTeX completion)
-    { 'lervag/vimtex' },
-
     {
-    },
-
-    -- Code cell running, setup otter
-    {
-        "quarto-dev/quarto-nvim",
-        dependencies = {
-          "jmbuhr/otter.nvim",
-          "nvim-treesitter/nvim-treesitter",
-        },
-    },
-
-    -- LSP features in markdown cells
-    {
-        'jmbuhr/otter.nvim',
-        dependencies = {
-          'nvim-treesitter/nvim-treesitter',
-        },
-        opts = {},
-    },
-
-    -- Notebook conversion
-    {
-        "GCBallesteros/jupytext.nvim",
+        'lervag/vimtex',
         lazy = false,
-        opts = {
-            -- on-disk representation
-            style = "markdown"
-        },
-        config = true,
-    },
-
-    -- Image rendering (ueberzug backend)
-    {
-        "3rd/image.nvim",
-        build = false, -- so that it doesn't build the rock https://github.com/3rd/image.nvim/issues/91#issuecomment-2453430239
-        opts = {
-            processor = "magick_cli",
-        }
-    },
-    -- Run cells interactively
-    {
-        "benlubas/molten-nvim",
-        version = "^1.0.0", -- use version <2.0.0 to avoid breaking changes
-        dependencies = { "3rd/image.nvim" },
-        build = ":UpdateRemotePlugins",
-        init = function()
-            -- these are examples, not defaults. Please see the readme
-            vim.g.molten_image_provider = "image.nvim"
-            vim.g.molten_output_win_max_height = 20
+        init = function ()
+            vim.g.vimtex_compiler_latexmk_engines = {
+                --_ = "-lualatex"
+                _ = "-xelatex"
+                --_ = "-pdf"
+            }
+            vim.g.vimtex_view_method = "skim"
         end,
     },
 
-
-    -- {
-    --     "dccsillag/magma-nvim",
-    --     build = ":UpdateRemotePlugins",
-    --     config = function()
-    --         vim.cmd("let g:magma_automatically_open_output = v:false")
-    --         vim.keymap.set("n", "<leader>r", ":MagmaEvaluateOperator<CR>", { silent = true })
-    --         vim.keymap.set("n", "<leader>rr", ":MagmaEvaluateLine<CR>", { silent = true })
-    --         vim.keymap.set("x", "<leader>r", ":<C-u>MagmaEvaluateVisual<CR>", { silent = true })
-    --         vim.keymap.set("n", "<leader>rc", ":MagmaReevaluateCell<CR>", { silent = true })
-    --         vim.keymap.set("n", "<leader>rd", ":MagmaDelete<CR>", { silent = true })
-    --         vim.keymap.set("n", "<leader>ro", ":MagmaShowOutput<CR>", { silent = true })
-    --     end
-    -- },
-
-
+    {
+    },
+    {
+        "dccsillag/magma-nvim",
+        build = ":UpdateRemotePlugins",
+        config = function()
+            vim.cmd("let g:magma_automatically_open_output = v:false")
+            vim.keymap.set("n", "<leader>r", ":MagmaEvaluateOperator<CR>", { silent = true })
+            vim.keymap.set("n", "<leader>rr", ":MagmaEvaluateLine<CR>", { silent = true })
+            vim.keymap.set("x", "<leader>r", ":<C-u>MagmaEvaluateVisual<CR>", { silent = true })
+            vim.keymap.set("n", "<leader>rc", ":MagmaReevaluateCell<CR>", { silent = true })
+            vim.keymap.set("n", "<leader>rd", ":MagmaDelete<CR>", { silent = true })
+            vim.keymap.set("n", "<leader>ro", ":MagmaShowOutput<CR>", { silent = true })
+        end
+    },
     {
         "nvimtools/hydra.nvim",
         config = function ()
@@ -280,7 +346,7 @@ require("lazy").setup({
                 -- see :h hydra-hint-hint-configuration
                 hint =  {
                     position = "bottom",
-                    border = "rounded",
+                    -- border = "rounded",
                 },
             },
             heads = {
@@ -332,7 +398,22 @@ require("lazy").setup({
             })
         end,
     },
+    --{
+    --    config = function ()
+    --        require("presence"):setup(){}
+    --
+    --    end
+    --},
 
+    -- nvim-platformio
+    {
+        'anurag3301/nvim-platformio.lua',
+        dependencies = {
+            {'akinsho/nvim-toggleterm.lua'},
+            {'nvim-telescope/telescope.nvim'},
+            {'nvim-lua/plenary.nvim'},
+        },
+    },
 
 
   },
