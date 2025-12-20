@@ -2,8 +2,13 @@
 ## deorice
 > dotfiles for \*nix setup ricing
 
-[![xmonad](https://github.com/deomorxsy/deorice/actions/workflows/xmonad.yml/badge.svg)](https://github.com/deomorxsy/deorice/actions/workflows/xmonad.yml)
 
+
+
+| **Category** | **CI** |
+|:-------------|:-------|
+| **WMs**      |  [![xmonad](https://github.com/deomorxsy/deorice/actions/workflows/xmonad.yml/badge.svg)](https://github.com/deomorxsy/deorice/actions/workflows/xmonad.yml)       |
+| **Editor plugins** | [![vimtex](https://github.com/deomorxsy/deorice/actions/workflows/vimtex.yml/badge.svg)](https://github.com/deomorxsy/deorice/actions/workflows/vimtex.yml)    |
 
 
 <div align="center">
@@ -98,6 +103,7 @@ nvim --headless -c 'so' -c 'PackerSync' "${HOME}/.config/nvim/lua/user/packer.lu
 ### emacs
 based on MELPA elisp rice, it follows the XDG spec.
 
+### Plugins
 Main plugins used in this vim/neovim rice, not ordered:
 - [telescope](https://github.com/nvim-telescope/telescope.nvim) or [chadtree](https://github.com/ms-jpq/chadtree) for fuzzy search. The second is a whole [completion client](https://www.reddit.com/r/neovim/comments/p4m8vt/i_spent_1_year_of_my_life_on_making_a_fast_as/) spawning sqlite vms in memory and integrating with other external programs;
 - [nvim-R](https://github.com/jalvesaq/Nvim-R) to run a R interpreter inside neovim (checkout the tmux integration);
@@ -108,3 +114,13 @@ Main plugins used in this vim/neovim rice, not ordered:
 - [presence.nvim](https://github.com/andweeb/presence.nvim/) is a cool way to understand how activity logic SDKs such as discord presence works, and also lua dotfile config for other apps.
 - [pio](https://docs.platformio.org/en/latest/core/installation/index.html) for espressif development. Install it also on the virtualenv, use it inside nvim or source outside while multiplexing with tmux. Also check [xtensa-qemetsu](https://github.com/deomorxsy/xtensa-qemetsu) for a CI/CD, qemu-based environment setup.
 - [lean.nvim](https://github.com/Julian/lean.nvim?tab=readme-ov-file), the neovim support for the Lean4 programming language and theorem prover
+
+
+### Breaking changes + Changelog
+
+The previous architecture was highly dependant on neovim/nvim-lspconfig under lsp-zero, which got a "dead project status".
+This repository is currently changing from require('nvim-lspconfig') to the vim.lsp.config syntax, which also replaces the lsp-zero method and make each component more modular [1/n].
+
+#### Plugins
+
+- [VonHeikemen/lsp-zero.nvim](https://github.com/VonHeikemen/lsp-zero.nvim) - project status: dead. "It took about 3 years but finally Neovim has solved all the issues that led to the creation of this plugin. Neovim v0.11 can provide everything you need without installing extra plugins. For those of you that still use Neovim v0.9 or v0.10, this blog post will show you a simple setup you can use as your base: [Getting started with Neovim's LSP client](https://vonheikemen.github.io/learn-nvim/feature/lsp-setup.html)."
