@@ -9,7 +9,16 @@
 "	execute pathogen#infect()
 "	execute pathogen#helptags()
 
+" Agda Programming Language integration
+    autocmd FileType agda,lagda imap <buffer> \forall ∀
+    autocmd FileType agda,lagda imap <buffer> \to →
+    autocmd FileType agda,lagda imap <buffer> \lambda λ
+    autocmd FileType agda,lagda imap <buffer> \Sigma Σ
+    autocmd FileType agda,lagda imap <buffer> \exists ∃
+    autocmd FileType agda,lagda imap <buffer> \equiv ≡
+
 " Some basics:
+    "g:mapleader = ","
 	set nocompatible
 	filetype plugin on
 	syntax on
@@ -37,6 +46,7 @@
 	set ttyfast
 	set background=dark
 	syntax on
+    set hlsearch
 
 	execute pathogen#infect()
 	syntax on
@@ -419,3 +429,5 @@ augroup END
 "let R_notmuxconf = 1
 let R_source = '~/.config/vim/tmux_split.vim'
 
+"shortmess for match counting
+set shortmess-=S
