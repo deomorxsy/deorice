@@ -423,6 +423,12 @@ augroup GetGitBranch
   autocmd VimEnter,WinEnter,BufEnter * call StatuslineGitBranch()
 augroup END
 
+"" from vimdoc.
+function! Setup_Forth()
+    let filetype_f  = "forth"
+    let filetype_fs = "forth"
+endfunction
+
 " nvim-R integration with tmux
 "let R_external_term = 1
 "let R_external_term =
