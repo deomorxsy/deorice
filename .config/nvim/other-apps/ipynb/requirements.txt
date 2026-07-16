@@ -2,34 +2,34 @@
 pynvim==0.6.0
 
 # Interact with jupyter
-jupyter_client==8.6.3
+jupyter_client==8.9.1
 
 # Digital Image Processing and overall displaying
 ueberzug==18.3.1
 
 # fix: Pillow vulnerability can cause write buffer overflow on BCn encoding #1
 # upgrade pillow to version 11.3.0 or later.
-pillow==12.0.0
+pillow==12.3.0
 
 # Display SVG images
-cairosvg==2.8.2
+cairosvg==2.9.0
 
 # Display TeX formulas
 pnglatex==1.1
 
 # Display Plotly figures
-plotly==6.3.1
-kaleido==1.1.0
+plotly==6.9.0
+kaleido==1.3.0
 pyperclip==1.11.0
 
 # Base jupyter kernel
-ipykernel==7.1.0
+ipykernel==7.3.0
 
 # Needs linux-headers ethtool
-psutil==7.1.2
+psutil==7.2.2
 
 # For GCBallesteros/jupytext.nvim notebook conversion
-jupytext==1.18.1
+jupytext==1.19.4
 
 # Papermill for later headless execution of ipynb
-papermill==2.6.0
+papermill==2.7.0
