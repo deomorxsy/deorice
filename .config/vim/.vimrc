@@ -9,14 +9,7 @@
 "	execute pathogen#infect()
 "	execute pathogen#helptags()
 
-" Agda Programming Language integration
-    autocmd FileType agda,lagda inoremap \forall ∀
-    autocmd FileType agda,lagda inoremap \to →
-    autocmd FileType agda,lagda inoremap \lambda λ
-    autocmd FileType agda,lagda inoremap \Sigma Σ
-    autocmd FileType agda,lagda inoremap \exists ∃
-    autocmd FileType agda,lagda inoremap \equiv ≡
-    " autocmd FileType tex inoremap ;neg {\neg}
+
 
 " Some basics:
     "g:mapleader = ","
@@ -438,3 +431,13 @@ let R_source = '~/.config/vim/tmux_split.vim'
 
 "shortmess for match counting
 set shortmess-=S
+
+" Agda Programming Language integration
+    autocmd FileType agda inoremap <Space>xes ∀
+    "autocmd FileType agda,lagda inoremap <Space> ;toarr   →
+    "autocmd FileType agda,lagda inoremap <leader>tom →
+    "autocmd FileType agda,lagda inoremap <Space> ;lambda  λ
+    "autocmd FileType agda,lagda inoremap <Space> ;sigma   Σ
+    "autocmd FileType agda,lagda inoremap <Space> ;exists  ∃
+    "autocmd FileType agda,lagda inoremap <Space> ;equiv   ≡
+    " autocmd FileType tex inoremap ;neg {\neg}
