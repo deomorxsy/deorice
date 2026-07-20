@@ -10,12 +10,13 @@
 "	execute pathogen#helptags()
 
 " Agda Programming Language integration
-    autocmd FileType agda,lagda imap <buffer> \forall ∀
-    autocmd FileType agda,lagda imap <buffer> \to →
-    autocmd FileType agda,lagda imap <buffer> \lambda λ
-    autocmd FileType agda,lagda imap <buffer> \Sigma Σ
-    autocmd FileType agda,lagda imap <buffer> \exists ∃
-    autocmd FileType agda,lagda imap <buffer> \equiv ≡
+    autocmd FileType agda,lagda inoremap \forall ∀
+    autocmd FileType agda,lagda inoremap \to →
+    autocmd FileType agda,lagda inoremap \lambda λ
+    autocmd FileType agda,lagda inoremap \Sigma Σ
+    autocmd FileType agda,lagda inoremap \exists ∃
+    autocmd FileType agda,lagda inoremap \equiv ≡
+    " autocmd FileType tex inoremap ;neg {\neg}
 
 " Some basics:
     "g:mapleader = ","
