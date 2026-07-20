@@ -44,6 +44,42 @@ mkdir -p "${VIMDIR_DOC}"
 
 }
 
+
+vim_setup() {
+
+VIM_CONFIG_PATH="${HOME}/.vimrc"
+VIM_DOTFILE_PATH_REPO_FILE="./.config/vim/vimrc"
+VIM_DOTFILE_BAK="/tmp/vimrc-bak"
+
+if ! cp "${VIM_CONFIG_PATH}" "${VIM_DOTFILE_BAK}" ; then
+    echo "|> [ERROR]: could not create a backup file for the vimrc. Exiting now..."
+    return 1
+fi
+    echo "|> [PASS]: successfully created a backup file for the vimrc. Proceeding..."
+
+if [ -f "${VIM_CONFIG_PATH}"]; then
+    if ! cp "${VIM_DOTFILE_PATH_REPO_FILE}" "${VIM_CONFIG_PATH}"; then
+        echo "|> [ERROR]: could not copy the vimrc dotfile at the local repository to the system's vimrc at ${HOME}."
+        echo
+
+    fi
+
+    if  !(! diff "${VIM_CONFIG_PATH}" "${VIM_DOTFILE_PATH_REPO_FILE}"); then
+        # ==========
+        echo "|> [ERROR]: the [VIM_CONFIG_PATH=${VIM_CONFIG_PATH}] differs from the local repository vimrc dotfile at [VIM_DOTFILE_PATH_REPO_FILE=${VIM_DOTFILE_PATH_REPO_FILE}.]"
+        echo "|> [WARNING]: attempting to restore the backup vimrc file..."
+        if ! cp "${VIM_DOTFILE_BAK}" "${VIM_CONFIG_PATH}"; then
+            echo "|> [ERROR]: could not restore the backup vimrc file. Exiting now..."
+            return 1
+        fi
+        echo "|> [PASS]: successfully restored the backup vimrc file. Exiting now..."
+        # ==========
+    fi
+    echo "|> [PASS]: successfully copied the vimrc dotfile at the local repository to the system's vimrc at ${HOME}. Finished."
+fi
+
+}
+
 nvim_setup() {
 
 NEOVIM_CONFIG_PATH="${HOME}/.config/nvim/"
@@ -133,16 +169,24 @@ echo "|> [PASSED]: successfully ran the function [ncmpcpp_sync]. Proceeding..."
 
 }
 
+
 print_usage() {
-cat <<-END >&2
-USAGE: confsync [-options]
-                - nvim
-                - help
-                - version
+    cat <<-END >&2
+USAGE: MODE="[-options]" . ./scripts/confsync.sh
+            - vim_synch
+            - neovim_synch
+            - all
+            - version
+            - help
+            - clean
+
 eg,
-confsync -nvim   # synchronize neovim configuration
-confsync -help    # shows this help message
-confsync -version # shows script version
+MODE="-vim_synch"   . ./scripts/confsync.sh # synchronize vim dotfiles
+MODE="-neovim_synch"  . ./scripts/confsync.sh # synchronize neovim dotfiles
+MODE="-all"          . ./scripts/confsync.sh # synchronize all dotfiles
+MODE="-version"      . ./scripts/confsync.sh # print program version
+MODE="-help"         . ./scripts/confsync.sh # print help version
+MODE="-clean"        . ./scripts/confsync.sh # clean program intermediate build step artifacts
 
 See the man page and example file for more info.
 
@@ -150,16 +194,76 @@ END
 
 }
 
+print_version() {
+
+SCRIPT_VER="|> script: [./scripts/confsync.sh]"
+FUNCTION_VER="|> function: [print_version]"
+
+ if [ "${PRINTA_VERBOSE}" = "1"]; then
+    echo "=============="
+    echo "${SCRIPT_VER}"
+    echo "${FUNCTION_VER}"
+    echo
+fi
+    echo
+    echo "|> Version: confsync v1.0.0"
+    echo
+}
+
+print_error() {
+
+SCRIPT_PE="|> script: [./scripts/confsync.sh]"
+FUNCTION_PE="|> function: [print_error]"
+
+if [ "${PRINTA_VERBOSE}" = "1"]; then
+    echo "=============="
+    echo "${SCRIPT_PE}"
+    echo "${FUNCTION_PE}"
+    echo
+fi
+
+echo "|> Invalid option. Exiting now..."
+print_usage
+}
 
 # Check the argument passed from the command line
-if [ "$MODE" = "synch" ] || [ "$MODE" = "-synch" ] || [ "$MODE" = "--synch" ] || [ "$MODE" = "--synchronize" ] ; then
-    nvim_setup
-elif [ "$MODE" = "help" ] || [ "$MODE" = "-h" ] || [ "$MODE" = "--help" ]; then
-    print_usage
-else
-    printf "\n|> Invalid function name. Please specify one of: [function1, nvim, help]\n\n"
-    print_usage
+if ! [ -z "${PRINTA_VERBOSE}" ] && [ "${PRINTA_VERBOSE}" = "1" ]; then
+    PRINTA_VERBOSE="1" && export PRINTA_VERBOSE;
+
+    if ! env | grep "PRINTA_VERBOSE"; then
+        echo "|> [WARNING]: the [PRINTA_VERBOSE] pretty-printer variable was not set. Exiting now..."
+        return 1
+    fi
+    echo "|> [PASS]: the [PRINTA_VERBOSE] pretty-printer variable was set with success. Proceeding..."
 fi
+
+
+if ! [ -z "${MODE}" ] &&
+    [ "${MODE}" = "-vim_synch"]    ||
+    [ "${MODE}" = "-neovim_synch" ]   ||
+    [ "${MODE}" = "-all" ]       ||
+    [ "${MODE}" = "-help" ]      ||
+    [ "${MODE}" = "-version" ]; then
+    case "${MODE}" in
+    "-vim_synch") vim_setup ;;
+    "-neovim_synch") nvim_setup ;;
+    "-all") build_all ;;
+    "-help") print_help ;;
+    "-version") print_version ;;
+    *)
+        print_error
+        print_usage
+        ;;
+    esac
+
+elif [ "${MODE}" = "help" ]     || [ "${MODE}" = "-h" ] || [ "${MODE}" = "--help" ]; then
+    print_usage
+elif [ "${MODE}" = "version" ]  || [ "${MODE}" = "-v" ] || [ "${MODE}" = "--version" ]; then
+    printf "\n|> Version: confsync 1.0.0"
+else
+    print_error
+fi
+
 
 
 
