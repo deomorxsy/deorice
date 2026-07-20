@@ -46,7 +46,7 @@ vimdir_setup() {
 vim_setup() {
 
     VIM_CONFIG_PATH="${HOME}/.vimrc"
-    VIM_DOTFILE_PATH_REPO_FILE="./.config/vim/vimrc"
+    VIM_DOTFILE_PATH_REPO_FILE="./.config/vim/.vimrc"
     VIM_DOTFILE_BAK="/tmp/vimrc-bak"
 
     if ! cp "${VIM_CONFIG_PATH}" "${VIM_DOTFILE_BAK}"; then
@@ -58,21 +58,24 @@ vim_setup() {
     if [ -f "${VIM_CONFIG_PATH}" ]; then
         if ! cp "${VIM_DOTFILE_PATH_REPO_FILE}" "${VIM_CONFIG_PATH}"; then
             echo "|> [ERROR]: could not copy the vimrc dotfile at the local repository to the system's vimrc at ${HOME}."
+
+            if ! (! diff "${VIM_CONFIG_PATH}" "${VIM_DOTFILE_PATH_REPO_FILE}"); then
+                # ==========
+                echo "|> [ERROR]: the [VIM_CONFIG_PATH=${VIM_CONFIG_PATH}] differs from the local repository vimrc dotfile at [VIM_DOTFILE_PATH_REPO_FILE=${VIM_DOTFILE_PATH_REPO_FILE}.]"
+                echo "|> [WARNING]: attempting to restore the backup vimrc file..."
+                if ! cp "${VIM_DOTFILE_BAK}" "${VIM_CONFIG_PATH}"; then
+                    echo "|> [ERROR]: could not restore the backup vimrc file. Exiting now..."
+                    return 1
+                fi
+                echo "|> [PASS]: successfully restored the backup vimrc file. Exiting now..."
+                # ==========
+            fi
             echo
 
+            return 1
+
         fi
 
-        if ! (! diff "${VIM_CONFIG_PATH}" "${VIM_DOTFILE_PATH_REPO_FILE}"); then
-            # ==========
-            echo "|> [ERROR]: the [VIM_CONFIG_PATH=${VIM_CONFIG_PATH}] differs from the local repository vimrc dotfile at [VIM_DOTFILE_PATH_REPO_FILE=${VIM_DOTFILE_PATH_REPO_FILE}.]"
-            echo "|> [WARNING]: attempting to restore the backup vimrc file..."
-            if ! cp "${VIM_DOTFILE_BAK}" "${VIM_CONFIG_PATH}"; then
-                echo "|> [ERROR]: could not restore the backup vimrc file. Exiting now..."
-                return 1
-            fi
-            echo "|> [PASS]: successfully restored the backup vimrc file. Exiting now..."
-            # ==========
-        fi
         echo "|> [PASS]: successfully copied the vimrc dotfile at the local repository to the system's vimrc at ${HOME}. Finished."
     fi
 
