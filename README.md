@@ -24,17 +24,17 @@
 
 ### vim
 
-The config is pretty straight-forward: just edit the ```~/.vimrc``` with vimscript/vimL syntax, place it in $HOME and next time you open vim it is already working. Search for the basics: the 7 vim modes, vimscript syntax, commands, etc. Read the errors and try to find the root cause. It's the best way to get out of future possible circles of the dependency hell.
+The config is pretty straight-forward: just edit the `~/.vimrc` with vimscript/vimL syntax, place it in $HOME and next time you open vim it is already working. Search for the basics: the 7 vim modes, vimscript syntax, commands, etc. Read the errors and try to find the root cause. It's the best way to get out of future possible circles of the dependency hell.
 
 ### neovim
 
-Neovim adopts the ```~/.config/nvim/init.vim``` or ```~/.config/nvim/init.lua``` file as the default config file. It is also compatible with the vimrc; that explains the [source](https://github.com/deomorxsy/deorice/blob/main/.config/nvim/init.vim.old#L3). It means these are the files neovim uses for configuration lookups every time the editor starts.
+Neovim adopts the `~/.config/nvim/init.vim` or `~/.config/nvim/init.lua` file as the default config file. It is also compatible with the vimrc; that explains the [source](https://github.com/deomorxsy/deorice/blob/main/.config/nvim/init.vim.old#L3). It means these are the files neovim uses for configuration lookups every time the editor starts.
 
 This repository in specific migrates from the vimrc, used in vim, directly to the init.lua that uses the syntax of the [language lua](https://www.lua.org/docs.html) to program the editor. The runtime is the [LuaJIT](https://luajit.org/) embedded in neovim and you can learn more in the [docs](https://neovim.io/doc/user/lua.html).
 
-To handle LSP, DAP, linters and formatters you can use [mason-nvim](https://github.com/williamboman/mason.nvim). You can also integrate its functionality with [lsp-zero](https://github.com/VonHeikemen/lsp-zero.nvim) into a not-bloated, fast [gattai-mecha](https://github.com/VonHeikemen/lsp-zero.nvim/blob/v3.x/doc/md/guides/integrate-with-mason-nvim.md) for completion.
+To handle LSP, DAP, linters and formatters you can use [mason-nvim](https://github.com/williamboman/mason.nvim). You can also integrate its functionality with [lsp-zero](https://github.com/VonHeikemen/lsp-zero.nvim) into a bloat-free, fast [gattai-mecha](https://github.com/VonHeikemen/lsp-zero.nvim/blob/v3.x/doc/md/guides/integrate-with-mason-nvim.md) for completion.
 
-Be sure to set a mapleader. Check with ```:echo mapleader``` (" " means space). If it isn't already set, do it with ```vim.g.mapleader = "<your-map-leader-key>"```.
+Be sure to set a mapleader. Check with `:echo mapleader` (" " means space). If it isn't already set, do it with `vim.g.mapleader = "<your-map-leader-key>"`.
 
 To use the base configuration, run the [playbooks](./scripts/playbooks/), execute the [scripts](./scripts/) or do it manually:
 
@@ -56,7 +56,7 @@ git clone --depth 1 https://github.com/wbthomason/packer.nvim \
 ```
 
 
-4. To avoid [provider-related](https://neovim.io/doc/user/provider.html) errors, specifically about python (ultisnips), you can use the script [neovim-setup.sh](./scripts/neovim-setup.sh), ```./scripts/neovim-setup.sh```, which sets up the python provider ```$PATH``` based in the hack path that python uses with the virtualenv, [adapted from the docs](https://neovim.io/doc/user/provider.html#python-virtualenv) ;)
+4. To avoid [provider-related](https://neovim.io/doc/user/provider.html) errors, specifically about python (ultisnips), you can use the script [neovim-setup.sh](./scripts/neovim-setup.sh), `./scripts/neovim-setup.sh`, which sets up the python provider `$PATH` based in the hack path that python uses with the virtualenv, [adapted from the docs](https://neovim.io/doc/user/provider.html#python-virtualenv) ;)
 ```sh
 cat > ./scripts/neovim-setup.sh << "EOF"
 #!/usr/bin/sh
@@ -95,7 +95,7 @@ chmod +x ./scripts/neovim-setup.sh
 let g:python3_host_prog = "${HOME}/.config/nvim/venv_nvim/neovim3/bin/python"
 ```
 
-6. Source the packer.lua file to finish installing packer. Then, also in command line, synchronize plugins in the configuration with packer.  I like the [headless flag](https://neovim.io/doc/user/starting.html#--headless) for this, otherwise just open the specific ```packer.lua``` file for sourcing, enter Terminal Mode and type ```:so```. Synchronize with ```PackerSync``` in any context.
+6. Source the packer.lua file to finish installing packer. Then, also in command line, synchronize plugins in the configuration with packer.  I like the [headless flag](https://neovim.io/doc/user/starting.html#--headless) for this, otherwise just open the specific `packer.lua` file for sourcing, enter Terminal Mode and type `:so`. Synchronize with `PackerSync` in any context.
 ```sh
 nvim --headless -c 'so' -c 'PackerSync' "${HOME}/.config/nvim/lua/user/packer.lua"
 ```
