@@ -22,8 +22,18 @@ vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = ","
 vim.g.maplocalleader = "\\"
 
+-- fix conceallevel
+vim.opt.conceallevel = 0
+
+-- local opt = vim.opt
+-- opt.conceallevel = 0
+-- opt.conceallevel = 2
+
 -- Setup lazy.nvim
 require("lazy").setup({
+
+
+
     spec = {
         -- import your plugins
         --{ import = "plugins.packerSpecs" },
@@ -62,14 +72,17 @@ require("lazy").setup({
         --  i.e. 1) non-indented heredocs to cat;
         --  2) posix shell conditional line breaks, which
         --  conform insists on removing the reverse bar.
-        { "stevearc/conform.nvim",       enabled = false },
-        { "catppuccin",                  enabled = true },
-        { "mason-lspconfig.nvim",        enabled = true },
-        { "mini.pairs",                  enabled = true },
-        { "nvim-lint",                   enabled = true },
-        { "nvim-lspconfig",              enabled = true },
-        { "nvim-treesitter-textobjects", enabled = true },
-        { "nvim-lspconfig",              enabled = true },
+        { "stevearc/conform.nvim",          enabled = false },
+        { "catppuccin",                     enabled = true },
+        { "mason-lspconfig.nvim",           enabled = true },
+        { "mini.pairs",                     enabled = true },
+        { "nvim-lint",                      enabled = true },
+        { "nvim-lspconfig",                 enabled = true },
+        { "nvim-treesitter-textobjects",    enabled = true },
+        { "nvim-lspconfig",                 enabled = true },
+        { "tokyonight.nvim",                enabled = false },
+        { "folke/snacks.nvim",              enabled = false },
+        { "folke/trouble.nvim",             enabled = false },
 
         {
             "ibhagwan/fzf-lua",
@@ -294,11 +307,11 @@ require("lazy").setup({
 
         -- from: https://github.com/LazyVim/starter/blob/803bc181d7c0d6d5eeba9274d9be49b287294d99/lua/config/lazy.lua#L20
         -- add LazyVim and import its plugins
-        { "LazyVim/LazyVim",                 import = "lazyvim.plugins" },
-        defaults = {
-            lazy = false,
-            version = false,
-        },
+        -- { "LazyVim/LazyVim",                 import = "lazyvim.plugins" },
+        -- defaults = {
+        --     lazy = false,
+        --     version = false,
+        -- },
 
         -- warning: disable due to switch to blink.cmp and to avoid cascading erros
         -- setup lsp for nvim-cmp
