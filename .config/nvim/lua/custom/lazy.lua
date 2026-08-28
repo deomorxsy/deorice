@@ -39,146 +39,151 @@ require("lazy").setup({
 
     {"nvim-treesitter/nvim-treesitter", build = ":TSUpdate"},
     { 'mbbill/undotree' },
-    { 'ms-jpq/coq_nvim', branch = 'coq' },
+    --{ 'ms-jpq/coq_nvim', branch = 'coq' },
 
     -- 9000+ Snippets
     { 'ms-jpq/coq.artifacts', branch = 'artifacts'},
 
     -- " lua & third party sources -- See https://github.com/ms-jpq/coq.thirdparty
     -- " Need to **configure separately**
-    { 'ms-jpq/coq.thirdparty', branch = '3p' },
+    --{ 'ms-jpq/coq.thirdparty', branch = '3p' },
+
     -- " - shell repl
     -- " - nvim lua api
     -- " - scientific calculator
     -- " - comment banner
     -- " - etc
 
-    -- lsp-zero
-    {
-      'VonHeikemen/lsp-zero.nvim',
-      branch = 'v3.x',
-      dependencies = {
-        --- Uncomment these if you want to manage LSP servers from neovim
-        -- {'mason-org/mason.nvim'},
-        {
-            'mason-org/mason-lspconfig.nvim',
-            opts = {
-                ensure_installed = { "lua_ls", "rust_analyzer" },
-            },
-            dependencies = {
-                { "mason-org/mason.nvim", opts = {} },
-                "neovim/nvim-lspconfig",
-            },
-        },
+    -- ###################3
+    -- ditching lsp-zero...
 
-        -- Autocompletion
-        {
-            'hrsh7th/nvim-cmp',
-            event = 'InsertEnter',
-            config = function()
-                local cmp = require('cmp')
+    -- ### -- lsp-zero
+    -- ### {
+    -- ###   'VonHeikemen/lsp-zero.nvim',
+    -- ###   branch = 'v3.x',
+    -- ###   dependencies = {
+    -- ###     --- Uncomment these if you want to manage LSP servers from neovim
+    -- ###     -- {'mason-org/mason.nvim'},
+    -- ###     {
+    -- ###         'mason-org/mason-lspconfig.nvim',
+    -- ###         opts = {
+    -- ###             -- ensure_installed = { "lua_ls", "rust_analyzer" },
+    -- ###             ensure_installed = { "lua_ls" },
+    -- ###         },
+    -- ###         dependencies = {
+    -- ###             { "mason-org/mason.nvim", opts = {} },
+    -- ###             "neovim/nvim-lspconfig",
+    -- ###         },
+    -- ###     },
 
-                cmp.setup({
-                    sources = {
-                        {name = 'nvim_lsp'},
-                    },
-                    mapping = cmp.mapping.preset.insert({
-                        ['<C-space>'] = cmp.mapping.complete(),
-                        ['<C-u>'] = cmp.mapping.scroll_docs(-4),
-                        ['<C-d>'] = cmp.mapping.scroll_docs(4),
-                    }),
-                    snippet = {
-                        expand = function(args)
-                            vim.snippet.expand(args.body)
-                        end,
-                    },
-                })
-            end
-        },
+    -- ###     -- Autocompletion
+    -- ###     {
+    -- ###         'hrsh7th/nvim-cmp',
+    -- ###         event = 'InsertEnter',
+    -- ###         config = function()
+    -- ###             local cmp = require('cmp')
 
-        -- LSP Support
-        {
-            'neovim/nvim-lspconfig',
-            cmd = "LspInfo",
-            event = {'BufReadPre', 'BufNewFile'},
-            dependencies = {
-                -- Autocompletion
-                {'hrsh7th/cmp-nvim-lsp'},
-            },
-            opts = {
-                servers = {
-                    ['*'] = {
-                        keys = {
-                            -- add a keymap
-                            { "H", "<cmd>echo 'hello'<cr>", desc = "Say Hello" },
-                            -- Change an existing keymap
-                            { "K", "<cmd>echo 'custom hover'<cr>", desc = "Custom Hover" },
-                            -- Disable a keymap
-                            { "gd", false },
+    -- ###             cmp.setup({
+    -- ###                 sources = {
+    -- ###                     {name = 'nvim_lsp'},
+    -- ###                 },
+    -- ###                 mapping = cmp.mapping.preset.insert({
+    -- ###                     ['<C-space>'] = cmp.mapping.complete(),
+    -- ###                     ['<C-u>'] = cmp.mapping.scroll_docs(-4),
+    -- ###                     ['<C-d>'] = cmp.mapping.scroll_docs(4),
+    -- ###                 }),
+    -- ###                 snippet = {
+    -- ###                     expand = function(args)
+    -- ###                         vim.snippet.expand(args.body)
+    -- ###                     end,
+    -- ###                 },
+    -- ###             })
+    -- ###         end
+    -- ###     },
 
-                            -- old ones
-                            { "n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", desc = "hmm..." },
-                            { "n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", desc = "hmm..." },
-                            { "n", "gd", "<cmd>lua vim.lsp.buf.definition()<cr>", desc = "hmm..." },
-                            { "n", "gD", "<cmd>lua vim.lsp.buf.declaration()<cr>", desc = "hmm..." },
-                            { "n", "gi", "<cmd>lua vim.lsp.buf.implementation()<cr>", desc = "hmm..." },
-                            { "n", "go", "<cmd>lua vim.lsp.buf.type_definition()<cr>", desc = "hmm..." },
-                            { "n", "gr", "<cmd>lua vim.lsp.buf.references()<cr>", desc = "hmm..." },
-                            { "n", "gs", "<cmd>lua vim.lsp.buf.signature_help()<cr>", desc = "hmm..." },
-                            { "n", "<F2>", "<cmd>lua vim.lsp.buf.rename()<cr>", desc = "hmm..." },
-                            { {"n", "x"}, "<F3>", "<cmd>lua vim.lsp.buf.format({async = true})<cr>", desc = "hmm..." },
-                            { "n", "<F4>", "<cmd>lua vim.lsp.buf.code_action()<cr>", desc = "hmm..." },
+    -- ###     -- LSP Support
+    -- ###     {
+    -- ###         'neovim/nvim-lspconfig',
+    -- ###         cmd = "LspInfo",
+    -- ###         event = {'BufReadPre', 'BufNewFile'},
+    -- ###         dependencies = {
+    -- ###             -- Autocompletion
+    -- ###             {'hrsh7th/cmp-nvim-lsp'},
+    -- ###         },
+    -- ###         opts = {
+    -- ###             servers = {
+    -- ###                 ['*'] = {
+    -- ###                     keys = {
+    -- ###                         -- add a keymap
+    -- ###                         { "H", "<cmd>echo 'hello'<cr>", desc = "Say Hello" },
+    -- ###                         -- Change an existing keymap
+    -- ###                         { "K", "<cmd>echo 'custom hover'<cr>", desc = "Custom Hover" },
+    -- ###                         -- Disable a keymap
+    -- ###                         { "gd", false },
 
-                        },
-                    },
-                },
-            },
-        --},
-            init = function ()
-                -- local lsp_defaults = require('lspconfig').util.default_config
-                -- local lsp_defaults = vim.lsp.config().util.default_config
-                -- local hmm = vim.lsp.config.string.u
-                -- vim.lsp.config.
-                local lsp_defaults = vim.lsp.config
+    -- ###                         -- old ones
+    -- ###                         { "n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", desc = "hmm..." },
+    -- ###                         { "n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", desc = "hmm..." },
+    -- ###                         { "n", "gd", "<cmd>lua vim.lsp.buf.definition()<cr>", desc = "hmm..." },
+    -- ###                         { "n", "gD", "<cmd>lua vim.lsp.buf.declaration()<cr>", desc = "hmm..." },
+    -- ###                         { "n", "gi", "<cmd>lua vim.lsp.buf.implementation()<cr>", desc = "hmm..." },
+    -- ###                         { "n", "go", "<cmd>lua vim.lsp.buf.type_definition()<cr>", desc = "hmm..." },
+    -- ###                         { "n", "gr", "<cmd>lua vim.lsp.buf.references()<cr>", desc = "hmm..." },
+    -- ###                         { "n", "gs", "<cmd>lua vim.lsp.buf.signature_help()<cr>", desc = "hmm..." },
+    -- ###                         { "n", "<F2>", "<cmd>lua vim.lsp.buf.rename()<cr>", desc = "hmm..." },
+    -- ###                         { {"n", "x"}, "<F3>", "<cmd>lua vim.lsp.buf.format({async = true})<cr>", desc = "hmm..." },
+    -- ###                         { "n", "<F4>", "<cmd>lua vim.lsp.buf.code_action()<cr>", desc = "hmm..." },
 
-                -- add cmp_nvim_lsp capabilities settings to lspconfig
-                -- this should be executed before you configure any language server
-                lsp_defaults.capabilities = vim.tbl_deep_extend('force', lsp_defaults.capabilities, require('cmp_nvim_lsp').default_capabilities())
+    -- ###                     },
+    -- ###                 },
+    -- ###             },
+    -- ###         },
+    -- ###     --},
+    -- ###         init = function ()
+    -- ###             -- local lsp_defaults = require('lspconfig').util.default_config
+    -- ###             -- local lsp_defaults = vim.lsp.config().util.default_config
+    -- ###             -- local hmm = vim.lsp.config.string.u
+    -- ###             -- vim.lsp.config.
+    -- ###             local lsp_defaults = vim.lsp.config
 
-                -- LspAttach is used to enable features when
-                -- there is a language server active for the file
-                vim.api.nvim_create_autocmd('LspAttach', {
-                    desc = 'LSP actions',
-                    callback = function (event)
-                        local opts = {buffer = event.buf}
+    -- ###             -- add cmp_nvim_lsp capabilities settings to lspconfig
+    -- ###             -- this should be executed before you configure any language server
+    -- ###             lsp_defaults.capabilities = vim.tbl_deep_extend('force', lsp_defaults.capabilities, require('cmp_nvim_lsp').default_capabilities())
 
-                        vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', opts)
-                        vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', opts)
-                        vim.keymap.set('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>', opts)
-                        vim.keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>', opts)
-                        vim.keymap.set('n', 'go', '<cmd>lua vim.lsp.buf.type_definition()<cr>', opts)
-                        vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', opts)
-                        vim.keymap.set('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<cr>', opts)
-                        vim.keymap.set('n', '<F2>', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
-                        vim.keymap.set({'n', 'x'}, '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
-                        vim.keymap.set('n', '<F4>', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
+    -- ###             -- LspAttach is used to enable features when
+    -- ###             -- there is a language server active for the file
+    -- ###             vim.api.nvim_create_autocmd('LspAttach', {
+    -- ###                 desc = 'LSP actions',
+    -- ###                 callback = function (event)
+    -- ###                     local opts = {buffer = event.buf}
 
-                    end,
-                })
+    -- ###                     vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', opts)
+    -- ###                     vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', opts)
+    -- ###                     vim.keymap.set('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>', opts)
+    -- ###                     vim.keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>', opts)
+    -- ###                     vim.keymap.set('n', 'go', '<cmd>lua vim.lsp.buf.type_definition()<cr>', opts)
+    -- ###                     vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', opts)
+    -- ###                     vim.keymap.set('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<cr>', opts)
+    -- ###                     vim.keymap.set('n', '<F2>', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
+    -- ###                     vim.keymap.set({'n', 'x'}, '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
+    -- ###                     vim.keymap.set('n', '<F4>', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
 
-                --require('lspconfig').gleam.setup({})
-                --require('lspconfig').ocamllsp.setup({})
+    -- ###                 end,
+    -- ###             })
 
-            end
-        },
+    -- ###             --require('lspconfig').gleam.setup({})
+    -- ###             --require('lspconfig').ocamllsp.setup({})
 
-        -- Snippets
-        {'L3MON4D3/LuaSnip',lazy = true},
+    -- ###         end
+    -- ###     },
 
-        },
-    },
+    -- ###     -- Snippets
+    -- ###     {'L3MON4D3/LuaSnip',lazy = true},
 
-    {'julian/lean.nvim'},
+    -- ###     },
+    -- ### },
+
+    -- ### {'julian/lean.nvim'},
     -- -- julian's lean.nvim LSP
     --  {
     --      'julian/lean.nvim',
@@ -204,42 +209,42 @@ require("lazy").setup({
 
     -- "=====> https://github.com/andweeb/presence.nvim
     -- { 'andweeb/presence.nvim' }
+    -- PS: disabling rich presence for a time.
+    -- {
+    --     "andweeb/presence.nvim",
+    --     config = function()
+    --         require("presence"):setup({
+    --         -- General options
+    --         auto_update         = true,                       -- Update activity based on autocmd events (if `false`, map or manually execute `:lua package.loaded.presence:update()`)
+    --         neovim_image_text   = ":ZZ", -- Text displayed when hovered over the Neovim image
+    --         main_image          = "neovim",                   -- Main image display (either "neovim" or "file")
+    --         client_id           = "793271441293967371",       -- Use your own Discord application client id (not recommended)
+    --         log_level           = nil,                        -- Log messages at or above this level (one of the following: "debug", "info", "warn", "error")
+    --         debounce_timeout    = 10,                         -- Number of seconds to debounce events (or calls to `:lua package.loaded.presence:update(<filename>, true)`)
+    --         enable_line_number  = false,                      -- Displays the current line number instead of the current project
+    --         blacklist           = {},                         -- A list of strings or Lua patterns that disable Rich Presence if the current file name, path, or workspace matches
+    --         buttons             = true,                       -- Configure Rich Presence button(s), either a boolean to enable/disable, a static table (`{{ label = "<label>", url = "<url>" }, ...}`, or a function(buffer: string, repo_url: string|nil): table)
+    --         file_assets         = {},                         -- Custom file asset definitions keyed by file names and extensions (see default config at `lua/presence/file_assets.lua` for reference)
+    --         show_time           = true,                       -- Show the timer
 
-    {
-        "andweeb/presence.nvim",
-        config = function()
-            require("presence"):setup({
-            -- General options
-            auto_update         = true,                       -- Update activity based on autocmd events (if `false`, map or manually execute `:lua package.loaded.presence:update()`)
-            neovim_image_text   = ":ZZ", -- Text displayed when hovered over the Neovim image
-            main_image          = "neovim",                   -- Main image display (either "neovim" or "file")
-            client_id           = "793271441293967371",       -- Use your own Discord application client id (not recommended)
-            log_level           = nil,                        -- Log messages at or above this level (one of the following: "debug", "info", "warn", "error")
-            debounce_timeout    = 10,                         -- Number of seconds to debounce events (or calls to `:lua package.loaded.presence:update(<filename>, true)`)
-            enable_line_number  = false,                      -- Displays the current line number instead of the current project
-            blacklist           = {},                         -- A list of strings or Lua patterns that disable Rich Presence if the current file name, path, or workspace matches
-            buttons             = true,                       -- Configure Rich Presence button(s), either a boolean to enable/disable, a static table (`{{ label = "<label>", url = "<url>" }, ...}`, or a function(buffer: string, repo_url: string|nil): table)
-            file_assets         = {},                         -- Custom file asset definitions keyed by file names and extensions (see default config at `lua/presence/file_assets.lua` for reference)
-            show_time           = true,                       -- Show the timer
-
-            -- Rich Presence text options
-            editing_text        = "Editing %s",               -- Format string rendered when an editable file is loaded in the buffer (either string or function(filename: string): string)
-            file_explorer_text  = "Browsing %s",              -- Format string rendered when browsing a file explorer (either string or function(file_explorer_name: string): string)
-            git_commit_text     = "Committing changes",       -- Format string rendered when committing changes in git (either string or function(filename: string): string)
-            plugin_manager_text = "Managing plugins",         -- Format string rendered when managing plugins (either string or function(plugin_manager_name: string): string)
-            reading_text        = "Reading %s",               -- Format string rendered when a read-only or unmodifiable file is loaded in the buffer (either string or function(filename: string): string)
-            workspace_text      = "Working on %s",            -- Format string rendered when in a git repository (either string or function(project_name: string|nil, filename: string): string)
-            line_number_text    = "Line %s out of %s",        -- Format string rendered when `enable_line_number` is set to true (either string or function(line_number: number, line_count: number): string)
-        })
-        end,
-    },
+    --         -- Rich Presence text options
+    --         editing_text        = "Editing %s",               -- Format string rendered when an editable file is loaded in the buffer (either string or function(filename: string): string)
+    --         file_explorer_text  = "Browsing %s",              -- Format string rendered when browsing a file explorer (either string or function(file_explorer_name: string): string)
+    --         git_commit_text     = "Committing changes",       -- Format string rendered when committing changes in git (either string or function(filename: string): string)
+    --         plugin_manager_text = "Managing plugins",         -- Format string rendered when managing plugins (either string or function(plugin_manager_name: string): string)
+    --         reading_text        = "Reading %s",               -- Format string rendered when a read-only or unmodifiable file is loaded in the buffer (either string or function(filename: string): string)
+    --         workspace_text      = "Working on %s",            -- Format string rendered when in a git repository (either string or function(project_name: string|nil, filename: string): string)
+    --         line_number_text    = "Line %s out of %s",        -- Format string rendered when `enable_line_number` is set to true (either string or function(line_number: number, line_count: number): string)
+    --     })
+    --     end,
+    -- },
 
 
     -- "=====> ncm-R for Rscripts completion
-    { 'ncm2/ncm2' },
-    { 'roxma/nvim-yarp' },
-    { 'jalvesaq/Nvim-R' },
-    { 'gaalcaras/ncm-R' },
+    -- { 'ncm2/ncm2' },
+    -- { 'roxma/nvim-yarp' },
+    -- { 'jalvesaq/Nvim-R' },
+    -- { 'gaalcaras/ncm-R' },
 
 
     -- "====> rust-analyzer dependencies
@@ -253,6 +258,7 @@ require("lazy").setup({
     -- })
 
     -- " nvim-jdtls
+    -- a helper for java language server
     { 'mfussenegger/nvim-jdtls' },
 
 
@@ -282,138 +288,145 @@ require("lazy").setup({
         end,
     },
 
-    {
-    },
-    {
-        "dccsillag/magma-nvim",
-        build = ":UpdateRemotePlugins",
-        config = function()
-            vim.cmd("let g:magma_automatically_open_output = v:false")
-            vim.keymap.set("n", "<leader>r", ":MagmaEvaluateOperator<CR>", { silent = true })
-            vim.keymap.set("n", "<leader>rr", ":MagmaEvaluateLine<CR>", { silent = true })
-            vim.keymap.set("x", "<leader>r", ":<C-u>MagmaEvaluateVisual<CR>", { silent = true })
-            vim.keymap.set("n", "<leader>rc", ":MagmaReevaluateCell<CR>", { silent = true })
-            vim.keymap.set("n", "<leader>rd", ":MagmaDelete<CR>", { silent = true })
-            vim.keymap.set("n", "<leader>ro", ":MagmaShowOutput<CR>", { silent = true })
-        end
-    },
-    {
-        "nvimtools/hydra.nvim",
-        config = function ()
-            local Hydra = require("hydra")
-            Hydra({
-            -- create hydras
-            name = "tiamat",
-            mode = "n",
-            body = "<leader>o",
-            hint = [[
-                _h_: <- _l_: -> _q_: exit
-            ]],
-            config = {
-                -- see :h hydra-heads
-                exit = false, -- set the default exit value for each head in the hydra
+    -- #######################################################
+    -- both magma and hydra for nvim and jupyter integration.
 
-                -- decides what to do when a key which doesn't belong to any head is pressed
-                --   nil: hydra exits and foreign key behaves normally, as if the hydra wasn't active
-                --   "warn": hydra stays active, issues a warning and doesn't run the foreign key
-                --   "run": hydra stays active, runs the foreign key
-                foreign_keys = nil,
+    -- {
+    --     "dccsillag/magma-nvim",
+    --     build = ":UpdateRemotePlugins",
+    --     config = function()
+    --         vim.cmd("let g:magma_automatically_open_output = v:false")
+    --         vim.keymap.set("n", "<leader>r", ":MagmaEvaluateOperator<CR>", { silent = true })
+    --         vim.keymap.set("n", "<leader>rr", ":MagmaEvaluateLine<CR>", { silent = true })
+    --         vim.keymap.set("x", "<leader>r", ":<C-u>MagmaEvaluateVisual<CR>", { silent = true })
+    --         vim.keymap.set("n", "<leader>rc", ":MagmaReevaluateCell<CR>", { silent = true })
+    --         vim.keymap.set("n", "<leader>rd", ":MagmaDelete<CR>", { silent = true })
+    --         vim.keymap.set("n", "<leader>ro", ":MagmaShowOutput<CR>", { silent = true })
+    --     end
+    -- },
 
-                -- see `:h hydra-colors`
-                color = "red", -- "red" | "amaranth" | "teal" | "pink"
+    -- {
+    --     "nvimtools/hydra.nvim",
+    --     config = function ()
+    --         local Hydra = require("hydra")
+    --         Hydra({
+    --         -- create hydras
+    --         name = "tiamat",
+    --         mode = "n",
+    --         body = "<leader>o",
+    --         hint = [[
+    --             _h_: <- _l_: -> _q_: exit
+    --         ]],
+    --         config = {
+    --             -- see :h hydra-heads
+    --             exit = false, -- set the default exit value for each head in the hydra
 
-                -- define a hydra for the given buffer, pass `true` for current buf
-                buffer = nil,
+    --             -- decides what to do when a key which doesn't belong to any head is pressed
+    --             --   nil: hydra exits and foreign key behaves normally, as if the hydra wasn't active
+    --             --   "warn": hydra stays active, issues a warning and doesn't run the foreign key
+    --             --   "run": hydra stays active, runs the foreign key
+    --             foreign_keys = nil,
 
-                -- when true, summon the hydra after pressing only the `body` keys. Normally a head is
-                -- required
-                invoke_on_body = true,
+    --             -- see `:h hydra-colors`
+    --             color = "red", -- "red" | "amaranth" | "teal" | "pink"
 
-                -- description used for the body keymap when `invoke_on_body` is true
-                desc = nil, -- when nil, "[Hydra] .. name" is used
+    --             -- define a hydra for the given buffer, pass `true` for current buf
+    --             buffer = nil,
 
-                -- see :h hydra-hooks
-                on_enter = nil, -- called when the hydra is activated
-                on_exit = nil, -- called before the hydra is deactivated
-                on_key = nil, -- called after every hydra head
+    --             -- when true, summon the hydra after pressing only the `body` keys. Normally a head is
+    --             -- required
+    --             invoke_on_body = true,
 
-                -- timeout after which the hydra is automatically disabled. Calling any head
-                -- will refresh the timeout
-                --   true: timeout set to value of 'timeoutlen' (:h 'timeoutlen')
-                --   5000: set to desired number of milliseconds
-                timeout = false, -- by default hydras wait forever
+    --             -- description used for the body keymap when `invoke_on_body` is true
+    --             desc = nil, -- when nil, "[Hydra] .. name" is used
 
-                -- see :h hydra-hint-hint-configuration
-                hint =  {
-                    position = "bottom",
-                    -- border = "rounded",
-                },
-            },
-            heads = {
-                { "h", "<C-w>h", { desc = "Window left" } },
-                { "l", "<C-w>l", { desc = "Window right" } },
-                {"q", nil, { exit = true, desc = "Quit Hydra"} },
-            }
-        })
-        end
-    },
+    --             -- see :h hydra-hooks
+    --             on_enter = nil, -- called when the hydra is activated
+    --             on_exit = nil, -- called before the hydra is deactivated
+    --             on_key = nil, -- called after every hydra head
+
+    --             -- timeout after which the hydra is automatically disabled. Calling any head
+    --             -- will refresh the timeout
+    --             --   true: timeout set to value of 'timeoutlen' (:h 'timeoutlen')
+    --             --   5000: set to desired number of milliseconds
+    --             timeout = false, -- by default hydras wait forever
+
+    --             -- see :h hydra-hint-hint-configuration
+    --             hint =  {
+    --                 position = "bottom",
+    --                 -- border = "rounded",
+    --             },
+    --         },
+    --         heads = {
+    --             { "h", "<C-w>h", { desc = "Window left" } },
+    --             { "l", "<C-w>l", { desc = "Window right" } },
+    --             {"q", nil, { exit = true, desc = "Quit Hydra"} },
+    --         }
+    --     })
+    --     end
+    -- },
+
     -- NotebookNavigator for Python REPL
-    {
+    -- {
 
-        "GCBallesteros/NotebookNavigator.nvim",
-        keys = {
-            { "]h", function() require("notebook-navigator").move_cell "d" end },
-            { "[h", function() require("notebook-navigator").move_cell "u" end },
-            { "<leader>X", "<cmd>lua require('notebook-navigator').run_cell()<cr>" },
-            { "<leader>x", "<cmd>lua require('notebook-navigator').run_and_move()<cr>" },
-        },
-        dependencies = {
-            "echasnovski/mini.comment",
-            "hkupty/iron.nvim", -- repl provider
-            -- "akinsho/toggleterm.nvim", -- alternative repl provider
-            -- "benlubas/molten-nvim", -- alternative repl provider
-            --"anuvyklack/hydra.nvim",
-        },
-        event = "VeryLazy",
-        config = function()
-            local nn = require "notebook-navigator"
-            nn.setup({
-                cell_markers = {
-                -- python = "# %%",
-                },
-                -- activate_hydra_keys = "<leader>h" ,
-                -- show_hydra_hint = true,
-                -- hydra_keys = {
-                --     comment = "c",
-                --     run = "X",
-                --     run_and_move = "x",
-                --     move_up = "k",
-                --     move_down = "j",
-                --     add_cell_before = "a",
-                --     add_cell_after = "b",
-                -- },
-                repl_provider = "auto",
-                syntax_highlight = false,
-                cell_highlight_group = "Folded",
-            })
-        end,
-    },
-    --{
-    --    config = function ()
-    --        require("presence"):setup(){}
-    --
-    --    end
-    --},
+    --     "GCBallesteros/NotebookNavigator.nvim",
+    --     keys = {
+    --         { "]h", function() require("notebook-navigator").move_cell "d" end },
+    --         { "[h", function() require("notebook-navigator").move_cell "u" end },
+    --         { "<leader>X", "<cmd>lua require('notebook-navigator').run_cell()<cr>" },
+    --         { "<leader>x", "<cmd>lua require('notebook-navigator').run_and_move()<cr>" },
+    --     },
+    --     dependencies = {
+    --         "echasnovski/mini.comment",
+    --         "hkupty/iron.nvim", -- repl provider
+    --         -- "akinsho/toggleterm.nvim", -- alternative repl provider
+    --         -- "benlubas/molten-nvim", -- alternative repl provider
+    --         --"anuvyklack/hydra.nvim",
+    --     },
+    --     event = "VeryLazy",
+    --     config = function()
+    --         local nn = require "notebook-navigator"
+    --         nn.setup({
+    --             cell_markers = {
+    --             -- python = "# %%",
+    --             },
+    --             -- activate_hydra_keys = "<leader>h" ,
+    --             -- show_hydra_hint = true,
+    --             -- hydra_keys = {
+    --             --     comment = "c",
+    --             --     run = "X",
+    --             --     run_and_move = "x",
+    --             --     move_up = "k",
+    --             --     move_down = "j",
+    --             --     add_cell_before = "a",
+    --             --     add_cell_after = "b",
+    --             -- },
+    --             repl_provider = "auto",
+    --             syntax_highlight = false,
+    --             cell_highlight_group = "Folded",
+    --         })
+    --     end,
+    -- },
+    -- --{
+    -- --    config = function ()
+    -- --        require("presence"):setup(){}
+    -- --
+    -- --    end
+    -- --},
+
+    -- firmware dev helper for platformio
+    -- and further virtualization stack
+    -- for embedded programming
 
     -- nvim-platformio
-    {
-        'anurag3301/nvim-platformio.lua',
-        dependencies = {
-            {'akinsho/nvim-toggleterm.lua'},
-            {'nvim-telescope/telescope.nvim'},
-            {'nvim-lua/plenary.nvim'},
-        },
-    },
+    -- {
+    --     'anurag3301/nvim-platformio.lua',
+    --     dependencies = {
+    --         {'akinsho/nvim-toggleterm.lua'},
+    --         {'nvim-telescope/telescope.nvim'},
+    --         {'nvim-lua/plenary.nvim'},
+    --     },
+    -- },
 
 
   },
