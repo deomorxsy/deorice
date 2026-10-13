@@ -451,130 +451,130 @@ require("lazy").setup({
         -- ### 	main = "lazyvim.util.cmp",
         -- ### },
 
-        -- ### -- lsp-zero
-        -- ### {
-        -- ###   'VonHeikemen/lsp-zero.nvim',
-        -- ###   branch = 'v3.x',
-        -- ###   dependencies = {
-        -- ###     --- Uncomment these if you want to manage LSP servers from neovim
-        -- ###     -- {'mason-org/mason.nvim'},
-        -- ###     {
-        -- ###         'mason-org/mason-lspconfig.nvim',
-        -- ###         opts = {
-        -- ###             ensure_installed = { "lua_ls", "rust_analyzer" },
-        -- ###         },
-        -- ###         dependencies = {
-        -- ###             { "mason-org/mason.nvim", opts = {} },
-        -- ###             "neovim/nvim-lspconfig",
-        -- ###         },
-        -- ###     },
+        -- lsp-zero
+         {
+           'VonHeikemen/lsp-zero.nvim',
+           branch = 'v3.x',
+           dependencies = {
+             --- Uncomment these if you want to manage LSP servers from neovim
+             -- {'mason-org/mason.nvim'},
+             {
+                 'mason-org/mason-lspconfig.nvim',
+                 opts = {
+                     ensure_installed = { "lua_ls", "rust_analyzer" },
+                 },
+                 dependencies = {
+                     { "mason-org/mason.nvim", opts = {} },
+                     "neovim/nvim-lspconfig",
+                 },
+             },
 
-        -- ###     -- Autocompletion
-        -- ###     {
-        -- ###         'hrsh7th/nvim-cmp',
-        -- ###         event = 'InsertEnter',
-        -- ###         config = function()
-        -- ###             local cmp = require('cmp')
+             -- Autocompletion
+             {
+                 'hrsh7th/nvim-cmp',
+                 event = 'InsertEnter',
+                 config = function()
+                     local cmp = require('cmp')
 
-        -- ###             cmp.setup({
-        -- ###                 sources = {
-        -- ###                     {name = 'nvim_lsp'},
-        -- ###                 },
-        -- ###                 mapping = cmp.mapping.preset.insert({
-        -- ###                     ['<C-space>'] = cmp.mapping.complete(),
-        -- ###                     ['<C-u>'] = cmp.mapping.scroll_docs(-4),
-        -- ###                     ['<C-d>'] = cmp.mapping.scroll_docs(4),
-        -- ###                 }),
-        -- ###                 snippet = {
-        -- ###                     expand = function(args)
-        -- ###                         vim.snippet.expand(args.body)
-        -- ###                     end,
-        -- ###                 },
-        -- ###             })
-        -- ###         end
-        -- ###     },
+                     cmp.setup({
+                         sources = {
+                             {name = 'nvim_lsp'},
+                         },
+                         mapping = cmp.mapping.preset.insert({
+                             ['<C-space>'] = cmp.mapping.complete(),
+                             ['<C-u>'] = cmp.mapping.scroll_docs(-4),
+                             ['<C-d>'] = cmp.mapping.scroll_docs(4),
+                         }),
+                         snippet = {
+                             expand = function(args)
+                                 vim.snippet.expand(args.body)
+                             end,
+                         },
+                     })
+                 end
+             },
 
-        -- ###     -- LSP Support
-        -- ###     {
-        -- ###         'neovim/nvim-lspconfig',
-        -- ###         cmd = "LspInfo",
-        -- ###         event = {'BufReadPre', 'BufNewFile'},
-        -- ###         dependencies = {
-        -- ###             -- Autocompletion
-        -- ###             {'hrsh7th/cmp-nvim-lsp'},
-        -- ###         },
-        -- ###         opts = {
-        -- ###             servers = {
-        -- ###                 ['*'] = {
-        -- ###                     keys = {
-        -- ###                         -- add a keymap
-        -- ###                         { "H", "<cmd>echo 'hello'<cr>", desc = "Say Hello" },
-        -- ###                         -- Change an existing keymap
-        -- ###                         { "K", "<cmd>echo 'custom hover'<cr>", desc = "Custom Hover" },
-        -- ###                         -- Disable a keymap
-        -- ###                         { "gd", false },
+             -- LSP Support
+             {
+                 'neovim/nvim-lspconfig',
+                 cmd = "LspInfo",
+                 event = {'BufReadPre', 'BufNewFile'},
+                 dependencies = {
+                     -- Autocompletion
+                     {'hrsh7th/cmp-nvim-lsp'},
+                 },
+                 opts = {
+                     servers = {
+                         ['*'] = {
+                             keys = {
+                                 -- add a keymap
+                                 { "H", "<cmd>echo 'hello'<cr>", desc = "Say Hello" },
+                                 -- Change an existing keymap
+                                 { "K", "<cmd>echo 'custom hover'<cr>", desc = "Custom Hover" },
+                                 -- Disable a keymap
+                                 { "gd", false },
 
-        -- ###                         -- old ones
-        -- ###                         { "n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", desc = "hmm..." },
-        -- ###                         { "n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", desc = "hmm..." },
-        -- ###                         { "n", "gd", "<cmd>lua vim.lsp.buf.definition()<cr>", desc = "hmm..." },
-        -- ###                         { "n", "gD", "<cmd>lua vim.lsp.buf.declaration()<cr>", desc = "hmm..." },
-        -- ###                         { "n", "gi", "<cmd>lua vim.lsp.buf.implementation()<cr>", desc = "hmm..." },
-        -- ###                         { "n", "go", "<cmd>lua vim.lsp.buf.type_definition()<cr>", desc = "hmm..." },
-        -- ###                         { "n", "gr", "<cmd>lua vim.lsp.buf.references()<cr>", desc = "hmm..." },
-        -- ###                         { "n", "gs", "<cmd>lua vim.lsp.buf.signature_help()<cr>", desc = "hmm..." },
-        -- ###                         { "n", "<F2>", "<cmd>lua vim.lsp.buf.rename()<cr>", desc = "hmm..." },
-        -- ###                         { {"n", "x"}, "<F3>", "<cmd>lua vim.lsp.buf.format({async = true})<cr>", desc = "hmm..." },
-        -- ###                         { "n", "<F4>", "<cmd>lua vim.lsp.buf.code_action()<cr>", desc = "hmm..." },
+                                 -- old ones
+                                 { "n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", desc = "hmm..." },
+                                 { "n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", desc = "hmm..." },
+                                 { "n", "gd", "<cmd>lua vim.lsp.buf.definition()<cr>", desc = "hmm..." },
+                                 { "n", "gD", "<cmd>lua vim.lsp.buf.declaration()<cr>", desc = "hmm..." },
+                                 { "n", "gi", "<cmd>lua vim.lsp.buf.implementation()<cr>", desc = "hmm..." },
+                                 { "n", "go", "<cmd>lua vim.lsp.buf.type_definition()<cr>", desc = "hmm..." },
+                                 { "n", "gr", "<cmd>lua vim.lsp.buf.references()<cr>", desc = "hmm..." },
+                                 { "n", "gs", "<cmd>lua vim.lsp.buf.signature_help()<cr>", desc = "hmm..." },
+                                 { "n", "<F2>", "<cmd>lua vim.lsp.buf.rename()<cr>", desc = "hmm..." },
+                                 { {"n", "x"}, "<F3>", "<cmd>lua vim.lsp.buf.format({async = true})<cr>", desc = "hmm..." },
+                                 { "n", "<F4>", "<cmd>lua vim.lsp.buf.code_action()<cr>", desc = "hmm..." },
 
-        -- ###                     },
-        -- ###                 },
-        -- ###             },
-        -- ###         },
-        -- ###     --},
-        -- ###         init = function ()
-        -- ###             -- local lsp_defaults = require('lspconfig').util.default_config
-        -- ###             -- local lsp_defaults = vim.lsp.config().util.default_config
-        -- ###             -- local hmm = vim.lsp.config.string.u
-        -- ###             -- vim.lsp.config.
-        -- ###             local lsp_defaults = vim.lsp.config
+                             },
+                         },
+                     },
+                 },
+             --},
+                 init = function ()
+                     -- local lsp_defaults = require('lspconfig').util.default_config
+                     -- local lsp_defaults = vim.lsp.config().util.default_config
+                     -- local hmm = vim.lsp.config.string.u
+                     -- vim.lsp.config.
+                     local lsp_defaults = vim.lsp.config
 
-        -- ###             -- add cmp_nvim_lsp capabilities settings to lspconfig
-        -- ###             -- this should be executed before you configure any language server
-        -- ###             lsp_defaults.capabilities = vim.tbl_deep_extend('force', lsp_defaults.capabilities, require('cmp_nvim_lsp').default_capabilities())
+                     -- add cmp_nvim_lsp capabilities settings to lspconfig
+                     -- this should be executed before you configure any language server
+                     lsp_defaults.capabilities = vim.tbl_deep_extend('force', lsp_defaults.capabilities, require('cmp_nvim_lsp').default_capabilities())
 
-        -- ###             -- LspAttach is used to enable features when
-        -- ###             -- there is a language server active for the file
-        -- ###             vim.api.nvim_create_autocmd('LspAttach', {
-        -- ###                 desc = 'LSP actions',
-        -- ###                 callback = function (event)
-        -- ###                     local opts = {buffer = event.buf}
+                     -- LspAttach is used to enable features when
+                     -- there is a language server active for the file
+                     vim.api.nvim_create_autocmd('LspAttach', {
+                         desc = 'LSP actions',
+                         callback = function (event)
+                             local opts = {buffer = event.buf}
 
-        -- ###                     vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', opts)
-        -- ###                     vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', opts)
-        -- ###                     vim.keymap.set('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>', opts)
-        -- ###                     vim.keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>', opts)
-        -- ###                     vim.keymap.set('n', 'go', '<cmd>lua vim.lsp.buf.type_definition()<cr>', opts)
-        -- ###                     vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', opts)
-        -- ###                     vim.keymap.set('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<cr>', opts)
-        -- ###                     vim.keymap.set('n', '<F2>', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
-        -- ###                     vim.keymap.set({'n', 'x'}, '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
-        -- ###                     vim.keymap.set('n', '<F4>', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
+                             vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', opts)
+                             vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', opts)
+                             vim.keymap.set('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>', opts)
+                             vim.keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>', opts)
+                             vim.keymap.set('n', 'go', '<cmd>lua vim.lsp.buf.type_definition()<cr>', opts)
+                             vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', opts)
+                             vim.keymap.set('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<cr>', opts)
+                             vim.keymap.set('n', '<F2>', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
+                             vim.keymap.set({'n', 'x'}, '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
+                             vim.keymap.set('n', '<F4>', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
 
-        -- ###                 end,
-        -- ###             })
+                         end,
+                     })
 
-        -- ###             --require('lspconfig').gleam.setup({})
-        -- ###             --require('lspconfig').ocamllsp.setup({})
+                     --require('lspconfig').gleam.setup({})
+                     --require('lspconfig').ocamllsp.setup({})
 
-        -- ###         end
-        -- ###     },
+                 end
+             },
 
-        -- ###     -- Snippets
-        -- ###     {'L3MON4D3/LuaSnip',lazy = true},
+             -- Snippets
+             {'L3MON4D3/LuaSnip',lazy = true},
 
-        -- ###     },
-        -- ### },
+             },
+         },
 
         -- {'julian/lean.nvim'},
         -- -- julian's lean.nvim LSP
