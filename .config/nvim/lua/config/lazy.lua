@@ -451,130 +451,192 @@ require("lazy").setup({
         -- ### 	main = "lazyvim.util.cmp",
         -- ### },
 
+
+        -- redo with new pattern
+        --
         -- lsp-zero
-         {
-           'VonHeikemen/lsp-zero.nvim',
-           branch = 'v3.x',
-           dependencies = {
-             --- Uncomment these if you want to manage LSP servers from neovim
-             -- {'mason-org/mason.nvim'},
-             {
-                 'mason-org/mason-lspconfig.nvim',
-                 opts = {
-                     ensure_installed = { "lua_ls", "rust_analyzer" },
-                 },
-                 dependencies = {
-                     { "mason-org/mason.nvim", opts = {} },
-                     "neovim/nvim-lspconfig",
-                 },
-             },
+        {
+          'VonHeikemen/lsp-zero.nvim',
+          branch = 'v4.x',
+          dependencies = {
+            --- Uncomment these if you want to manage LSP servers from neovim
+            -- {'mason-org/mason.nvim'},
+            {
+                'mason-org/mason-lspconfig.nvim',
+                opts = {
+                    ensure_installed = { "lua_ls", "rust_analyzer" },
+                },
+                dependencies = {
+                    { "mason-org/mason.nvim", opts = {} },
+                    "neovim/nvim-lspconfig",
+                },
+            },
 
-             -- Autocompletion
-             {
-                 'hrsh7th/nvim-cmp',
-                 event = 'InsertEnter',
-                 config = function()
-                     local cmp = require('cmp')
+            -- Autocompletion
+            {
+                'hrsh7th/nvim-cmp',
+                event = 'InsertEnter',
+                config = function()
+                    local cmp = require('cmp')
 
-                     cmp.setup({
-                         sources = {
-                             {name = 'nvim_lsp'},
-                         },
-                         mapping = cmp.mapping.preset.insert({
-                             ['<C-space>'] = cmp.mapping.complete(),
-                             ['<C-u>'] = cmp.mapping.scroll_docs(-4),
-                             ['<C-d>'] = cmp.mapping.scroll_docs(4),
-                         }),
-                         snippet = {
-                             expand = function(args)
-                                 vim.snippet.expand(args.body)
-                             end,
-                         },
-                     })
-                 end
-             },
+                    cmp.setup({
+                        sources = {
+                            {name = 'nvim_lsp'},
+                        },
+                        mapping = cmp.mapping.preset.insert({
+                            ['<C-space>'] = cmp.mapping.complete(),
+                            ['<C-u>'] = cmp.mapping.scroll_docs(-4),
+                            ['<C-d>'] = cmp.mapping.scroll_docs(4),
+                        }),
+                        snippet = {
+                            expand = function(args)
+                                vim.snippet.expand(args.body)
+                            end,
+                        },
+                    })
+                end
+            },
 
-             -- LSP Support
-             {
-                 'neovim/nvim-lspconfig',
-                 cmd = "LspInfo",
-                 event = {'BufReadPre', 'BufNewFile'},
-                 dependencies = {
-                     -- Autocompletion
-                     {'hrsh7th/cmp-nvim-lsp'},
-                 },
-                 opts = {
-                     servers = {
-                         ['*'] = {
-                             keys = {
-                                 -- add a keymap
-                                 { "H", "<cmd>echo 'hello'<cr>", desc = "Say Hello" },
-                                 -- Change an existing keymap
-                                 { "K", "<cmd>echo 'custom hover'<cr>", desc = "Custom Hover" },
-                                 -- Disable a keymap
-                                 { "gd", false },
+            -- LSP Support
+            {
+                'neovim/nvim-lspconfig',
+                cmd = "LspInfo",
+                event = {'BufReadPre', 'BufNewFile'},
+                dependencies = {
+                    -- Autocompletion
+                    {'hrsh7th/cmp-nvim-lsp'},
+                },
+                opts = {
+                    servers = {
+                        ['*'] = {
+                            keys = {
+                                -- add a keymap
+                                { "H", "<cmd>echo 'hello'<cr>", desc = "Say Hello" },
+                                -- Change an existing keymap
+                                { "K", "<cmd>echo 'custom hover'<cr>", desc = "Custom Hover" },
+                                -- Disable a keymap
+                                { "gd", false },
 
-                                 -- old ones
-                                 { "n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", desc = "hmm..." },
-                                 { "n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", desc = "hmm..." },
-                                 { "n", "gd", "<cmd>lua vim.lsp.buf.definition()<cr>", desc = "hmm..." },
-                                 { "n", "gD", "<cmd>lua vim.lsp.buf.declaration()<cr>", desc = "hmm..." },
-                                 { "n", "gi", "<cmd>lua vim.lsp.buf.implementation()<cr>", desc = "hmm..." },
-                                 { "n", "go", "<cmd>lua vim.lsp.buf.type_definition()<cr>", desc = "hmm..." },
-                                 { "n", "gr", "<cmd>lua vim.lsp.buf.references()<cr>", desc = "hmm..." },
-                                 { "n", "gs", "<cmd>lua vim.lsp.buf.signature_help()<cr>", desc = "hmm..." },
-                                 { "n", "<F2>", "<cmd>lua vim.lsp.buf.rename()<cr>", desc = "hmm..." },
-                                 { {"n", "x"}, "<F3>", "<cmd>lua vim.lsp.buf.format({async = true})<cr>", desc = "hmm..." },
-                                 { "n", "<F4>", "<cmd>lua vim.lsp.buf.code_action()<cr>", desc = "hmm..." },
+                                -- old ones
+                                { "n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", desc = "hmm..." },
+                                { "n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", desc = "hmm..." },
+                                { "n", "gd", "<cmd>lua vim.lsp.buf.definition()<cr>", desc = "hmm..." },
+                                { "n", "gD", "<cmd>lua vim.lsp.buf.declaration()<cr>", desc = "hmm..." },
+                                { "n", "gi", "<cmd>lua vim.lsp.buf.implementation()<cr>", desc = "hmm..." },
+                                { "n", "go", "<cmd>lua vim.lsp.buf.type_definition()<cr>", desc = "hmm..." },
+                                { "n", "gr", "<cmd>lua vim.lsp.buf.references()<cr>", desc = "hmm..." },
+                                { "n", "gs", "<cmd>lua vim.lsp.buf.signature_help()<cr>", desc = "hmm..." },
+                                { "n", "<F2>", "<cmd>lua vim.lsp.buf.rename()<cr>", desc = "hmm..." },
+                                { {"n", "x"}, "<F3>", "<cmd>lua vim.lsp.buf.format({async = true})<cr>", desc = "hmm..." },
+                                { "n", "<F4>", "<cmd>lua vim.lsp.buf.code_action()<cr>", desc = "hmm..." },
 
-                             },
-                         },
-                     },
-                 },
-             --},
-                 init = function ()
-                     -- local lsp_defaults = require('lspconfig').util.default_config
-                     -- local lsp_defaults = vim.lsp.config().util.default_config
-                     -- local hmm = vim.lsp.config.string.u
-                     -- vim.lsp.config.
-                     local lsp_defaults = vim.lsp.config
+                            },
+                        },
+                    },
+                },
+            --},
+                init = function ()
+                    -- local lsp_defaults = require('lspconfig').util.default_config
+                    -- local lsp_defaults = vim.lsp.config().util.default_config
+                    -- local hmm = vim.lsp.config.string.u
+                    -- vim.lsp.config.
 
-                     -- add cmp_nvim_lsp capabilities settings to lspconfig
-                     -- this should be executed before you configure any language server
-                     lsp_defaults.capabilities = vim.tbl_deep_extend('force', lsp_defaults.capabilities, require('cmp_nvim_lsp').default_capabilities())
+                    -- =================================================
+                    -- User configuration section
+                    local default_config = {
+                      -- do: prepend name of plugin in log messages
+                      plugin = 'deorice.nvim',
 
-                     -- LspAttach is used to enable features when
-                     -- there is a language server active for the file
-                     vim.api.nvim_create_autocmd('LspAttach', {
-                         desc = 'LSP actions',
-                         callback = function (event)
-                             local opts = {buffer = event.buf}
+                      -- do: print output to neovim while running
+                      use_console = true,
 
-                             vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', opts)
-                             vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', opts)
-                             vim.keymap.set('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>', opts)
-                             vim.keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>', opts)
-                             vim.keymap.set('n', 'go', '<cmd>lua vim.lsp.buf.type_definition()<cr>', opts)
-                             vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', opts)
-                             vim.keymap.set('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<cr>', opts)
-                             vim.keymap.set('n', '<F2>', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
-                             vim.keymap.set({'n', 'x'}, '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
-                             vim.keymap.set('n', '<F4>', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
+                      -- do: apply highlight (echohl) onto the console with
+                      highlights = true,
 
-                         end,
-                     })
+                      -- do: write to file
+                      use_file = true,
 
-                     --require('lspconfig').gleam.setup({})
-                     --require('lspconfig').ocamllsp.setup({})
+                      -- do: log every message above this level
+                      level = "trace",
 
-                 end
-             },
+                      -- Level configuration
+                      modes = {
+                        { name = "trace", hl = "Comment", },
+                        { name = "debug", hl = "Comment", },
+                        { name = "info",  hl = "None", },
+                        { name = "warn",  hl = "WarningMsg", },
+                        { name = "error", hl = "ErrorMsg", },
+                        { name = "fatal", hl = "ErrorMsg", },
+                      },
 
-             -- Snippets
-             {'L3MON4D3/LuaSnip',lazy = true},
+                      -- do: limit number of decimals displayed for floats
+                      float_precision = 0.01,
+                    }
 
-             },
-         },
+                    local log = {}
+                    log.new = function(config, standalone)
+                        config = vim.tbl_deep_extend('force', default_config, config)
+
+                        -- objects
+                        -- levels
+                        local levels = {}
+                        for i, v in ipairs(config.modes)do
+                            levels[v.name] = i
+                        end
+
+                    end
+
+                    log.new(default_config, true)
+
+                    return log
+                    -- =================================================
+
+                    local lsp_defaults = vim.lsp.config
+
+                    -- add cmp_nvim_lsp capabilities settings to lspconfig
+                    -- this should be executed before you configure any language server
+                    config_quux = {
+                        settings = {}
+                    }
+                    lsp_defaults.capabilities = vim.tbl_deep_extend(
+                        'force',
+                        lsp_defaults.capabilities,
+                        default_config,
+                        -- require('cmp_nvim_lsp').default_capabilities()
+                    )
+
+                    -- LspAttach is used to enable features when
+                    -- there is a language server active for the file
+                    vim.api.nvim_create_autocmd('LspAttach', {
+                        desc = 'LSP actions',
+                        callback = function (event)
+                            local opts = {buffer = event.buf}
+
+                            vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', opts)
+                            vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', opts)
+                            vim.keymap.set('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>', opts)
+                            vim.keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>', opts)
+                            vim.keymap.set('n', 'go', '<cmd>lua vim.lsp.buf.type_definition()<cr>', opts)
+                            vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', opts)
+                            vim.keymap.set('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<cr>', opts)
+                            vim.keymap.set('n', '<F2>', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
+                            vim.keymap.set({'n', 'x'}, '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
+                            vim.keymap.set('n', '<F4>', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
+
+                        end,
+                    })
+
+                    --require('lspconfig').gleam.setup({})
+                    --require('lspconfig').ocamllsp.setup({})
+
+                end
+            },
+
+            -- Snippets
+            {'L3MON4D3/LuaSnip',lazy = true},
+
+            },
+        },
 
         -- {'julian/lean.nvim'},
         -- -- julian's lean.nvim LSP
@@ -845,7 +907,8 @@ require("lazy").setup({
     },
     -- Configure any other settings here. See the documentation for more details.
     -- colorscheme that will be used when installing plugins.
-    install = { colorscheme = { "habamax" } },
+    install = { colorscheme = nil },
+    -- install = { colorscheme = { "habamax" } },
     -- automatically check for plugin updates
     -- notify is relative to the messages at startup.
     checker = {
