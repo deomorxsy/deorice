@@ -11,3 +11,9 @@ neovim_synch:
 vim_synch:
 	MODE="-vim_synch" . ./scripts/confsync.sh
 
+
+
+# shellscript conf
+.PHONY:
+
+#
