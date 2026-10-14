@@ -423,6 +423,9 @@ function! Setup_Forth()
     let filetype_fs = "forth"
 endfunction
 
+function!
+endfunction
+
 " nvim-R integration with tmux
 "let R_external_term = 1
 "let R_external_term =
@@ -440,7 +443,9 @@ autocmd BufRead,BufNewFile *.agda,*.lagda set filetype=agda
 au BufRead,BufNewFile *.agda setf agda
 au BufRead,BufNewFile *.lagda setf lagda
 
-" Setup-Agda: 2. Output unicode syntax fixture for Agda Programming Language Integration
+" Setup-Agda:
+    " 2. Output unicode syntax fixture
+    " for the Agda Programming Language integration
 
 " to4 -> toa -> \to arrow -> Logical Implication
 autocmd FileType agda,lagda inoremap <Space>to4 →
@@ -462,3 +467,12 @@ autocmd FileType agda,lagda inoremap <Space>ex1 ∃
 
 " equiv -> equivalence -> Bidirectional Implication
 autocmd FileType agda,lagda inoremap <Space>equ ≡
+
+
+" ===================
+" markdown headers
+
+:%s/^;, \[/#### ```;, \[/g | :g/;, \[/norm! A```/g
+:g/```/```/g
+
+
