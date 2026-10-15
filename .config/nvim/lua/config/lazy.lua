@@ -535,6 +535,7 @@ require("lazy").setup({
                     },
                 },
             --},
+            -- lsp-zero with new pattern
                 init = function ()
                     -- local lsp_defaults = require('lspconfig').util.default_config
                     -- local lsp_defaults = vim.lsp.config().util.default_config
@@ -573,8 +574,10 @@ require("lazy").setup({
                       float_precision = 0.01,
                     }
 
-                    local log = {}
-                    log.new = function(config, standalone)
+                    local lspdefaults = {}
+                    -- local lspdefaults = vim.lsp.config
+                    -- specifically for cmp_nvim_lsp: https://github.com/hrsh7th/cmp-nvim-lsp/issues/89
+                    lspdefauls.capabilities = function(config, standalone)
                         config = vim.tbl_deep_extend('force', default_config, config)
 
                         -- objects
@@ -586,24 +589,21 @@ require("lazy").setup({
 
                     end
 
-                    log.new(default_config, true)
+                    lspdefaults.capabilities(default_config, true)
 
-                    return log
+                    return lspdefaults
                     -- =================================================
-
-                    local lsp_defaults = vim.lsp.config
 
                     -- add cmp_nvim_lsp capabilities settings to lspconfig
                     -- this should be executed before you configure any language server
-                    config_quux = {
-                        settings = {}
-                    }
-                    lsp_defaults.capabilities = vim.tbl_deep_extend(
-                        'force',
-                        lsp_defaults.capabilities,
-                        default_config,
-                        -- require('cmp_nvim_lsp').default_capabilities()
-                    )
+
+                    -- local lspdefaults = vim.lsp.config
+                    -- lsp_defaults.capabilities = vim.tbl_deep_extend(
+                    --     'force',
+                    --     lsp_defaults.capabilities,
+                    --     default_config,
+                    --     -- require('cmp_nvim_lsp').default_capabilities()
+                    -- )
 
                     -- LspAttach is used to enable features when
                     -- there is a language server active for the file
