@@ -475,4 +475,12 @@ autocmd FileType agda,lagda inoremap <Space>equ ≡
 :%s/^;, \[/#### ```;, \[/g | :g/;, \[/norm! A```/g
 :g/```/```/g
 
+function! HeadersFormatter()
+lua << EOF
+local linenr = vim.window.line
+local curline = vim.buffer()[linenr]
+print(string.format("Current line [%d] has %d chars",
+    linenr, #curline))
+EOF
+endfunction
 
