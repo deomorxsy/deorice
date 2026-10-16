@@ -47,5 +47,10 @@ if not (l.starts_line(';, [' * .nonnewline^0)) then
    return 1
 end
 
+-- global substitution with re.gsub:
+-- re.gsub (subject, pattern, replacement)
+re.gsub(target, '^;, [', '#### ````;, [')
+
 target = "You saw a dog and a cat"
 print (string.match (target, "^dog"))
+
