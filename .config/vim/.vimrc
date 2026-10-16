@@ -472,11 +472,33 @@ autocmd FileType agda,lagda inoremap <Space>equ ≡
 " ===================
 " markdown headers
 
-:%s/^;, \[/#### ```;, \[/g | :g/;, \[/norm! A```/g
+ :%s/^;, \[/#### ```;, \[/g | :g/;, \[/norm! A```/g
 :g/```/```/g
 
 function! HeadersFormatter()
-lua << EOF
+lua << trim EOF
+
+vim.command([[
+
+if _VERSION == 'Lua 5.1' or _VERSION == 'Lua 5.2' then
+	error('lpeg.vim needs Lua 5.3 or newer')
+	return nil
+end
+
+local ok, _ = xpcall(require, function(err)
+	print('deorice.vim: ' .. err:sub(0, err:find('\n') - 2))
+end, 'lpeg')
+if not ok then
+	return nil
+end
+
+
+call search('
+:^;, \[/#### ```;, \[/g | :g/;, \[/norm! A```/g
+^;, \[]')
+
+]])
+
 local linenr = vim.window.line
 local curline = vim.buffer()[linenr]
 print(string.format("Current line [%d] has %d chars",

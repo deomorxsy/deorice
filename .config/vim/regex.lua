@@ -1,10 +1,14 @@
 
 M = {}
 
+
+
 if _VERSION == 'Lua 5.1' or _VERSION == 'Lua 5.2' then
 	error('lpeg.vim needs Lua 5.3 or newer')
 	return nil
 end
+
+
 
 local ok_lexer, lexer = xpcall(require, function(err)
     print('Error: ' ..err)
@@ -26,7 +30,22 @@ if not ok then
 end
 
 
+local lpeg = require 'lpeg'
+local P, Cs = lpeg.P, lpeg.Cs
+local any = P(1)
+local re = lpeg.re
+local p = re.compile([[
+]])
+
+
 call search('
 :^;, \[/#### ```;, \[/g | :g/;, \[/norm! A```/g
 ^;, \[]')
 
+if not (l.starts_line(';, [' * .nonnewline^0)) then
+   print(string.format('[ERROR]: %s. Could not match pattern. Exiting now...', err))
+   return 1
+end
+
+target = "You saw a dog and a cat"
+print (string.match (target, "^dog"))
