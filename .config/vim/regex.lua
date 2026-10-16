@@ -4,8 +4,8 @@ M = {}
 -- ===================================
 -- routine 0: system constraints
 -- ===================================
--- function: lexer checker
-function
+-- function: check lexer
+function check_lexer()
     local ok_lexer, lexer = xpcall(require, function(err)
         print('Error: ' ..err)
     end, lexer_file or '')
@@ -18,8 +18,8 @@ function
     end
 end
 
--- function: lua version and system compatibility for lpeg
-function
+-- function: check both lua version and lpeg system compatibility
+function check_lpeg_syscom()
     -- check: lua version
     -- LuaJIT 2.1.1767980792
     if _VERSION == 'Lua 5.1' or
@@ -42,8 +42,8 @@ end
 -- routine 1: main
 -- ===================================
 
--- function: regex runner
-function
+-- function: run regex
+function regex_runna()
     local lpeg = require 'lpeg'
     local P, Cs = lpeg.P, lpeg.Cs
     local any = P(1)
@@ -57,7 +57,7 @@ function
     -- ^;, \[]')
 
     -- function: check globally from the first line per the pattern.
-    function
+    function global_check()
         if not (l.starts_line(';, [' * .nonnewline^0)) then
            print(string.format('[ERROR]: %s. Could not match pattern. Exiting now...', err))
            return 1
