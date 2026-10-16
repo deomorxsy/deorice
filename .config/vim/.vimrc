@@ -485,6 +485,8 @@ if _VERSION == 'Lua 5.1' or _VERSION == 'Lua 5.2' then
 	return nil
 end
 
+local ok, lexer =
+
 local ok, _ = xpcall(require, function(err)
 	print('deorice.vim: ' .. err:sub(0, err:find('\n') - 2))
 end, 'lpeg')
@@ -505,4 +507,10 @@ print(string.format("Current line [%d] has %d chars",
     linenr, #curline))
 EOF
 endfunction
+
+"" ==========================
+"" import AllCustomHighlighter
+"" for syntax highlighting
+
+import "./after/syntax/all.vim"
 
