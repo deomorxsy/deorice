@@ -2,25 +2,37 @@
 
 xinit_setup() {
 XINITRC_REPO_LOCAL_PATH="./dotfiles/.xinitrc"
+XINIT_DOTFILE_BAK="/tmp/xinitrc-bak"
+XINIT_CONFIG_PATH="${HOME}/.xinitrc"
 
-cp "${XINITRC_REPO_LOCAL_PATH}" ${HOME}/.xinitrc
+if ! export \
+        XINITRC_REPO_LOCAL_PATH \
+        XINIT_DOTFILE_BAK \
+        XINIT_CONFIG_PATH ; then
+echo "|> [ERROR]: could not export xinirc environment variables. Exiting now..."
+fi
+echo "|> [PASS]: successfully exported xinirc environment variables. Proceeding..."
 
 
-if ! cp "${VIM_CONFIG_PATH}" "${VIM_DOTFILE_BAK}"; then
+cp "${XINITRC_REPO_LOCAL_PATH}" "${XINIT_CONFIG_PATH}"
+
+if ! cp "${XINIT_CONFIG_PATH}" "${XINIT_DOTFILE_BAK}"; then
         echo "|> [ERROR]: could not create a backup file for the vimrc. Exiting now..."
         return 1
     fi
     echo "|> [PASS]: successfully created a backup file for the vimrc. Proceeding..."
 
-    if [ -f "${VIM_CONFIG_PATH}" ]; then
-        if ! cp "${VIM_DOTFILE_PATH_REPO_FILE}" "${VIM_CONFIG_PATH}"; then
+    if [ -f "${XINIT_CONFIG_PATH}" ]; then
+        if ! cp "${XINIT_DOTFILE_PATH_REPO_FILE}" "${XINIT_CONFIG_PATH}"; then
             echo "|> [ERROR]: could not copy the vimrc dotfile at the local repository to the system's vimrc at ${HOME}."
 
-            if ! (! diff "${VIM_CONFIG_PATH}" "${VIM_DOTFILE_PATH_REPO_FILE}"); then
+            if ! (! diff "${XINIT_CONFIG_PATH}" "${XINIT_DOTFILE_PATH_REPO_FILE}"); then
                 # ==========
-                echo "|> [ERROR]: the [VIM_CONFIG_PATH=${VIM_CONFIG_PATH}] differs from the local repository vimrc dotfile at [VIM_DOTFILE_PATH_REPO_FILE=${VIM_DOTFILE_PATH_REPO_FILE}.]"
+                echo "|> [ERROR]: the [XINIT_CONFIG_PATH=${XINIT_CONFIG_PATH}]
+                differs from the local repository vimrc dotfile at
+                [XINIT_DOTFILE_PATH_REPO_FILE=${XINIT_DOTFILE_PATH_REPO_FILE}.]"
                 echo "|> [WARNING]: attempting to restore the backup vimrc file..."
-                if ! cp "${VIM_DOTFILE_BAK}" "${VIM_CONFIG_PATH}"; then
+                if ! cp "${XINIT_DOTFILE_BAK}" "${XINIT_CONFIG_PATH}"; then
                     echo "|> [ERROR]: could not restore the backup vimrc file. Exiting now..."
                     return 1
                 fi
@@ -35,6 +47,14 @@ if ! cp "${VIM_CONFIG_PATH}" "${VIM_DOTFILE_BAK}"; then
 
         echo "|> [PASS]: successfully copied the vimrc dotfile at the local repository to the system's vimrc at ${HOME}. Finished."
     fi
+
+if ! unset \
+        XINITRC_REPO_LOCAL_PATH \
+        XINIT_DOTFILE_BAK \
+        XINIT_CONFIG_PATH ; then
+echo "|> [ERROR]: could not unset xinitrc environment variables. Exiting now..."
+fi
+echo "|> [PASS]: succeessfully unset xinitrc environment variables. Proceeding..."
 
 }
 
